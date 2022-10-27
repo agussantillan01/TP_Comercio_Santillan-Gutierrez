@@ -1,38 +1,38 @@
-Create database TP_CompraVenta
+Create database TP_Comercio
 go
-Use TP_CompraVenta
+Use TP_Comercio
 go 
 Create table Marcas(
 IdMarca bigint not null identity(1,1) primary key,
 Nombre varchar (100) not null
 )
 go
-Create table Categoria_Productos(
-IdCategoria bigint not null identity(1,1) primary key, 
+Create table Tipo_Productos(
+IdTipo bigint not null identity(1,1) primary key, 
 Nombre varchar (100) not null
 )
 go
 Create table Productos(
 IdProducto bigint not null identity(1,1) primary key,
 Nombre varchar (100) not null, 
-Tipo bigint not null foreign key references Categoria_Productos (IdCategoria),
+IdTipo bigint not null foreign key references Tipo_Productos (IdTipo),
 Descripcion varchar (300) null, 
-Marca bigint not null foreign key references Marcas (IdMarca), 
+IdMarca bigint not null foreign key references Marcas (IdMarca), 
 Stock int not null, 
 StockMinimo smallint not null,
 Precio Money not null,
-Estado bit default 1
+Estado bit not null default 1
 )
 go 
 Create table Usuarios (
-idUsuario bigint not null identity (1,1) primary key, 
+IdUsuario bigint not null identity (1,1) primary key, 
 Nombre varchar (50) not null,
 Apellido varchar (50) not null,
 Email varchar (100) not null,
 Contraseña varchar (100) not null,
 FechaNacimiento date not null, 
-idProducto bigint null foreign key references Productos (IdProducto),
-Estado bit default 1
+IdProducto bigint null foreign key references Productos (IdProducto),
+Estado bit not null default 1
 )
 go
 Create table Proveedores(
@@ -40,7 +40,7 @@ IdProveedor bigint not null identity(1,1) primary key,
 razonSocial varchar (200) not null, 
 Domicilio varchar(200) not null, 
 IdProducto bigint not null foreign key references Productos (IdProducto), 
-Estado bit default 1
+Estado bit not null default 1
 )
 go
 Create table Clientes(
