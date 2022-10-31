@@ -31,8 +31,13 @@ Apellido varchar (50) not null,
 Email varchar (100) not null,
 Contraseña varchar (100) not null,
 FechaNacimiento date not null, 
-IdProducto bigint null foreign key references Productos (IdProducto),
 Estado bit not null default 1
+)
+go 
+Create table Usuario_X_Productos (
+IdUsuario bigint not null foreign key references Usuarios(IdUsuario),
+IdProducto bigint not null foreign key references Productos (IdProducto),
+Cantidad int not null
 )
 go
 Create table Proveedores(
