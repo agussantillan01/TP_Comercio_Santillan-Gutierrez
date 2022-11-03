@@ -7,7 +7,7 @@
 
     <asp:gridview Id="dgvProductos" runat="server" AutoGenerateColumns="false">
         <columns>
-            <asp:BoundField HeaderText="Tipo" DataField="Tipo" />
+            <asp:BoundField HeaderText="Tipo" DataField="Tipo"  />
             <asp:BoundField HeaderText="Marca" DataField="Marca" />
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
             <asp:BoundField HeaderText="Stock" DataField="Stock" />
@@ -16,7 +16,10 @@
 
         </columns>
     </asp:gridview>
-     
+
+
+
+
 <%--        <asp:GridView runat="server">
         <Columns>
             <asp:BoundField HeaderText="Productos" DataField="" />
