@@ -17,23 +17,35 @@ namespace administracion_web
        public bool noHayRegistro = false;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack) { 
             txtIdMarca.Enabled = false;
-            
+            ddlProductoMarca.Items.Add("--Seleccione un Item--");
+            ddlProductoMarca.Items.Add("Marca");
+            ddlProductoMarca.Items.Add("Categoria");
+            }
+
 
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            
 
-            
-            if (txtNombreMarca.Text != "")
+            string Seleccionado = ddlProductoMarca.SelectedItem.ToString();
+            if (Seleccionado== "Marca" && txtNombre.Text != "")
             {
                 Response.Redirect("registroProductos.aspx", false);
                 MarcaNegocio negocio = new MarcaNegocio();
                 Marca marca = new Marca();
-                marca.NombreMarca = txtNombreMarca.Text;
+                marca.NombreMarca = txtNombre.Text;
                 negocio.agregar(marca);
+            }
+            else if (Seleccionado == "Categoria" && txtNombre.Text != "")
+            {
+                Response.Redirect("registroProductos.aspx", false);
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                Tipo tipo = new Tipo();
+                tipo.NombreTipo = txtNombre.Text;
+                negocio.agregar(tipo);
             }
             else
             {

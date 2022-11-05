@@ -58,17 +58,16 @@ namespace negocio
             }
 
         }
+*/
 
-        public void agregar(Categoria nuevo)
+        public void agregar(Tipo nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string valores = "values('"
-                    + nuevo.Nombre + "')";
+                string valores = "values('" + nuevo.NombreTipo + "')";
 
-                datos.setearConsulta("insert into Categorias(Descripcion) "
-                    + valores);
+                datos.setearConsulta("INSERT INTO Tipo_Productos " + valores);
 
                 datos.ejectutarAccion();
 
@@ -82,53 +81,53 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        /*
+                public void modificar(Categoria modificar)
+                {
+                    AccesoDatos datos = new AccesoDatos();
+                    try
+                    {
+                        datos.setearConsulta(
+                            "update Categorias set Descripcion = '" + modificar.Nombre + "' where ID = " + modificar.ID);
 
-        public void modificar(Categoria modificar)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta(
-                    "update Categorias set Descripcion = '" + modificar.Nombre + "' where ID = " + modificar.ID);
+                        datos.ejectutarAccion();
 
-                datos.ejectutarAccion();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        datos.cerrarConexion();
+                    }
+                }
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+                public void eliminar(int ID)
+                {
+                    AccesoDatos datos = new AccesoDatos();
+                    try
+                    {
+                        Categoria aux = new Categoria();
 
-        public void eliminar(int ID)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                Categoria aux = new Categoria();
+                        aux.ID = ID;
+                        aux.Estado = false;
 
-                aux.ID = ID;
-                aux.Estado = false;
+                        datos.setearConsulta(
+                            "update Categorias set Estado = 0 where ID = " + aux.ID);
 
-                datos.setearConsulta(
-                    "update Categorias set Estado = 0 where ID = " + aux.ID);
+                        datos.ejectutarAccion();
 
-                datos.ejectutarAccion();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }*/
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        datos.cerrarConexion();
+                    }
+                }*/
     }
 
 }

@@ -32,8 +32,7 @@
     </asp:GridView>--%>
     <div style="display:inline;">
         <div style="text-align: left;">
-            <a type="submit" class="btn btn-primary" href="agregarMarca.aspx">--Agregar Marca--</a>
-            <a type="submit" class="btn btn-primary" href="#">--Agregar Categoria--</a>
+            <a type="submit" class="btn btn-primary" href="agregarMarcaProducto.aspx">--Agregar Marca/Categorias--</a>
         </div>
         <div style="text-align: right;">
             <a type="submit" class="btn btn-primary" href="#">Comprar</a>

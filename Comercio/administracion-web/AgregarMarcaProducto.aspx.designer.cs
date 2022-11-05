@@ -15,6 +15,15 @@ namespace administracion_web
     {
 
         /// <summary>
+        /// ddlProductoMarca control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProductoMarca;
+
+        /// <summary>
         /// txtIdMarca control.
         /// </summary>
         /// <remarks>
@@ -24,13 +33,13 @@ namespace administracion_web
         protected global::System.Web.UI.WebControls.TextBox txtIdMarca;
 
         /// <summary>
-        /// txtNombreMarca control.
+        /// txtNombre control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreMarca;
+        protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
         /// btnAgregar control.
