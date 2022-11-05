@@ -9,7 +9,7 @@ namespace negocio
 {
     public class MarcaNegocio
     {
-        /**
+  /**      
         public List<Marca> listar(bool combobox = false)
         {
             List<Marca> lista = new List<Marca>();
@@ -58,17 +58,15 @@ namespace negocio
             }
 
         }
-
+*/
         public void agregar(Marca nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string valores = "values('"
-                    + nuevo.Nombre + "')";
+                string valores = "values('" + nuevo.NombreMarca + "')";
 
-                datos.setearConsulta("insert into Marcas(Descripcion) "
-                    + valores);
+                datos.setearConsulta("insert into Marcas (Nombre) " + valores);
 
                 datos.ejectutarAccion();
 
@@ -82,7 +80,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-
+/*
         public void modificar(Marca modificar)
         {
             AccesoDatos datos = new AccesoDatos();

@@ -1,26 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/miMaster.Master" AutoEventWireup="true" CodeBehind="registroProductos.aspx.cs" Inherits="administracion_web.paginaProductos" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <hr />
 
 
-    <asp:gridview Id="dgvProductos" runat="server" AutoGenerateColumns="false">
-        <columns>
-            <asp:BoundField HeaderText="Tipo" DataField="Tipo"  />
+    <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" AutoGenerateColumns="false">
+        <Columns>
+            <asp:BoundField HeaderText="Tipo" DataField="Tipo" />
             <asp:BoundField HeaderText="Marca" DataField="Marca" />
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
             <asp:BoundField HeaderText="Stock" DataField="Stock" />
             <asp:BoundField HeaderText="Stock Min." DataField="StockMinimo" />
             <asp:BoundField HeaderText="$" DataField="Precio" />
 
-        </columns>
-    </asp:gridview>
+        </Columns>
+    </asp:GridView>
 
 
 
 
-<%--        <asp:GridView runat="server">
+    <%--        <asp:GridView runat="server">
         <Columns>
             <asp:BoundField HeaderText="Productos" DataField="" />
             <asp:BoundField HeaderText="Precio" DataField="" />
@@ -29,10 +30,15 @@
             <asp:BoundField HeaderText="Proveedor" DataField="" />
         </Columns>
     </asp:GridView>--%>
-    <div style="text-align:center;">
-        <a type="submit" class="btn btn-primary" href="#">Comprar</a>
-        <a type="submit" class="btn btn-primary" href="#">Vender</a>
-        <a type="submit" class="btn btn-primary" href="#">Modificar</a>
-
+    <div style="display:inline;">
+        <div style="text-align: left;">
+            <a type="submit" class="btn btn-primary" href="agregarMarca.aspx">--Agregar Marca--</a>
+            <a type="submit" class="btn btn-primary" href="#">--Agregar Categoria--</a>
+        </div>
+        <div style="text-align: right;">
+            <a type="submit" class="btn btn-primary" href="#">Comprar</a>
+            <a type="submit" class="btn btn-primary" href="#">Vender</a>
+        </div>
     </div>
+
 </asp:Content>
