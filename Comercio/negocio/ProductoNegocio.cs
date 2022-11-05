@@ -43,8 +43,8 @@ namespace negocio
 
 
                     prod.Tipo = new Tipo();
-                    prod.Tipo.IdTipo= (Int64)lector["IdTipo"];
-                    prod.Tipo.NombreTipo= (string)lector["Tipo"];
+                    prod.Tipo.IdTipo = (Int64)lector["IdTipo"];
+                    prod.Tipo.NombreTipo = (string)lector["Tipo"];
 
 
                     prod.Marca = new Marca();
@@ -63,6 +63,38 @@ namespace negocio
             }
 
         }
+
+
+        public void agregarConSP(Producto nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_AgregarProducto");
+                datos.setearParametro("@Nombre",nuevo.Nombre);
+                datos.setearParametro("@IdTipo",nuevo.Tipo.IdTipo);
+                datos.setearParametro("@Descripcion",nuevo.Descripcion);
+                datos.setearParametro("@IdMarca",nuevo.Marca.Id);
+                datos.setearParametro("@Stock",nuevo.stock);
+                datos.setearParametro("@StockMinimo", nuevo.stockMinimo);
+                datos.setearParametro("@Precio", nuevo.Precio);
+
+                datos.ejectutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
         /**
         public void agregar(Producto nuevo)
         {

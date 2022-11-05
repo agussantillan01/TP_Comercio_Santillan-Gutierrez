@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/miMaster.Master" AutoEventWireup="true" CodeBehind="AgregarMarcaProducto.aspx.cs" Inherits="administracion_web.AgregarMarca" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/miMaster.Master" AutoEventWireup="true" CodeBehind="agregarMarcaCategoria.aspx.cs" Inherits="administracion_web.AgregarMarca" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -22,7 +22,7 @@
                 <asp:Label Text="Marca" for="exampleInputEmail1" class="form-label" runat="server" />
                 <asp:TextBox ID="txtNombre" class="form-control" runat="server" />
             </div>
-            <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-primary" runat="server" />
+            <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
             <div>
               <%if (noHayRegistro) {%>
                 <asp:Label Text="" ID="lblAlertError" Style="color: red;" runat="server" />

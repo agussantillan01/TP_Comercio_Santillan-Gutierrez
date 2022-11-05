@@ -9,7 +9,7 @@ namespace negocio
 {
     public class MarcaNegocio
     {
-  /**      
+ 
         public List<Marca> listar(bool combobox = false)
         {
             List<Marca> lista = new List<Marca>();
@@ -20,30 +20,28 @@ namespace negocio
             {
                 Marca estado0 = new Marca();
 
-                estado0.ID = -1;
-                estado0.Nombre = "--Seleccione Marca--";
-                estado0.Estado = true;
+                estado0.Id = -1;
+                estado0.NombreMarca = "--Seleccione Marca--";
 
                 lista.Add(estado0);
             }
 
             try
             {
-                datos.setearConsulta("select ID, Descripcion, Estado from Marcas");
+                datos.setearConsulta("Select IdMarca,Nombre from marcas");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Marca aux = new Marca();
 
-                    aux.ID = (int)datos.Lector["ID"];
-                    aux.Nombre = (string)datos.Lector["Descripcion"];
-                    aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.Id = (Int64)datos.Lector["IdMarca"];
+                    aux.NombreMarca = (string)datos.Lector["Nombre"];
 
-                    if (aux.Estado != false)
-                    {
+                    
+                    
                         lista.Add(aux);
-                    }
+                    
                 }
 
                 return lista;
@@ -58,7 +56,7 @@ namespace negocio
             }
 
         }
-*/
+
         public void agregar(Marca nuevo)
         {
             AccesoDatos datos = new AccesoDatos();

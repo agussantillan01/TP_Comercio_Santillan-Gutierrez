@@ -64,7 +64,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AgregarMarcaProducto.aspx" />
+    <Content Include="agregarMarcaCategoria.aspx" />
+    <Content Include="agregarProducto.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Global.asax" />
     <Content Include="registroCompras.aspx" />
@@ -73,12 +74,19 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgregarMarcaProducto.aspx.cs">
-      <DependentUpon>AgregarMarcaProducto.aspx</DependentUpon>
+    <Compile Include="agregarMarcaCategoria.aspx.cs">
+      <DependentUpon>agregarMarcaCategoria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AgregarMarcaProducto.aspx.designer.cs">
-      <DependentUpon>AgregarMarcaProducto.aspx</DependentUpon>
+    <Compile Include="agregarMarcaCategoria.aspx.designer.cs">
+      <DependentUpon>agregarMarcaCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="agregarProducto.aspx.cs">
+      <DependentUpon>agregarProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="agregarProducto.aspx.designer.cs">
+      <DependentUpon>agregarProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

@@ -9,41 +9,37 @@ namespace negocio
 {
     public class CategoriaNegocio
     {
-/*
-        public List<Categoria> listar(bool combobox = false)
+
+        public List<Tipo> listar(bool combobox = false)
         {
-            List<Categoria> lista = new List<Categoria>();
+            List<Tipo> lista = new List<Tipo>();
 
             AccesoDatos datos = new AccesoDatos();
 
             if (combobox)
             {
-                Categoria estado0 = new Categoria();
+                Tipo estado0 = new Tipo();
 
-                estado0.ID = -1;
-                estado0.Nombre = "--Seleccione Categoría--";
-                estado0.Estado = true;
+                estado0.IdTipo = -1;
+                estado0.NombreTipo = "--Seleccione Categoría--";
 
                 lista.Add(estado0);
             }
 
             try
             {
-                datos.setearConsulta("select ID, Descripcion, Estado from Categorias");
+                datos.setearConsulta("select IdTipo, Nombre from Tipo_productos");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    Categoria aux = new Categoria();
+                    Tipo aux = new Tipo();
 
-                    aux.ID = (int)datos.Lector["ID"];
-                    aux.Nombre = (string)datos.Lector["Descripcion"];
-                    aux.Estado = (bool)datos.Lector["Estado"];
+                    aux.IdTipo = (Int64)datos.Lector["IdTipo"];
+                    aux.NombreTipo = (string)datos.Lector["Nombre"];
 
-                    if (aux.Estado != false)
-                    {
                         lista.Add(aux);
-                    }
+                    
                 }
 
                 return lista;
@@ -58,7 +54,7 @@ namespace negocio
             }
 
         }
-*/
+
 
         public void agregar(Tipo nuevo)
         {

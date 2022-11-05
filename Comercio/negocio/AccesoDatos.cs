@@ -33,10 +33,11 @@ namespace negocio
             comando.CommandText = sp;
         }
 
-        public void agregarParametro(string nombre, Object valor)
+        public void setearParametro(string nombre, object valor)
         {
-            comando.Parameters.AddWithValue(nombre,valor);
+            comando.Parameters.AddWithValue(nombre, valor);
         }
+
 
         public void ejecutarLectura()
         {
