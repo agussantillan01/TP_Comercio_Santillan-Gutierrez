@@ -13,42 +13,58 @@ namespace administracion_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                try
-                {
-                    //Completo el desplegable de Categoria
-                    CategoriaNegocio negocioTipo = new CategoriaNegocio();
-                    List<Tipo> listaTipo = negocioTipo.listar();
-                    ddlTipo.DataSource = listaTipo;
-                    ddlTipo.DataValueField = "IdTipo";
-                    ddlTipo.DataTextField = "NombreTipo";
-                    ddlTipo.DataBind();
+          txtId.Enabled = false;
+           try
+           {
+                if (!IsPostBack)
+                { 
+                   //Completo el desplegable de Categoria
+                   CategoriaNegocio negocioTipo = new CategoriaNegocio();
+                   List<Tipo> listaTipo = negocioTipo.listar();
+                   ddlTipo.DataSource = listaTipo;
+                   ddlTipo.DataValueField = "IdTipo";
+                   ddlTipo.DataTextField = "NombreTipo";
+                   ddlTipo.DataBind();
 
-                    //Completo el desplegable de marcas
-                    MarcaNegocio negocioMarca = new MarcaNegocio();
-                    List<Marca> listaMarca = negocioMarca.listar();
-                    ddlMarca.DataSource = listaMarca;
-                    ddlMarca.DataValueField = "Id";
-                    ddlMarca.DataTextField = "NombreMarca";
-                    ddlMarca.DataBind();
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
+                   //Completo el desplegable de marcas
+                   MarcaNegocio negocioMarca = new MarcaNegocio();
+                   List<Marca> listaMarca = negocioMarca.listar();
+                   ddlMarca.DataSource = listaMarca;
+                   ddlMarca.DataValueField = "Id";
+                   ddlMarca.DataTextField = "NombreMarca";
+                   ddlMarca.DataBind();
                 }
 
-            }
+
+                string id = Request.QueryString["Id"].ToString() != null ? Request.QueryString["Id"].ToString() : "";
+                if (id != "" && !IsPostBack)
+                {
+                    ProductoNegocio negocio = new ProductoNegocio();
+                    Producto seleccionado = (negocio.listar(id))[0];
+
+                    txtId.Text = id;
+                    txtNombre.Text = seleccionado.Nombre;
+                    txtDescripcion.Text = seleccionado.Descripcion;
+                    txtStock.Text = seleccionado.stock.ToString();
+                    txtStockMinimo.Text = seleccionado.stockMinimo.ToString();
+                    txtPrecio.Text = seleccionado.Precio.ToString();
+
+                    ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
+                    ddlTipo.SelectedValue = seleccionado.Tipo.IdTipo.ToString();
+
+
+                }
+
+           }
+
+           catch (Exception ex)
+           {
+
+               throw;
+           }
+
+            
         }
-
-        //public string Nombre { get; set; }
-        //public Tipo Tipo { get; set; }
-        //public string Descripcion { get; set; }
-        //public Marca Marca { get; set; }
-        //public int stock { get; set; }
-        //public int stockMinimo { get; set; }
-        //public decimal Precio { get; set; }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -65,8 +81,14 @@ namespace administracion_web
 
             nuevo.Marca = new Marca();
             nuevo.Marca.Id = Int64.Parse(ddlMarca.SelectedValue);
+            if (Request.QueryString["Id"] != null)
+            {
+                nuevo.Id =Int64.Parse(txtId.Text);
+                negocio.modificarConSP(nuevo);
 
-            negocio.agregarConSP(nuevo);
+            }
+            else 
+                negocio.agregarConSP(nuevo);
             Response.Redirect("registroProductos.aspx", false);
 
         }

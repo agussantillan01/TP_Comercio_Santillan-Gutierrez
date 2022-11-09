@@ -13,7 +13,7 @@ namespace negocio
     public class ProductoNegocio
     {
 
-        public List<Producto> listar()
+        public List<Producto> listar(string id="")
         {
             List<Producto> lista = new List<Producto>();
             SqlConnection conexion = new SqlConnection();
@@ -24,7 +24,9 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca";
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca ";
+                if (id != "")
+                comando.CommandText += "where PR.IdProducto = " + id;
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -93,7 +95,39 @@ namespace negocio
         }
 
 
+        public void modificarConSP(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_ModificaProducto");
+                datos.setearParametro("@Id", producto.Id);
+                datos.setearParametro("@Nombre", producto.Nombre);
+                datos.setearParametro("@IdTipo", producto.Tipo.IdTipo);
+                datos.setearParametro("@Descripcion", producto.Descripcion);
+                datos.setearParametro("@IdMarca", producto.Marca.Id);
+                datos.setearParametro("@Stock", producto.stock);
+                datos.setearParametro("@StockMinimo", producto.stockMinimo);
+                datos.setearParametro("@Precio", producto.Precio);
 
+
+
+
+
+
+
+                datos.ejectutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
         /**
         public void agregar(Producto nuevo)

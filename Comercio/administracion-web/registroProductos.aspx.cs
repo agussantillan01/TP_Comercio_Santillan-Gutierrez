@@ -16,5 +16,11 @@ namespace administracion_web
             dgvProductos.DataSource = negocio.listar();
             dgvProductos.DataBind();
         }
+
+        protected void dgvProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = dgvProductos.SelectedDataKey.Value.ToString();
+            Response.Redirect("agregarProducto.aspx?Id=" + id);
+        }
     }
 }

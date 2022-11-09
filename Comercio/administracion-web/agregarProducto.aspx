@@ -6,6 +6,10 @@
     <div class="row">
         <h1>Agrega un Producto!</h1>
         <div class="col">
+              <div class="mb-3">
+                <asp:Label Text="Id(*)" CssClass="form-label" runat="server" />
+                <asp:TextBox ID="txtId" CssClass="form-control" runat="server" />
+            </div>
             <div class="mb-3">
                 <asp:Label Text="Nombre(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
