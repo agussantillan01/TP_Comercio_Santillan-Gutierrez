@@ -11,9 +11,11 @@ namespace administracion_web
 {
     public partial class agregarProducto : System.Web.UI.Page
     {
+        public bool confirmaEliminacion { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
           txtId.Enabled = false;
+            confirmaEliminacion = false;
            try
            {
                 if (!IsPostBack)
@@ -36,7 +38,7 @@ namespace administracion_web
                 }
 
 
-                string id = Request.QueryString["Id"].ToString() != null ? Request.QueryString["Id"].ToString() : "";
+                string id = Request.QueryString["Id"] != null ? Request.QueryString["Id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
                     ProductoNegocio negocio = new ProductoNegocio();
@@ -91,6 +93,29 @@ namespace administracion_web
                 negocio.agregarConSP(nuevo);
             Response.Redirect("registroProductos.aspx", false);
 
+        }
+
+        protected void BtnEliminar_Click(object sender, EventArgs e)
+        {
+            confirmaEliminacion = true;
+        }
+
+        protected void btnConfirmaEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(chkConfirmarEliminacion.Checked)
+                { 
+                ProductoNegocio negocio = new ProductoNegocio();
+                negocio.eliminarConSP(int.Parse(txtId.Text));
+                    Response.Redirect("registroProductos.aspx");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Session.Add("Error al tratar de eliminar",ex);
+            }
         }
     }
 }

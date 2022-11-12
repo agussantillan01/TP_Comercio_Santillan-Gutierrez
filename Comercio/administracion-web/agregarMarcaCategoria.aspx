@@ -5,6 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="row">
+        
         <h1>Agrega una marca/Categoria!</h1>
 
         <div class="col">
@@ -19,7 +20,7 @@
             </div>
 
             <div class="mb-3">
-                <asp:Label Text="Marca" for="exampleInputEmail1" class="form-label" runat="server" />
+                <asp:Label Text="Marca o Categoria" for="exampleInputEmail1" class="form-label" runat="server" />
                 <asp:TextBox ID="txtNombre" class="form-control" runat="server" />
             </div>
             <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
