@@ -34,6 +34,28 @@
         </div>
 
         <div class="col-4"></div>
+           <asp:ScriptManager ID="ScriptManager2" runat="server"> </asp:ScriptManager>
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+
+               <ContentTemplate>      
+
+
+            <asp:Button AutoPosback=true Text="Modificar" id="BtnModificarMarca" OnClick="BtnModificarMarca_Click"  CssClass="btn btn-primary" runat="server" />
+           <%  if(Modificacion) { %>
+            <div>
+              <asp:Label Text="Marca" CssClass="form-label" runat="server" />
+                <asp:DropDownList ID="ddlMarca" CssClass="form-select" runat="server"></asp:DropDownList>
+               <div>
+           <asp:TextBox ID="TxtNuevaMarca" class="form-control" runat="server" />
+            </div>
+            <asp:Button Text="Aceptar" ID="btnAceptar" OnClick="btnAceptar_Click" CssClass="btn btn-success" runat="server" />
+            <div>
+            </div>
+             <% }  %>
+           </ContentTemplate> 
+            </asp:UpdatePanel>
+     
+          
         <div class="col-4"></div>
 
 

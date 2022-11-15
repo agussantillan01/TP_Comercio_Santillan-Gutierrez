@@ -10,21 +10,30 @@ using negocio;
 
 namespace administracion_web
 {
-     
-
+  
     public partial class AgregarMarca : System.Web.UI.Page
     {
-       public bool noHayRegistro = false;
+        public bool Modificacion { get; set; }
+        public bool noHayRegistro = false;
+                
         protected void Page_Load(object sender, EventArgs e)
         {
+            Modificacion = false;
             if (!IsPostBack) { 
             txtIdMarca.Enabled = false;
             ddlProductoMarca.Items.Add("--Seleccione un Item--");
             ddlProductoMarca.Items.Add("Marca");
             ddlProductoMarca.Items.Add("Categoria");
+
+                MarcaNegocio negocioMarca = new MarcaNegocio();
+                List<Marca> listaMarca = negocioMarca.listar();
+                ddlMarca.DataSource = listaMarca;
+                ddlMarca.DataValueField = "Id";
+                ddlMarca.DataTextField = "NombreMarca";
+                ddlMarca.DataBind();
             }
 
-
+ 
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -33,6 +42,7 @@ namespace administracion_web
             string Seleccionado = ddlProductoMarca.SelectedItem.ToString();
             if (Seleccionado== "Marca" && txtNombre.Text != "")
             {
+
                 Response.Redirect("registroProductos.aspx", false);
                 MarcaNegocio negocio = new MarcaNegocio();
                 Marca marca = new Marca();
@@ -52,6 +62,25 @@ namespace administracion_web
                 noHayRegistro = true;
                 lblAlertError.Text = "Recuerde llenar los campos!";
             }
+
+        }
+
+        protected void BtnModificarMarca_Click(object sender, EventArgs e)
+        {
+            Modificacion = true;
+        }
+
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+           
+
+            MarcaNegocio negocio = new MarcaNegocio();
+            Marca marca = new Marca();
+            marca.NombreMarca = TxtNuevaMarca.Text;
+            negocio.modificarConSP(marca, int.Parse(ddlMarca.SelectedValue));
+   
+            Response.Redirect("registroProductos.aspx", false);
+
 
         }
     }

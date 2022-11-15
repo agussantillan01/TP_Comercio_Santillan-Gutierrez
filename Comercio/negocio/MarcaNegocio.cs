@@ -78,15 +78,16 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-/*
-        public void modificar(Marca modificar)
+        public void modificarConSP(Marca Marca, int Id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
+                datos.setearProcedimiento("SP_ModificaMarca");
+                datos.setearParametro("@Nombre", Marca.NombreMarca);
+                datos.setearParametro("@IdMarca", Id);
 
-                datos.setearConsulta(
-                    "update Marcas set Descripcion = '" + modificar.Nombre + "'where ID = " + modificar.ID);
+
 
                 datos.ejectutarAccion();
 
@@ -100,32 +101,54 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        /*
+                public void modificar(Marca modificar)
+                {
+                    AccesoDatos datos = new AccesoDatos();
+                    try
+                    {
 
-        public void eliminar(int ID)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                Marca aux = new Marca();
+                        datos.setearConsulta(
+                            "update Marcas set Descripcion = '" + modificar.Nombre + "'where ID = " + modificar.ID);
 
-                aux.ID = ID;
-                aux.Estado = false;
+                        datos.ejectutarAccion();
 
-                datos.setearConsulta(
-                    "update Marcas set Estado = 0 where ID = " + aux.ID);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        datos.cerrarConexion();
+                    }
+                }
 
-                datos.ejectutarAccion();
+                public void eliminar(int ID)
+                {
+                    AccesoDatos datos = new AccesoDatos();
+                    try
+                    {
+                        Marca aux = new Marca();
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }*/
+                        aux.ID = ID;
+                        aux.Estado = false;
+
+                        datos.setearConsulta(
+                            "update Marcas set Estado = 0 where ID = " + aux.ID);
+
+                        datos.ejectutarAccion();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        datos.cerrarConexion();
+                    }
+                }*/
     }
 
 }

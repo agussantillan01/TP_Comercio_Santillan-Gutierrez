@@ -73,3 +73,58 @@ IdUsuario bigint not null foreign key references Usuarios(IdUsuario),
 Cantidad smallint not null,
 Precio money not null
 )
+
+go
+Create Procedure SP_ModificaProducto(
+@Id bigint, 
+@Nombre varchar (100),
+@IdTipo bigint,
+@Descripcion varchar (300),
+@IdMarca bigint,
+@Stock int, 
+@StockMinimo smallint, 
+@Precio money
+)
+as
+Begin
+update Productos set 
+nombre = @nombre,
+Descripcion = @descripcion,
+IdMarca = @IDMarca,
+IdTipo = @IdTipo,
+Precio = @precio,
+Stock = @stock, 
+StockMinimo = @StockMinimo
+Where IdProducto = @Id
+end
+
+go
+create procedure SP_AgregarProducto(
+	@Nombre varchar(100),
+	@IdTipo bigint,
+	@Descripcion varchar(300),
+	@IdMarca bigint,
+	@Stock int,
+	@StockMinimo smallint,
+	@Precio money
+)as
+Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@StockMinimo,@Precio,1)
+
+go
+
+create procedure SP_ValidacionUsuario (
+	@Email varchar (100),
+	@Contraseña varchar(100)
+)as 
+BEGIN
+Select U.IdUsuario from Usuarios U
+Where U.Email = @Email AND U.Contraseña = @Contraseña
+END
+
+
+go
+Create Procedure SP_EliminaProducto(@Id bigint)
+as
+Begin
+delete Productos Where IdProducto = @Id
+end

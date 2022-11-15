@@ -17,6 +17,8 @@
             <asp:BoundField HeaderText="Stock Min." DataField="StockMinimo" />
             <asp:BoundField HeaderText="$" DataField="Precio" />
             <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
+          
+
         </Columns>
     </asp:GridView>
 
