@@ -64,22 +64,32 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="agregarMarcaCategoria.aspx" />
+    <Content Include="agregarCategoria.aspx" />
+    <Content Include="agregarMarca.aspx" />
     <Content Include="agregarProducto.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="registroCategorias.aspx" />
     <Content Include="registroCompras.aspx" />
+    <Content Include="registroMarcas.aspx" />
     <Content Include="registroProductos.aspx" />
     <Content Include="registroVentas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="agregarMarcaCategoria.aspx.cs">
-      <DependentUpon>agregarMarcaCategoria.aspx</DependentUpon>
+    <Compile Include="agregarCategoria.aspx.cs">
+      <DependentUpon>agregarCategoria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="agregarMarcaCategoria.aspx.designer.cs">
-      <DependentUpon>agregarMarcaCategoria.aspx</DependentUpon>
+    <Compile Include="agregarCategoria.aspx.designer.cs">
+      <DependentUpon>agregarCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="agregarMarca.aspx.cs">
+      <DependentUpon>agregarMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="agregarMarca.aspx.designer.cs">
+      <DependentUpon>agregarMarca.aspx</DependentUpon>
     </Compile>
     <Compile Include="agregarProducto.aspx.cs">
       <DependentUpon>agregarProducto.aspx</DependentUpon>
@@ -105,12 +115,26 @@
     <Compile Include="masterLogin.Master.designer.cs">
       <DependentUpon>masterLogin.Master</DependentUpon>
     </Compile>
+    <Compile Include="registroCategorias.aspx.cs">
+      <DependentUpon>registroCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="registroCategorias.aspx.designer.cs">
+      <DependentUpon>registroCategorias.aspx</DependentUpon>
+    </Compile>
     <Compile Include="registroCompras.aspx.cs">
       <DependentUpon>registroCompras.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="registroCompras.aspx.designer.cs">
       <DependentUpon>registroCompras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="registroMarcas.aspx.cs">
+      <DependentUpon>registroMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="registroMarcas.aspx.designer.cs">
+      <DependentUpon>registroMarcas.aspx</DependentUpon>
     </Compile>
     <Compile Include="registroProductos.aspx.cs">
       <DependentUpon>registroProductos.aspx</DependentUpon>

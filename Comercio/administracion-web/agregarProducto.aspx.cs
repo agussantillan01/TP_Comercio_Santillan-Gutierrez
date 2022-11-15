@@ -15,14 +15,14 @@ namespace administracion_web
         protected void Page_Load(object sender, EventArgs e)
         {
           txtId.Enabled = false;
-            confirmaEliminacion = false;
+          confirmaEliminacion = false;
            try
            {
                 if (!IsPostBack)
                 { 
                    //Completo el desplegable de Categoria
                    CategoriaNegocio negocioTipo = new CategoriaNegocio();
-                   List<Tipo> listaTipo = negocioTipo.listar();
+                   List<Tipo> listaTipo = negocioTipo.listarSP();
                    ddlTipo.DataSource = listaTipo;
                    ddlTipo.DataValueField = "IdTipo";
                    ddlTipo.DataTextField = "NombreTipo";
@@ -30,7 +30,7 @@ namespace administracion_web
 
                    //Completo el desplegable de marcas
                    MarcaNegocio negocioMarca = new MarcaNegocio();
-                   List<Marca> listaMarca = negocioMarca.listar();
+                   List<Marca> listaMarca = negocioMarca.listarSP();
                    ddlMarca.DataSource = listaMarca;
                    ddlMarca.DataValueField = "Id";
                    ddlMarca.DataTextField = "NombreMarca";
@@ -43,6 +43,8 @@ namespace administracion_web
                 {
                     ProductoNegocio negocio = new ProductoNegocio();
                     Producto seleccionado = (negocio.listar(id))[0];
+                    
+                    
 
                     txtId.Text = id;
                     txtNombre.Text = seleccionado.Nombre;
@@ -89,8 +91,11 @@ namespace administracion_web
                 negocio.modificarConSP(nuevo);
 
             }
-            else 
+            else
+            {
                 negocio.agregarConSP(nuevo);
+            }
+               
             Response.Redirect("registroProductos.aspx", false);
 
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,41 +10,108 @@ namespace negocio
 {
     public class MarcaNegocio
     {
- 
-        public List<Marca> listar(bool combobox = false)
+
+        //public List<Marca> listar(bool combobox = false)
+        //{
+        //    List<Marca> lista = new List<Marca>();
+
+        //    AccesoDatos datos = new AccesoDatos();
+
+        //    if (combobox)
+        //    {
+        //        Marca estado0 = new Marca();
+
+        //        estado0.Id = -1;
+        //        estado0.NombreMarca = "--Seleccione Marca--";
+
+        //        lista.Add(estado0);
+        //    }
+
+        //    try
+        //    {
+        //        datos.setearConsulta("Select IdMarca,Nombre from marcas");
+        //        datos.ejecutarLectura();
+
+        //        while (datos.Lector.Read())
+        //        {
+        //            Marca aux = new Marca();
+
+        //            aux.Id = (Int64)datos.Lector["IdMarca"];
+        //            aux.NombreMarca = (string)datos.Lector["Nombre"];
+
+
+
+        //                lista.Add(aux);
+
+        //        }
+
+        //        return lista;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.cerrarConexion();
+        //    }
+
+        //}
+
+        public List<Marca> listar (string id = "")
         {
             List<Marca> lista = new List<Marca>();
-
-            AccesoDatos datos = new AccesoDatos();
-
-            if (combobox)
-            {
-                Marca estado0 = new Marca();
-
-                estado0.Id = -1;
-                estado0.NombreMarca = "--Seleccione Marca--";
-
-                lista.Add(estado0);
-            }
+            SqlConnection conexion = new SqlConnection();
+            SqlCommand comando = new SqlCommand();
+            SqlDataReader lector;
 
             try
             {
-                datos.setearConsulta("Select IdMarca,Nombre from marcas");
-                datos.ejecutarLectura();
+                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
+                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandText = "Select IdMarca, Nombre from Marcas ";
+                if (id != "")
+                    comando.CommandText += "where IdMarca= " + id;
+                comando.Connection = conexion;
 
+                conexion.Open();
+                lector = comando.ExecuteReader();
+
+                while (lector.Read())
+                {
+                    Marca marca = new Marca();
+                    marca.Id = (Int64)lector["IdMarca"];
+                    marca.NombreMarca = (string)lector["Nombre"];
+
+                    lista.Add(marca);
+                }
+
+                conexion.Close();
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public List<Marca> listarSP()
+        {
+            List<Marca> lista = new List<Marca>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_ListaMarcas");
+
+                datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Marca aux = new Marca();
-
                     aux.Id = (Int64)datos.Lector["IdMarca"];
                     aux.NombreMarca = (string)datos.Lector["Nombre"];
-
-                    
-                    
-                        lista.Add(aux);
-                    
+                    lista.Add(aux);
                 }
-
                 return lista;
             }
             catch (Exception ex)
@@ -54,7 +122,6 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
-
         }
 
         public void agregar(Marca nuevo)
@@ -78,14 +145,15 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public void modificarConSP(Marca Marca, int Id)
+        public void modificarConSP(Marca marca)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearProcedimiento("SP_ModificaMarca");
-                datos.setearParametro("@Nombre", Marca.NombreMarca);
-                datos.setearParametro("@IdMarca", Id);
+                datos.setearParametro("@IdMarca", marca.Id);
+                datos.setearParametro("@Nombre", marca.NombreMarca);
+
 
 
 

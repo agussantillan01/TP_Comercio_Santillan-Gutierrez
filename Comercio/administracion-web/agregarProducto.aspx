@@ -1,17 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/miMaster.Master" AutoEventWireup="true" CodeBehind="agregarProducto.aspx.cs" Inherits="administracion_web.agregarProducto" %>
-  
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
-
-
     <div class="row">
         <h1>Agrega un Producto!</h1>
         <div class="col">
-              <div class="mb-3">
+            <div class="mb-3">
                 <asp:Label Text="Id(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox ID="txtId" CssClass="form-control" runat="server" />
             </div>
@@ -44,23 +41,22 @@
                 <asp:TextBox ID="txtPrecio" CssClass="form-control" runat="server" />
             </div>
 
-            <asp:Button Text="Agregar" id="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
-         <asp:ScriptManager ID="ScriptManager1" runat="server"> </asp:ScriptManager>
+            <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 
-               <ContentTemplate>      
-
-
-            <asp:Button AutoPosback=true Text="Eliminar" id="BtnEliminar" OnClick="BtnEliminar_Click"  CssClass="btn btn-danger" runat="server" />
-           <%  if(confirmaEliminacion) { %>
-            <div>
-                <asp:CheckBox AutoPosback=true Text="Confirmar eliminacion" ID="chkConfirmarEliminacion" runat="server" />
-                <asp:Button Text="Eliminar" id="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-danger" runat="server" />
-            </div>
-             <% }  %>
-           </ContentTemplate> 
+                <ContentTemplate>
+                    <asp:Button AutoPosback="true" Text="Eliminar" ID="BtnEliminar" OnClick="BtnEliminar_Click" CssClass="btn btn-danger" runat="server" />
+                    <%  if (confirmaEliminacion)
+                        { %>
+                    <div>
+                        <asp:CheckBox AutoPosback="true" Text="Confirmar eliminacion" ID="chkConfirmarEliminacion" runat="server" />
+                        <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-danger" runat="server" />
+                    </div>
+                    <% }  %>
+                </ContentTemplate>
             </asp:UpdatePanel>
-     </div>
+        </div>
 
         <div class="col-2"></div>
 
@@ -68,5 +64,5 @@
 
 
     </div>
-    </asp:Content>
+</asp:Content>
 
