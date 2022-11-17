@@ -71,7 +71,7 @@ namespace administracion_web
                     negocio.agregar(marca);
                 }
 
-                Response.Redirect("registroCategorias.aspx", false);
+                
                 
             }
             else
@@ -79,6 +79,7 @@ namespace administracion_web
                 noHayRegistro = true;
                 lblAlertError.Text = "Recuerde llenar los campos!";
             }
+            Response.Redirect("registroMarcas.aspx", false);
 
         }
     }

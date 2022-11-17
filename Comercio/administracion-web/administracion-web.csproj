@@ -67,6 +67,7 @@
     <Content Include="agregarCategoria.aspx" />
     <Content Include="agregarMarca.aspx" />
     <Content Include="agregarProducto.aspx" />
+    <Content Include="creaCuenta.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Global.asax" />
     <Content Include="registroCategorias.aspx" />
@@ -97,6 +98,13 @@
     </Compile>
     <Compile Include="agregarProducto.aspx.designer.cs">
       <DependentUpon>agregarProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="creaCuenta.aspx.cs">
+      <DependentUpon>creaCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="creaCuenta.aspx.designer.cs">
+      <DependentUpon>creaCuenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

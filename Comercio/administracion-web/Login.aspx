@@ -30,6 +30,7 @@
                 <label class="form-check-label" for="exampleCheck1">Administrador</label>
             </div>
             <a class="btn btn-primary" href="registroProductos.aspx" role="button">Ingresar</a>
+            <a href="creaCuenta.aspx">Crea una cuenta</a>
             <%--<asp:Button Text="Ingresar" id="btnIngresar" onclick="btnIngresar_Click" CssClass="btn btn-primary" runat="server" />--%>
         </div>
                 

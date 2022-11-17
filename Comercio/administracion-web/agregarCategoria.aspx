@@ -1,10 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/miMaster.Master" AutoEventWireup="true" CodeBehind="agregarCategoria.aspx.cs" Inherits="administracion_web.agregarCategoria" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
-
-        <h1>Agrega una Categoria!</h1>
+        <%if (Request.QueryString["IdCategoria"] != null)
+            {%>
+        <h1>Modificacion</h1>
+        <%}
+            else
+            {%>
+        <h1>Agregue una Categoria!</h1>
+        <% }%>
+        
 
         <div class="col">
             <div class="mb-3">
@@ -21,9 +29,10 @@
                 <asp:Label Text="Marca o Categoria" for="exampleInputEmail1" class="form-label" runat="server" />
                 <asp:TextBox ID="txtNombre" class="form-control" runat="server" />
             </div>
-            <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
+            <asp:Button Text="Aceptar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
             <div>
-                <%if (noHayRegistro){%>
+                <%if (noHayRegistro)
+                    {%>
                 <asp:Label Text="" ID="lblAlertError" Style="color: red;" runat="server" />
                 <%}%>
             </div>

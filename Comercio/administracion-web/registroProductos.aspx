@@ -4,8 +4,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <hr />
-
-
+    <div style="text-align:center;">
+        <a type="submit" class="btn btn-light" href="#">Clientes Existentes</a>
+        <a type="submit" class="btn btn-light" href="#">Proveedores</a>
+    </div>
+        
+   
+    <hr />
+    <br />
     <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false"
             OnClass="table" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
         <Columns>

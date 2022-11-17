@@ -6,7 +6,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="row">
-        <h1>Agrega un Producto!</h1>
+        <%if(Request.QueryString["Id"] != null) {%>
+        <h1>Modifica/Elimina</h1>
+        <%} else
+            {%>
+        <h1>Agregue Producto</h1>
+            <%}%>
         <div class="col">
             <div class="mb-3">
                 <asp:Label Text="Id(*)" CssClass="form-label" runat="server" />
@@ -41,7 +46,7 @@
                 <asp:TextBox ID="txtPrecio" CssClass="form-control" runat="server" />
             </div>
 
-            <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
+            <asp:Button Text="Aceptar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 
