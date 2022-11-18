@@ -51,7 +51,8 @@ go
 Create table Clientes(
 IdCliente bigint not null identity(1,1) primary key, 
 Nombre varchar (100) not null, 
-Apellido varchar (100) not null, 
+Apellido varchar (100) not null,
+Email varchar(100) null,
 FechaNacimiento datetime not null,
 Estado bit default 1
 )
@@ -73,6 +74,7 @@ IdUsuario bigint not null foreign key references Usuarios(IdUsuario),
 Cantidad smallint not null,
 Precio money not null
 )
+
 
 go
 Create Procedure SP_ModificaProducto(
@@ -110,6 +112,7 @@ create procedure SP_AgregarProducto(
 )as
 Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@StockMinimo,@Precio,1)
 
+
 go
 
 create procedure SP_ValidacionUsuario (
@@ -121,10 +124,60 @@ Select U.IdUsuario from Usuarios U
 Where U.Email = @Email AND U.Contraseña = @Contraseña
 END
 
-
 go
 Create Procedure SP_EliminaProducto(@Id bigint)
 as
 Begin
 delete Productos Where IdProducto = @Id
 end
+go 
+--MODIFICA MARCA
+Create Procedure SP_ModificaMarca(
+@IdMarca bigint,
+@Nombre varchar (100)
+)
+as
+Begin
+update Marcas set nombre = @Nombre
+Where IdMarca = @IdMarca
+end
+go 
+
+--MODIFICA CATEGORIA 
+
+
+Create Procedure SP_ModificaCategoria(
+	@IdCategoria bigint, 
+	@Nombre varchar (100)
+) as 
+begin 
+update Tipo_Productos set Nombre = @Nombre
+Where IdTipo = @IdCategoria
+end
+
+
+
+--LISTA MARCAS
+
+go
+Create Procedure SP_ListaMarcas as 
+begin 
+Select IdMarca,Nombre from Marcas  
+end 
+
+
+go
+
+--LISTA CATEGORIAS
+Create Procedure SP_ListaCategorias as 
+begin 
+Select IdTipo,Nombre from Tipo_Productos
+end
+Go
+-- LISTA CLIENTES 
+Create Procedure SP_ListaClientes As 
+BEGIN 
+Select IdCliente, Nombre, Apellido,Email, FechaNacimiento from Clientes  
+END 
+
+

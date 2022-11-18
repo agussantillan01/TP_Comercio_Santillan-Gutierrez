@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <hr />
     <div style="text-align:center;">
-        <a type="submit" class="btn btn-light" href="#">Clientes Existentes</a>
+        <a type="submit" class="btn btn-light" href="registroClientes.aspx">Clientes Existentes</a>
         <a type="submit" class="btn btn-light" href="#">Proveedores</a>
     </div>
         

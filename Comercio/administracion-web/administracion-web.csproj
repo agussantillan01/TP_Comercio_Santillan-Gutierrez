@@ -71,6 +71,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Global.asax" />
     <Content Include="registroCategorias.aspx" />
+    <Content Include="registroClientes.aspx" />
     <Content Include="registroCompras.aspx" />
     <Content Include="registroMarcas.aspx" />
     <Content Include="registroProductos.aspx" />
@@ -129,6 +130,13 @@
     </Compile>
     <Compile Include="registroCategorias.aspx.designer.cs">
       <DependentUpon>registroCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="registroClientes.aspx.cs">
+      <DependentUpon>registroClientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="registroClientes.aspx.designer.cs">
+      <DependentUpon>registroClientes.aspx</DependentUpon>
     </Compile>
     <Compile Include="registroCompras.aspx.cs">
       <DependentUpon>registroCompras.aspx</DependentUpon>
