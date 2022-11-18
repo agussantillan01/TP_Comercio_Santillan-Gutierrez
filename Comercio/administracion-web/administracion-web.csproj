@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="agregarCategoria.aspx" />
+    <Content Include="agregarProveedores.aspx" />
     <Content Include="agregarCliente.aspx" />
     <Content Include="agregarMarca.aspx" />
     <Content Include="agregarProducto.aspx" />
@@ -72,6 +73,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Global.asax" />
     <Content Include="registroCategorias.aspx" />
+    <Content Include="registroProveedores.aspx" />
     <Content Include="registroClientes.aspx" />
     <Content Include="registroCompras.aspx" />
     <Content Include="registroMarcas.aspx" />
@@ -86,6 +88,13 @@
     </Compile>
     <Compile Include="agregarCategoria.aspx.designer.cs">
       <DependentUpon>agregarCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="agregarProveedores.aspx.cs">
+      <DependentUpon>agregarProveedores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="agregarProveedores.aspx.designer.cs">
+      <DependentUpon>agregarProveedores.aspx</DependentUpon>
     </Compile>
     <Compile Include="agregarCliente.aspx.cs">
       <DependentUpon>agregarCliente.aspx</DependentUpon>
@@ -138,6 +147,13 @@
     </Compile>
     <Compile Include="registroCategorias.aspx.designer.cs">
       <DependentUpon>registroCategorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="registroProveedores.aspx.cs">
+      <DependentUpon>registroProveedores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="registroProveedores.aspx.designer.cs">
+      <DependentUpon>registroProveedores.aspx</DependentUpon>
     </Compile>
     <Compile Include="registroClientes.aspx.cs">
       <DependentUpon>registroClientes.aspx</DependentUpon>
@@ -207,6 +223,9 @@
       <Project>{052c838a-3e11-4ea2-acbc-b228148ede5f}</Project>
       <Name>negocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

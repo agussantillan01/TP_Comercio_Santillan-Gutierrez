@@ -6,7 +6,7 @@
     <hr />
     <div style="text-align:center;">
         <a type="submit" class="btn btn-light" href="registroClientes.aspx">Clientes Existentes</a>
-        <a type="submit" class="btn btn-light" href="#">Proveedores</a>
+        <a type="submit" class="btn btn-light" href="registroProveedores.aspx">Proveedores</a>
     </div>
         
    

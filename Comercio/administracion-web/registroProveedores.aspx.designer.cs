@@ -11,16 +11,16 @@ namespace administracion_web
 {
 
 
-    public partial class paginaProductos
+    public partial class registroProveedores
     {
 
         /// <summary>
-        /// Control dgvProductos.
+        /// Control dgvProveedores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvProductos;
+        protected global::System.Web.UI.WebControls.GridView dgvProveedores;
     }
 }
