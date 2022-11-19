@@ -10,6 +10,7 @@
                 <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                 <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
                 <asp:BoundField HeaderText="Email" DataField="Email" />
+                <asp:BoundField HeaderText="Nacimiento" DataField="FechaNacimiento" />
                 <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
             </Columns>
         </asp:GridView>

@@ -19,7 +19,8 @@ namespace administracion_web
 
         protected void dgvClientes_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            string idCliente = dgvClientes.SelectedDataKey.Value.ToString();
+            Response.Redirect("agregarCliente.aspx?IdCliente="+ idCliente, false);
         }
     }
 }

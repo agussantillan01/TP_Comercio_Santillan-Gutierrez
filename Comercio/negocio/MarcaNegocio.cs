@@ -58,6 +58,7 @@ namespace negocio
 
         //}
 
+        
         public List<Marca> listar (string id = "")
         {
             List<Marca> lista = new List<Marca>();
@@ -96,6 +97,7 @@ namespace negocio
 
         }
 
+        //Devuelve lista completa de Marcas
         public List<Marca> listarSP()
         {
             List<Marca> lista = new List<Marca>();

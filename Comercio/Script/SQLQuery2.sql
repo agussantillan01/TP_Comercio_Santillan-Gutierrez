@@ -41,10 +41,11 @@ Cantidad int not null
 )
 go
 Create table Proveedores(
-IdProveedor bigint not null identity(1,1) primary key,
-razonSocial varchar (200) not null, 
+IdProveedores bigint not null identity(1,1) primary key,
+Nombre varchar (100) not null,
+Cuil varchar (200) not null, 
 Domicilio varchar(200) not null, 
-IdProducto bigint not null foreign key references Productos (IdProducto), 
+Email varchar(100) null, 
 Estado bit not null default 1
 )
 go
@@ -53,7 +54,7 @@ IdCliente bigint not null identity(1,1) primary key,
 Nombre varchar (100) not null, 
 Apellido varchar (100) not null,
 Email varchar(100) null,
-FechaNacimiento date not null,
+FechaNacimiento datetime not null,
 Estado bit default 1
 )
 go
@@ -69,15 +70,16 @@ go
 Create table Compra_movimiento(
 IdCompraMovimiento bigint not null identity (1,1) primary key, 
 IdProducto bigint not null foreign key references Productos (IdProducto),
-IdProveedor bigint not null foreign key references Proveedores (IdProveedor),
+IdProveedores bigint not null foreign key references Proveedores (IdProveedores),
 IdUsuario bigint not null foreign key references Usuarios(IdUsuario),
 Cantidad smallint not null,
 Precio money not null
 )
 
 
---*********PROCEDICIMIENTOS ALMACENADOS*********
+						--*********PROCEDICIMIENTOS ALMACENADOS*********
 
+--MODIFICA PRODUCTOS
 go
 Create Procedure SP_ModificaProducto(
 @Id bigint, 
@@ -102,6 +104,8 @@ StockMinimo = @StockMinimo
 Where IdProducto = @Id
 end
 
+
+--AGREGA PRODUCTOS
 go
 create procedure SP_AgregarProducto(
 	@Nombre varchar(100),
@@ -117,6 +121,7 @@ Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@Sto
 
 go
 
+-- VALIDA USUARIO  => CHEQUEAR
 create procedure SP_ValidacionUsuario (
 	@Email varchar (100),
 	@Contraseña varchar(100)
@@ -126,6 +131,9 @@ Select U.IdUsuario from Usuarios U
 Where U.Email = @Email AND U.Contraseña = @Contraseña
 END
 
+
+
+--ELIMINA PRODUCTO
 go
 Create Procedure SP_EliminaProducto(@Id bigint)
 as
@@ -133,6 +141,8 @@ Begin
 delete Productos Where IdProducto = @Id
 end
 go 
+
+
 --MODIFICA MARCA
 Create Procedure SP_ModificaMarca(
 @IdMarca bigint,
@@ -146,8 +156,6 @@ end
 go 
 
 --MODIFICA CATEGORIA 
-
-
 Create Procedure SP_ModificaCategoria(
 	@IdCategoria bigint, 
 	@Nombre varchar (100)
@@ -156,7 +164,6 @@ begin
 update Tipo_Productos set Nombre = @Nombre
 Where IdTipo = @IdCategoria
 end
-
 
 
 --LISTA MARCAS
@@ -184,7 +191,7 @@ END
 
 --AGREGAR CLIENTES
 Go 
-create procedure SP_AgregarCliente(
+Create Procedure SP_AgregarCliente(
 	@Nombre varchar(100),
 	@Apellido varchar(100),
 	@Email varchar(100),
@@ -193,3 +200,37 @@ create procedure SP_AgregarCliente(
 BEGIN
 Insert into Clientes (Nombre,Apellido,Email,FechaNacimiento) values (@Nombre,@Apellido, @Email,@FechaNacimiento)
 END
+
+GO
+-- LISTA PROVEEDORES
+Create Procedure SP_ListaProveedores As 
+BEGIN 
+Select IdProveedores, Nombre, Domicilio,Email, Cuil from Proveedores  
+END 
+
+--AGREGAR Proveedores
+Go 
+create Procedure SP_AgregarProveedores(
+	@Nombre varchar(100),
+	@Domicilio varchar(100),
+	@Email varchar(100),
+	@Cuil varchar(100)
+)as
+BEGIN
+Insert into Proveedores (Nombre,Domicilio,Email,Cuil) values (@Nombre,@Domicilio, @Email,@Cuil)
+END
+
+Go
+--MODIFICA CLIENTE
+Alter Procedure SP_ModificaCliente(
+	@IdCliente bigint,
+	@Nombre varchar(100),
+	@Apellido varchar(100),
+	@Email varchar(100),
+	@FechaNacimiento datetime
+)as
+BEGIN
+Update Clientes set Nombre=@Nombre,Apellido=@Apellido, Email=@Email,FechaNacimiento=@FechaNacimiento
+Where IdCliente=@IdCliente
+END
+
