@@ -233,4 +233,18 @@ BEGIN
 Update Clientes set Nombre=@Nombre,Apellido=@Apellido, Email=@Email,FechaNacimiento=@FechaNacimiento
 Where IdCliente=@IdCliente
 END
+Go
+--MODIFICA PROVEEDOR
+Create Procedure SP_ModificaProveedor(
+	@IdProveedor bigint,
+	@Nombre varchar(100),
+	@Cuil varchar (200),
+	@Domicilio varchar(200),
+	@Email varchar(100)
+	
+)as
+BEGIN
+Update Proveedores set Nombre=@Nombre,Cuil=@Cuil,Domicilio=@Domicilio, Email=@Email
+Where IdProveedor=@IdProveedor
+END
 

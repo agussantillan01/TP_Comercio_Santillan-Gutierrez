@@ -111,11 +111,6 @@ namespace negocio
                 datos.setearParametro("@Precio", producto.Precio);
 
 
-
-
-
-
-
                 datos.ejectutarAccion();
 
             }

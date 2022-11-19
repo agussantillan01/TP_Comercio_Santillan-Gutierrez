@@ -31,7 +31,7 @@
             <a type="submit" class="btn btn-primary" href="agregarProducto.aspx">--Agregar Producto--</a>
         </div>
         <div style="text-align: right;">
-            <a type="submit" class="btn btn-primary" href="#">Comprar</a>
+            <a type="submit" class="btn btn-primary" href="compras.aspx">Comprar</a>
             <a type="submit" class="btn btn-primary" href="#">Vender</a>
         </div>
     
