@@ -30,7 +30,7 @@ namespace administracion_web
                     txtNombre.Text = seleccionado.Nombre;
                     txtApellido.Text = seleccionado.Apellido;
                     txtEmail.Text = seleccionado.Email;
-                    txtFechaNacimiento.Text = "HOLAAAA";
+                    txtFechaNacimiento.Text = seleccionado.FechaNacimiento.ToShortDateString();
                 }
 
             }

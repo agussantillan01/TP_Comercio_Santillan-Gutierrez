@@ -12,14 +12,15 @@ namespace administracion_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProveedoresNegocio negocio = new ProveedoresNegocio();
+            ProveedorNegocio negocio = new ProveedorNegocio();
             dgvProveedores.DataSource = negocio.listarSP();
             dgvProveedores.DataBind();
         }
 
         protected void dgvProveedores_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            string idProveedor = dgvProveedores.SelectedDataKey.Value.ToString();
+            Response.Redirect("agregarProveedores.aspx?IdProveedor=" + idProveedor, false);
         }
     }
 }

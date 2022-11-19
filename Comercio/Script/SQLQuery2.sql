@@ -41,7 +41,7 @@ Cantidad int not null
 )
 go
 Create table Proveedores(
-IdProveedores bigint not null identity(1,1) primary key,
+IdProveedor bigint not null identity(1,1) primary key,
 Nombre varchar (100) not null,
 Cuil varchar (200) not null, 
 Domicilio varchar(200) not null, 
@@ -70,7 +70,7 @@ go
 Create table Compra_movimiento(
 IdCompraMovimiento bigint not null identity (1,1) primary key, 
 IdProducto bigint not null foreign key references Productos (IdProducto),
-IdProveedores bigint not null foreign key references Proveedores (IdProveedores),
+IdProveedores bigint not null foreign key references Proveedores (IdProveedor),
 IdUsuario bigint not null foreign key references Usuarios(IdUsuario),
 Cantidad smallint not null,
 Precio money not null
@@ -205,7 +205,7 @@ GO
 -- LISTA PROVEEDORES
 Create Procedure SP_ListaProveedores As 
 BEGIN 
-Select IdProveedores, Nombre, Domicilio,Email, Cuil from Proveedores  
+Select IdProveedor, Nombre, Domicilio,Email, Cuil from Proveedores  
 END 
 
 --AGREGAR Proveedores
@@ -222,7 +222,7 @@ END
 
 Go
 --MODIFICA CLIENTE
-Alter Procedure SP_ModificaCliente(
+Create Procedure SP_ModificaCliente(
 	@IdCliente bigint,
 	@Nombre varchar(100),
 	@Apellido varchar(100),

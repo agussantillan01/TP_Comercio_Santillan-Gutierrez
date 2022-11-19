@@ -3,6 +3,7 @@ using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,7 +17,22 @@ namespace administracion_web
             try
             {
                 if (!IsPostBack)
+                {
                     txtIdProveedores.Enabled = false;
+                }
+                string idProveedor = Request.QueryString["IdProveedor"] != null ? Request.QueryString["IdProveedor"].ToString() : "";
+                if (idProveedor != "" && !IsPostBack)
+                {
+                    ProveedorNegocio negocio = new ProveedorNegocio();
+                    Proveedor seleccionado = (negocio.listar(idProveedor))[0];
+
+                    txtIdProveedores.Text = idProveedor;
+                    txtNombre.Text = seleccionado.Nombre;
+                    txtEmail.Text = seleccionado.Email;
+                    txtCuil.Text = seleccionado.Cuil;
+                    txtDomicilio.Text = seleccionado.Domicilio;
+                    
+                }
             }
             catch (Exception ex)
             {
@@ -33,14 +49,25 @@ namespace administracion_web
         {
             if (txtNombre.Text != "" && txtDomicilio.Text != "" && txtCuil .Text!= "")
             {
-                Response.Redirect("registroProveedores.aspx", false);
-                ProveedoresNegocio negocio = new ProveedoresNegocio();
-                Proveedores proveedores = new Proveedores();
+                
+                ProveedorNegocio negocio = new ProveedorNegocio();
+                Proveedor proveedores = new Proveedor();
                 proveedores.Nombre = txtNombre.Text;
                 proveedores.Domicilio = txtDomicilio.Text;
                 proveedores.Email = txtEmail.Text;
                 proveedores.Cuil = txtCuil.Text;
-                negocio.agregarConSP(proveedores);
+                if (Request.QueryString["IdProveedor"] != null)
+                {
+                    proveedores.Id = Int64.Parse(txtIdProveedores.Text);
+                    negocio.modificarConSP(proveedores);
+                }
+                else
+                {
+                    negocio.agregarConSP(proveedores);
+                }
+
+                Response.Redirect("registroProveedores.aspx", false);
+
 
 
             }
