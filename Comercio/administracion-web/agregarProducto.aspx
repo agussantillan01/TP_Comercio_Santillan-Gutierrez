@@ -67,7 +67,7 @@
 
         <div class="col-4"></div>
 
-
+        <asp:Label Text="" ID="lblError" style="color:red;"  runat="server" />
     </div>
 </asp:Content>
 

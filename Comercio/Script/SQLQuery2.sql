@@ -71,7 +71,6 @@ Create table Compra_movimiento(
 IdCompraMovimiento bigint not null identity (1,1) primary key, 
 IdProducto bigint not null foreign key references Productos (IdProducto),
 IdProveedores bigint not null foreign key references Proveedores (IdProveedor),
-IdUsuario bigint not null foreign key references Usuarios(IdUsuario),
 Cantidad smallint not null,
 Precio money not null
 )

@@ -11,9 +11,15 @@ namespace administracion_web
 {
     public partial class compras : System.Web.UI.Page
     {
+        public Int64 idTipo;
+        public Int64 idMarca;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
+            ddlMarca.Enabled = false;
+            ddlProducto.Enabled = false;
             ProveedorNegocio negocioProveedor = new ProveedorNegocio();
             ProductoNegocio negocioProducto = new ProductoNegocio();
             CategoriaNegocio negocioCategoria = new CategoriaNegocio();
@@ -49,20 +55,35 @@ namespace administracion_web
             }
 
         }
-
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Int64 idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
+            ddlMarca.Enabled = true;
+            idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
             ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll(x => x.Tipo.IdTipo == idTipo);
             ddlProducto.DataTextField = "Nombre";
             ddlProducto.DataBind();
+
+
         }
 
-
-     
+        protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            idMarca = Int64.Parse(ddlMarca.SelectedItem.Value);
+            ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll(x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo);
+            ddlProducto.DataTextField = "Nombre";
+            ddlProducto.DataBind();
+            ddlProducto.Enabled = true;
+        }
+        protected void btnSumarProducto_Click(object sender, EventArgs e)
+        {
+            
+        }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+        
+            
         }
+
 
     }
 }

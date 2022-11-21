@@ -85,6 +85,7 @@ namespace administracion_web
 
             nuevo.Marca = new Marca();
             nuevo.Marca.Id = Int64.Parse(ddlMarca.SelectedValue);
+            
             if (Request.QueryString["Id"] != null)
             {
                 nuevo.Id =Int64.Parse(txtId.Text);
@@ -93,10 +94,20 @@ namespace administracion_web
             }
             else
             {
+               bool fueEncontrado= seEncontroProducto(nuevo.Nombre.ToUpper());
+                if (fueEncontrado)
+                {
+                    Console.WriteLine("El producto ya fue registrado");
+                    lblError.Text = "El Producto " + nuevo.Nombre + " ya se ha registrado.";
+                }
+                else
+                {
                 negocio.agregarConSP(nuevo);
+                    Response.Redirect("registroProductos.aspx", false);
+                }
             }
                
-            Response.Redirect("registroProductos.aspx", false);
+            
 
         }
 
@@ -121,6 +132,20 @@ namespace administracion_web
 
                 Session.Add("Error al tratar de eliminar",ex);
             }
+        }
+
+        public bool seEncontroProducto (string nombreProducto)
+        {
+            ProductoNegocio negocioproducto = new ProductoNegocio();
+            List<Producto> listaProdcuto = negocioproducto.listar();
+            foreach (Producto p in listaProdcuto)
+            {
+                if (p.Nombre.ToUpper() == nombreProducto)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
