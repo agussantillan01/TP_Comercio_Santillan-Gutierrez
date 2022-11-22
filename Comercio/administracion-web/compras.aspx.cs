@@ -69,7 +69,12 @@ namespace administracion_web
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
             idMarca = Int64.Parse(ddlMarca.SelectedItem.Value);
-            ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll(x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo);
+            idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
+            ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll((x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo ));
+
+
+
+
             ddlProducto.DataTextField = "Nombre";
             ddlProducto.DataBind();
             ddlProducto.Enabled = true;
