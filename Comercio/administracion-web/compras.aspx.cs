@@ -18,8 +18,8 @@ namespace administracion_web
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            ddlMarca.Enabled = false;
-            ddlProducto.Enabled = false;
+            ddlMarca.Enabled = true;
+            ddlProducto.Enabled = true;
             ProveedorNegocio negocioProveedor = new ProveedorNegocio();
             ProductoNegocio negocioProducto = new ProductoNegocio();
             CategoriaNegocio negocioCategoria = new CategoriaNegocio();
@@ -28,8 +28,8 @@ namespace administracion_web
             if (!IsPostBack)
             {
                 //Completo el desplegable de Productos
-                List<Producto> listaProdcuto = negocioProducto.listar();
-                Session["listaProducto"] = listaProdcuto;
+                List<Producto> listaProducto = negocioProducto.listar();
+                Session["listaProducto"] = listaProducto;
 
                 //Completo el desplegable de Proveedor
                 List<Proveedor> listaProveedor = negocioProveedor.listarSP();
@@ -66,6 +66,7 @@ namespace administracion_web
 
         }
 
+
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
             idMarca = Int64.Parse(ddlMarca.SelectedItem.Value);
@@ -74,11 +75,12 @@ namespace administracion_web
 
 
 
-
             ddlProducto.DataTextField = "Nombre";
             ddlProducto.DataBind();
             ddlProducto.Enabled = true;
         }
+
+   
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
             
