@@ -39,6 +39,15 @@
             </div>
         </div>
         <div class="col-2"></div>
+            <asp:GridView ID="dgvCompras" Style="width: 60%; text-align: right;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false"
+            OnClass="table" OnSelectedIndexChanged="dgvCompras_SelectedIndexChanged">
+            <Columns>
+                <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
+                <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
+                <asp:BoundField HeaderText="Precio" DataField="Precio" />
+                <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
+            </Columns>
+        </asp:GridView>
         <div class="col-4"></div>
     </div>
 

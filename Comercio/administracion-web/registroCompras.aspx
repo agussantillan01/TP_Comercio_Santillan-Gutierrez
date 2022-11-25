@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Desde Rgistro de compras</h1>
+    <h1>Desde Registro de compras</h1>
+    
     <asp:GridView runat="server">
         <Columns>
             <asp:BoundField HeaderText="Productos" DataField="" />

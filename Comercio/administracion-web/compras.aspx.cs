@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,6 +18,9 @@ namespace administracion_web
 
         protected void Page_Load(object sender, EventArgs e)
         {
+             CompraNegocio negocioCompra = new CompraNegocio();
+            dgvCompras.DataSource = negocioCompra.listar();
+            dgvCompras.DataBind();
             txtId.Enabled = false;
             ddlMarca.Enabled = true;
             ddlProducto.Enabled = true;
@@ -51,7 +55,18 @@ namespace administracion_web
                 ddlMarca.DataTextField = "NombreMarca";
                 ddlMarca.DataBind();
 
-               
+                //FALTA CAMBIAR ESTO
+           /*     txtId.Text = id;
+                txtNombre.Text = seleccionado.Nombre;
+                txtDescripcion.Text = seleccionado.Descripcion;
+                txtStock.Text = seleccionado.stock.ToString();
+                txtStockMinimo.Text = seleccionado.stockMinimo.ToString();
+                txtPrecio.Text = seleccionado.Precio.ToString();
+
+                ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
+                ddlTipo.SelectedValue = seleccionado.Tipo.IdTipo.ToString();
+           */
+
             }
 
         }
@@ -83,12 +98,53 @@ namespace administracion_web
    
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
+         // FIJARSE SI LE AGREGAMOS UN BOOL PARA VER SI EXISTE ?
+         if (int.Parse(ddlProducto.SelectedItem.Value)== 0)
+            {
+              // VALIDAR
+            }
+                
             
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-        
-            
+            /* FALTA CAMBIAR TODO  {
+                  Producto nuevo = new Producto();
+                  ProductoNegocio negocio = new ProductoNegocio();
+                  nuevo.Nombre = txtNombre.Text;
+                  nuevo.Descripcion = txtDescripcion.Text;
+                  nuevo.stock = int.Parse(txtStock.Text);
+                  nuevo.stockMinimo = int.Parse(txtStockMinimo.Text);
+                  nuevo.Precio = decimal.Parse(txtPrecio.Text);
+
+                  nuevo.Tipo = new Tipo();
+                  nuevo.Tipo.IdTipo = Int64.Parse(ddlTipo.SelectedValue);
+
+                  nuevo.Marca = new Marca();
+                  nuevo.Marca.Id = Int64.Parse(ddlMarca.SelectedValue);
+
+                  if (Request.QueryString["Id"] != null)
+                  {
+                      nuevo.Id = Int64.Parse(txtId.Text);
+                      negocio.modificarConSP(nuevo);
+
+                  }
+                  else
+                  {
+                      bool fueEncontrado = seEncontroProducto(nuevo.Nombre.ToUpper());
+                      if (fueEncontrado)
+                      {
+                          Console.WriteLine("El producto ya fue registrado");
+                          lblError.Text = "El Producto " + nuevo.Nombre + " ya se ha registrado.";
+                      }
+                      else
+                      {
+                          negocio.agregarConSP(nuevo);
+                          Response.Redirect("registroProductos.aspx", false);
+                      }
+                  }
+
+            */
         }
 
 
