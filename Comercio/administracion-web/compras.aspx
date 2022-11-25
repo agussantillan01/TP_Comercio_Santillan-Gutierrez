@@ -24,33 +24,30 @@
             </div>
             <div class="mb-3">
                 <asp:Label Text="Producto(*)" CssClass="form-label" runat="server" />
-                <asp:DropDownList ID="ddlProducto"  CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlProducto" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" runat="server"></asp:DropDownList>
             </div>
             <div class="mb-3">
                 <asp:Label Text="Cantidad(*)" CssClass="form-label" runat="server" />
-                <asp:TextBox ID="txtCantidad" CssClass="form-control" runat="server" />
+                <asp:TextBox Text="1" ID="txtCantidad" CssClass="form-control" runat="server" />
             </div>
             <div class="mb-3">
                 <asp:Label Text="Precio(*)" CssClass="form-label" runat="server" />
-                <asp:TextBox Text="$" ID="txtPrecio" CssClass="form-control" runat="server" />
+                <asp:TextBox Text="0" ID="txtPrecio" CssClass="form-control" runat="server" />
             </div>
             <div class="mb-3" style="text-align: right;">
                 <asp:Button Text="+" ID="btnSumarProducto" OnClick="btnSumarProducto_Click" CssClass="btn btn-success" runat="server" />
             </div>
         </div>
-        <div class="col-2"></div>
-            <asp:GridView ID="dgvCompras" Style="width: 60%; text-align: right;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false"
-            OnClass="table" OnSelectedIndexChanged="dgvCompras_SelectedIndexChanged">
-            <Columns>
-                <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
-                <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
-                <asp:BoundField HeaderText="Precio" DataField="Precio" />
-                <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
-            </Columns>
-        </asp:GridView>
         <div class="col-4"></div>
-    </div>
+        <div class="col-4">
+            <h1>Lista de productos</h1>
 
-    <asp:Button Style="float: right;" Text="Aceptar" CssClass="btn btn-success" ID="btnAceptar" OnClick="btnAceptar_Click" runat="server" />
-    <br />
+
+        </div>
+        <div>
+            <asp:Button Style="float: right;" Text="Aceptar" CssClass="btn btn-success" ID="btnAceptar" OnClick="btnAceptar_Click" runat="server" />
+
+        </div>
+        <br />
+    </div>
 </asp:Content>

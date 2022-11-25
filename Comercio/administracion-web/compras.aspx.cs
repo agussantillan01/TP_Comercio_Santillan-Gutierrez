@@ -14,13 +14,13 @@ namespace administracion_web
     {
         public Int64 idTipo;
         public Int64 idMarca;
+        public List<Compra> ListaEnCarrito;
+        public decimal PrecioTotal =0;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
-             CompraNegocio negocioCompra = new CompraNegocio();
-            dgvCompras.DataSource = negocioCompra.listar();
-            dgvCompras.DataBind();
+
             txtId.Enabled = false;
             ddlMarca.Enabled = true;
             ddlProducto.Enabled = true;
@@ -55,17 +55,7 @@ namespace administracion_web
                 ddlMarca.DataTextField = "NombreMarca";
                 ddlMarca.DataBind();
 
-                //FALTA CAMBIAR ESTO
-           /*     txtId.Text = id;
-                txtNombre.Text = seleccionado.Nombre;
-                txtDescripcion.Text = seleccionado.Descripcion;
-                txtStock.Text = seleccionado.stock.ToString();
-                txtStockMinimo.Text = seleccionado.stockMinimo.ToString();
-                txtPrecio.Text = seleccionado.Precio.ToString();
 
-                ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
-                ddlTipo.SelectedValue = seleccionado.Tipo.IdTipo.ToString();
-           */
 
             }
 
@@ -87,64 +77,53 @@ namespace administracion_web
             idMarca = Int64.Parse(ddlMarca.SelectedItem.Value);
             idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
             ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll((x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo ));
-
-
-
-            ddlProducto.DataTextField = "Nombre";
             ddlProducto.DataBind();
             ddlProducto.Enabled = true;
         }
 
-   
+
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
-         // FIJARSE SI LE AGREGAMOS UN BOOL PARA VER SI EXISTE ?
-         if (int.Parse(ddlProducto.SelectedItem.Value)== 0)
+            Compra compra = new Compra();
+            string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
+            //Guardo en la lista completa de Productos
+            ProductoNegocio negocioProducto = new ProductoNegocio();
+            List<Producto> listaProducto = negocioProducto.listar();
+            foreach (var item in listaProducto) // Recorro la lista completa de productos
             {
-              // VALIDAR
+                if (item.Nombre.ToString() == nombreProductoSeleccionado) // si el nombre del producto = producto seleccionado
+                {
+                    compra.Producto = item; // Lleno el producto, en la compra realizada
+                    break;
+                }
             }
-                
-            
+
+
+            string idProveedor = ddlProveedor.SelectedItem.Value.ToString(); // ID Del proveedor seleccionado
+            //en la variable prove = proveedor con id igual a idProveedor seleccionado
+            ProveedorNegocio negocioProveedor = new ProveedorNegocio();
+            Proveedor prove = negocioProveedor.listar(idProveedor)[0];
+            // Lleno el Proveedor, en la compra realizada
+            compra.Proveedor = prove;
+            // Lleno la cantidad, en la compra realizada
+            compra.Cantidad = Int16.Parse(txtCantidad.Text);
+            compra.Precio = decimal.Parse(txtPrecio.Text);
+
+            if (ListaEnCarrito == null) // si no hay una compra en la lista
+            {
+                ListaEnCarrito = new List<Compra>();
+                ListaEnCarrito.Add(compra); //agrego la compra que cargue anteriormente
+                PrecioTotal = decimal.Parse(txtPrecio.Text) * Int16.Parse(txtCantidad.Text); // calculo el precio total 
+            }
+
+       
+
+
+
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            /* FALTA CAMBIAR TODO  {
-                  Producto nuevo = new Producto();
-                  ProductoNegocio negocio = new ProductoNegocio();
-                  nuevo.Nombre = txtNombre.Text;
-                  nuevo.Descripcion = txtDescripcion.Text;
-                  nuevo.stock = int.Parse(txtStock.Text);
-                  nuevo.stockMinimo = int.Parse(txtStockMinimo.Text);
-                  nuevo.Precio = decimal.Parse(txtPrecio.Text);
-
-                  nuevo.Tipo = new Tipo();
-                  nuevo.Tipo.IdTipo = Int64.Parse(ddlTipo.SelectedValue);
-
-                  nuevo.Marca = new Marca();
-                  nuevo.Marca.Id = Int64.Parse(ddlMarca.SelectedValue);
-
-                  if (Request.QueryString["Id"] != null)
-                  {
-                      nuevo.Id = Int64.Parse(txtId.Text);
-                      negocio.modificarConSP(nuevo);
-
-                  }
-                  else
-                  {
-                      bool fueEncontrado = seEncontroProducto(nuevo.Nombre.ToUpper());
-                      if (fueEncontrado)
-                      {
-                          Console.WriteLine("El producto ya fue registrado");
-                          lblError.Text = "El Producto " + nuevo.Nombre + " ya se ha registrado.";
-                      }
-                      else
-                      {
-                          negocio.agregarConSP(nuevo);
-                          Response.Redirect("registroProductos.aspx", false);
-                      }
-                  }
-
-            */
+            
         }
 
 
