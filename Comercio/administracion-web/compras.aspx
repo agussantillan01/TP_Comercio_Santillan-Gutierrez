@@ -38,11 +38,25 @@
                 <asp:Button Text="+" ID="btnSumarProducto" OnClick="btnSumarProducto_Click" CssClass="btn btn-success" runat="server" />
             </div>
         </div>
-        <div class="col-4"></div>
-        <div class="col-4">
-            <h1>Lista de productos</h1>
-
-
+        <div class="col-2"></div>
+        <div class="col-6">
+            <h3>Lista de productos</h3>
+            <table>
+                <asp:Repeater runat="server" ID="repetidor">
+                    <ItemTemplate>
+                        <tr>
+                            <td><%#Eval("Producto.Nombre")%></td>
+                            <td><%#Eval("Cantidad") %></td>
+                            <td><%#Eval("Precio") %></td>
+                            <td>
+                                <asp:Label Text="" ID="lblSubtotal" runat="server" />
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </table>
+            <asp:Label Text="" ID="lblPrecioTotal" runat="server" />
+            <hr />
         </div>
         <div>
             <asp:Button Style="float: right;" Text="Aceptar" CssClass="btn btn-success" ID="btnAceptar" OnClick="btnAceptar_Click" runat="server" />

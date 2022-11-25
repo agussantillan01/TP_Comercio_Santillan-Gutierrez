@@ -14,8 +14,12 @@ namespace administracion_web
     {
         public Int64 idTipo;
         public Int64 idMarca;
+        public Int64 idProductoSeleccionado;
+        Int64 idProveedor;
+
+
         public List<Compra> ListaEnCarrito;
-        public decimal PrecioTotal =0;
+        public carritoCompra carrito = new carritoCompra();
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -57,8 +61,17 @@ namespace administracion_web
 
 
 
+
+
             }
 
+        }
+        private List<Proveedor> listadoProveedores()
+        {
+            List<Proveedor> lista;
+            ProveedorNegocio negocio = new ProveedorNegocio();
+            lista = negocio.listar();
+            return lista;
         }
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -84,42 +97,65 @@ namespace administracion_web
 
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
-            Compra compra = new Compra();
             string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
             //Guardo en la lista completa de Productos
-            ProductoNegocio negocioProducto = new ProductoNegocio();
-            List<Producto> listaProducto = negocioProducto.listar();
+            List<Producto> listaProducto = listadoProductos();
             foreach (var item in listaProducto) // Recorro la lista completa de productos
             {
                 if (item.Nombre.ToString() == nombreProductoSeleccionado) // si el nombre del producto = producto seleccionado
                 {
-                    compra.Producto = item; // Lleno el producto, en la compra realizada
+                    idProductoSeleccionado = item.Id;
                     break;
                 }
             }
-
-
-            string idProveedor = ddlProveedor.SelectedItem.Value.ToString(); // ID Del proveedor seleccionado
-            //en la variable prove = proveedor con id igual a idProveedor seleccionado
-            ProveedorNegocio negocioProveedor = new ProveedorNegocio();
-            Proveedor prove = negocioProveedor.listar(idProveedor)[0];
-            // Lleno el Proveedor, en la compra realizada
-            compra.Proveedor = prove;
-            // Lleno la cantidad, en la compra realizada
-            compra.Cantidad = Int16.Parse(txtCantidad.Text);
-            compra.Precio = decimal.Parse(txtPrecio.Text);
-
-            if (ListaEnCarrito == null) // si no hay una compra en la lista
-            {
+            //******* LISTA DE COMPRA*****************
+            ListaEnCarrito = (List<Compra>)Session["listaEnCarro"];
+            carrito = (carritoCompra)Session["total"];
+            if (ListaEnCarrito == null)
                 ListaEnCarrito = new List<Compra>();
-                ListaEnCarrito.Add(compra); //agrego la compra que cargue anteriormente
-                PrecioTotal = decimal.Parse(txtPrecio.Text) * Int16.Parse(txtCantidad.Text); // calculo el precio total 
-            }
 
-       
+            if (carrito == null)
+                carrito = new carritoCompra();
+            //if (!IsPostBack)
+           // {
+                if (idProductoSeleccionado != 0)
+                {
+                    Compra aux = new Compra();
+                    aux.Cantidad = Int16.Parse(txtCantidad.Text);
+                    aux.Precio = decimal.Parse(txtPrecio.Text);
+                    foreach (Producto item in listaProducto)
+                    {
+                        if (item.Id == idProductoSeleccionado)
+                            aux.Producto = item;
 
+                    }
+                    List<Proveedor> listaProveedores = listadoProveedores();
+                    foreach (Proveedor item in listaProveedores)
+                    {
+                        if (item.Id == idProveedor)
+                            aux.Proveedor = item;
+                    }
+                    carrito.total += (decimal)aux.Precio * aux.Cantidad;
+                    //lblPrecioTotal.Text = "$ Total: " + carrito.total.ToString();
+                    ListaEnCarrito.Add(aux);
 
+                    carrito.listado = ListaEnCarrito;
 
+                }
+                repetidor.DataSource = ListaEnCarrito;
+                repetidor.DataBind();
+            //}
+            lblPrecioTotal.Text = "$ Total: "+ carrito.total.ToString();
+            Session.Add("listaEnCarro", ListaEnCarrito);
+            Session.Add("total", carrito);
+
+        }
+
+        private List<Producto> listadoProductos()
+        {
+            ProductoNegocio negocioProducto = new ProductoNegocio();
+            List<Producto> lista = negocioProducto.listar();
+            return lista;
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
