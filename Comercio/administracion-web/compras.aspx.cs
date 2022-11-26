@@ -15,11 +15,11 @@ namespace administracion_web
         public Int64 idTipo;
         public Int64 idMarca;
         public Int64 idProductoSeleccionado;
-        Int64 idProveedor;
+  
 
 
-        public List<Compra> ListaEnCarrito;
-        public carritoCompra carrito = new carritoCompra();
+        public List<Compra> ListaCompra;
+        public listaTotalProductos carrito = new listaTotalProductos();
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -89,7 +89,7 @@ namespace administracion_web
         {
             idMarca = Int64.Parse(ddlMarca.SelectedItem.Value);
             idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
-            ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll((x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo ));
+            ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll((x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo));
             ddlProducto.DataBind();
             ddlProducto.Enabled = true;
         }
@@ -97,6 +97,9 @@ namespace administracion_web
 
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
+            bool ProductoYaSeleccionado = false;
+            Int64 idProveedor = Int64.Parse(ddlProveedor.SelectedItem.Value);
+            
             string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
             //Guardo en la lista completa de Productos
             List<Producto> listaProducto = listadoProductos();
@@ -108,17 +111,33 @@ namespace administracion_web
                     break;
                 }
             }
-            //******* LISTA DE COMPRA*****************
-            ListaEnCarrito = (List<Compra>)Session["listaEnCarro"];
-            carrito = (carritoCompra)Session["total"];
-            if (ListaEnCarrito == null)
-                ListaEnCarrito = new List<Compra>();
 
-            if (carrito == null)
-                carrito = new carritoCompra();
-            //if (!IsPostBack)
-           // {
-                if (idProductoSeleccionado != 0)
+            //******* LISTA DE COMPRA*****************
+            ListaCompra = (List<Compra>)Session["listaEnCarro"];
+            carrito = (listaTotalProductos)Session["total"];
+            bool IngresoCantidadIncorrecta = convierteTextoAInt(txtCantidad.Text);
+            bool IngresoPrecioIncorrecto = convierteTextoADecimal(txtPrecio.Text);
+            if (!IngresoCantidadIncorrecta && !IngresoPrecioIncorrecto)
+            {
+                if (ListaCompra == null)
+                    ListaCompra = new List<Compra>();
+
+
+                if (carrito == null)
+                {
+                    carrito = new listaTotalProductos();
+                }
+                else
+                {
+                    foreach (Compra item in carrito.listado)
+                    {
+                        if (item.Producto.Id == idProductoSeleccionado)
+                            ProductoYaSeleccionado = true;
+                    }
+                }
+
+
+                if (idProductoSeleccionado != 0 && !ProductoYaSeleccionado)
                 {
                     Compra aux = new Compra();
                     aux.Cantidad = Int16.Parse(txtCantidad.Text);
@@ -130,27 +149,45 @@ namespace administracion_web
 
                     }
                     List<Proveedor> listaProveedores = listadoProveedores();
+                    
                     foreach (Proveedor item in listaProveedores)
                     {
                         if (item.Id == idProveedor)
                             aux.Proveedor = item;
                     }
-                    carrito.total += (decimal)aux.Precio * aux.Cantidad;
-                    //lblPrecioTotal.Text = "$ Total: " + carrito.total.ToString();
-                    ListaEnCarrito.Add(aux);
+                    carrito.total += aux.Precio * aux.Cantidad;
+                    ListaCompra.Add(aux);
 
-                    carrito.listado = ListaEnCarrito;
+                    carrito.listado = ListaCompra;
 
                 }
-                repetidor.DataSource = ListaEnCarrito;
+                repetidor.DataSource = ListaCompra;
                 repetidor.DataBind();
-            //}
-            lblPrecioTotal.Text = "Total: $"+ carrito.total.ToString();
-            Session.Add("listaEnCarro", ListaEnCarrito);
-            Session.Add("total", carrito);
+
+                lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
+                Session.Add("listaEnCarro", ListaCompra);
+                Session.Add("total", carrito);
+            }
+
 
         }
 
+        private bool convierteTextoAInt(string numeroCantidad)
+        {
+            if (Int16.TryParse(numeroCantidad, out Int16 cantidad))
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool convierteTextoADecimal(string numero)
+        {
+            if (Decimal.TryParse(numero, out Decimal Precio))
+            {
+                return false;
+            }
+            return true;
+        }
         private List<Producto> listadoProductos()
         {
             ProductoNegocio negocioProducto = new ProductoNegocio();
@@ -159,7 +196,7 @@ namespace administracion_web
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            
+
         }
 
 

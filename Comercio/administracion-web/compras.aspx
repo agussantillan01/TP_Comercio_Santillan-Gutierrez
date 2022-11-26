@@ -55,7 +55,8 @@
 
                         <tr>
                             <td style="padding-right: 170px;"><%#Eval("Producto.Nombre")%></td>
-                            <td style="padding-right: 170px;"><%#Eval("Cantidad") %></td>
+                            <td style="padding-right: 10px;"><%#Eval("Cantidad") %></td>
+                            <td style="padding-right: 170px;"><%#Eval("Proveedor.Nombre")%></td>
                             <td style="padding-right: 110px;"><%#Eval("Precio") %></td>
                             <td>
                                 <asp:Button Text="-" CssClass="btn btn-danger" runat="server" />
@@ -70,6 +71,7 @@
             <br />
             <br />
             <asp:Label Text="" ID="lblPrecioTotal" runat="server" />
+            <asp:Label Text="" ID="txtCantidadIngresado" runat="server" />
             <hr />
         </div>
 
