@@ -40,14 +40,26 @@
         </div>
         <div class="col-2"></div>
         <div class="col-6">
-            <h3>Lista de productos</h3>
+            <br />
+            <table>
+
+                <tr>
+                    <td style="padding-right: 150px;"><b>Producto</b> </td>
+                    <td style="padding-right: 140px;"><b>Cantidad</b> </td>
+                    <td style="padding-right: 100px;"><b>Precio</b> </td>
+                </tr>
+            </table>
             <table>
                 <asp:Repeater runat="server" ID="repetidor">
                     <ItemTemplate>
+
                         <tr>
-                            <td><%#Eval("Producto.Nombre")%></td>
-                            <td><%#Eval("Cantidad") %></td>
-                            <td><%#Eval("Precio") %></td>
+                            <td style="padding-right: 170px;"><%#Eval("Producto.Nombre")%></td>
+                            <td style="padding-right: 170px;"><%#Eval("Cantidad") %></td>
+                            <td style="padding-right: 110px;"><%#Eval("Precio") %></td>
+                            <td>
+                                <asp:Button Text="-" CssClass="btn btn-danger" runat="server" />
+                            </td>
                             <td>
                                 <asp:Label Text="" ID="lblSubtotal" runat="server" />
                             </td>
@@ -55,9 +67,13 @@
                     </ItemTemplate>
                 </asp:Repeater>
             </table>
+            <br />
+            <br />
             <asp:Label Text="" ID="lblPrecioTotal" runat="server" />
             <hr />
         </div>
+
+
         <div>
             <asp:Button Style="float: right;" Text="Aceptar" CssClass="btn btn-success" ID="btnAceptar" OnClick="btnAceptar_Click" runat="server" />
 

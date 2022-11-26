@@ -145,7 +145,7 @@ namespace administracion_web
                 repetidor.DataSource = ListaEnCarrito;
                 repetidor.DataBind();
             //}
-            lblPrecioTotal.Text = "$ Total: "+ carrito.total.ToString();
+            lblPrecioTotal.Text = "Total: $"+ carrito.total.ToString();
             Session.Add("listaEnCarro", ListaEnCarrito);
             Session.Add("total", carrito);
 
