@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
-        <h1 style="text-align: center;">Realice una compra! </h1>
+        <br />
         <div class="col">
             <div class="mb-3">
                 <asp:Label Text="Numero de Compra(*)" CssClass="form-label" runat="server" />
@@ -16,11 +16,12 @@
             </div>
             <div class="mb-3">
                 <asp:Label Text="Categoria(*)" CssClass="form-label" runat="server" />
-                <asp:DropDownList ID="ddlCategoria" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlCategoria" CssClass="form-select" OnDataBound="ddlCategoria_DataBound" AutoPostBack="true" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" runat="server"></asp:DropDownList>
+
             </div>
             <div class="mb-3">
                 <asp:Label Text="Marca(*)" CssClass="form-label" runat="server" />
-                <asp:DropDownList ID="ddlMarca" AutoPostBack="true" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" CssClass="form-select" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlMarca" AutoPostBack="true" OnDataBound="ddlMarca_DataBound" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" CssClass="form-select" runat="server"></asp:DropDownList>
             </div>
             <div class="mb-3">
                 <asp:Label Text="Producto(*)" CssClass="form-label" runat="server" />
@@ -50,16 +51,15 @@
                 </tr>
             </table>
             <table>
-                <asp:Repeater runat="server" ID="repetidor">
+                <asp:Repeater runat="server" ID="tabla_productos">
                     <ItemTemplate>
 
                         <tr>
-                            <td style="padding-right: 170px;"><%#Eval("Producto.Nombre")%></td>
-                            <td style="padding-right: 10px;"><%#Eval("Cantidad") %></td>
-                            <td style="padding-right: 170px;"><%#Eval("Proveedor.Nombre")%></td>
-                            <td style="padding-right: 110px;"><%#Eval("Precio") %></td>
+                            <td style="padding-right: 200px;"><%#Eval("Producto.Nombre")%></td>
+                            <td style="padding-right: 200px;"><%#Eval("Cantidad") %></td>
+                            <td style="padding-right: 80px;"><%#Eval("Precio") %></td>
                             <td>
-                                <asp:Button Text="-" CssClass="btn btn-danger" runat="server" />
+                                <asp:Button Text="-" ID="btnEliminarProductoLista" OnClick="btnEliminarProductoLista_Click" CssClass="btn btn-danger" AutoPostBack="true" CommandArgument='<%#Eval ("Id")%>' runat="server" />
                             </td>
                             <td>
                                 <asp:Label Text="" ID="lblSubtotal" runat="server" />
@@ -82,4 +82,5 @@
         </div>
         <br />
     </div>
+    <asp:Label Text="" ID="cantidadListado" runat="server" />
 </asp:Content>

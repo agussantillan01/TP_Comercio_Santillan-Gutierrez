@@ -15,7 +15,7 @@ namespace administracion_web
         public Int64 idTipo;
         public Int64 idMarca;
         public Int64 idProductoSeleccionado;
-  
+
 
 
         public List<Compra> ListaCompra;
@@ -24,6 +24,7 @@ namespace administracion_web
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
 
             txtId.Enabled = false;
             ddlMarca.Enabled = true;
@@ -59,10 +60,6 @@ namespace administracion_web
                 ddlMarca.DataTextField = "NombreMarca";
                 ddlMarca.DataBind();
 
-
-
-
-
             }
 
         }
@@ -97,9 +94,11 @@ namespace administracion_web
 
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
+
+            ddlProveedor.Enabled = false;
             bool ProductoYaSeleccionado = false;
             Int64 idProveedor = Int64.Parse(ddlProveedor.SelectedItem.Value);
-            
+
             string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
             //Guardo en la lista completa de Productos
             List<Producto> listaProducto = listadoProductos();
@@ -142,27 +141,28 @@ namespace administracion_web
                     Compra aux = new Compra();
                     aux.Cantidad = Int16.Parse(txtCantidad.Text);
                     aux.Precio = decimal.Parse(txtPrecio.Text);
-                    foreach (Producto item in listaProducto)
+                    foreach (var item in listaProducto)
                     {
                         if (item.Id == idProductoSeleccionado)
+                        {
                             aux.Producto = item;
+                            aux.Id = idProductoSeleccionado;
+                            break;
+                        }
+                    }
 
-                    }
                     List<Proveedor> listaProveedores = listadoProveedores();
-                    
-                    foreach (Proveedor item in listaProveedores)
-                    {
-                        if (item.Id == idProveedor)
-                            aux.Proveedor = item;
-                    }
+
+                    aux.Proveedor = listaProveedores.Find(x => x.Id == idProveedor);
+
                     carrito.total += aux.Precio * aux.Cantidad;
                     ListaCompra.Add(aux);
 
                     carrito.listado = ListaCompra;
 
                 }
-                repetidor.DataSource = ListaCompra;
-                repetidor.DataBind();
+                tabla_productos.DataSource = ListaCompra;
+                tabla_productos.DataBind();
 
                 lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
                 Session.Add("listaEnCarro", ListaCompra);
@@ -172,6 +172,32 @@ namespace administracion_web
 
         }
 
+        protected void btnEliminarProductoLista_Click(object sender, EventArgs e)
+        {
+            carrito =(listaTotalProductos)Session["total"];
+            Int64 idEliminarProducto= Int64.Parse(((Button)sender).CommandArgument);
+            List<Compra> listaCompra = (List<Compra>)Session["listaEnCarro"];
+            Compra elim = listaCompra.Find(x => x.Id == idEliminarProducto);
+            listaCompra.Remove(elim);
+
+            carrito.total -= elim.Precio * elim.Cantidad;
+            if (carrito.total < 0) carrito.total = 0;
+            lblPrecioTotal.Text = "Total: " + carrito.total.ToString("00.00");
+            Session.Add("listaEnCarro", listaCompra);
+            Session.Add("total", carrito);
+            tabla_productos.DataSource = null;
+            tabla_productos.DataSource = listaCompra;
+            tabla_productos.DataBind();
+        }
+
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        //FUNCIONES
         private bool convierteTextoAInt(string numeroCantidad)
         {
             if (Int16.TryParse(numeroCantidad, out Int16 cantidad))
@@ -194,9 +220,14 @@ namespace administracion_web
             List<Producto> lista = negocioProducto.listar();
             return lista;
         }
-        protected void btnAceptar_Click(object sender, EventArgs e)
+        protected void ddlCategoria_DataBound(object sender, EventArgs e)
         {
+            ddlCategoria.Items.Insert(0, "--Seleccione una categoria--");
+        }
 
+        protected void ddlMarca_DataBound(object sender, EventArgs e)
+        {
+            ddlMarca.Items.Insert(0, "--Seleccione una Marca--");
         }
 
 

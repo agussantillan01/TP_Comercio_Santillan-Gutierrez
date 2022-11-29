@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,12 @@ namespace administracion_web
     public partial class registroCompras : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        protected void dgvComprasTotales_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

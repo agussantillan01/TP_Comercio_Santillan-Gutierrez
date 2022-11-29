@@ -87,13 +87,13 @@ namespace administracion_web
         protected global::System.Web.UI.WebControls.Button btnSumarProducto;
 
         /// <summary>
-        /// repetidor control.
+        /// tabla_productos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repetidor;
+        protected global::System.Web.UI.WebControls.Repeater tabla_productos;
 
         /// <summary>
         /// lblPrecioTotal control.
@@ -121,5 +121,14 @@ namespace administracion_web
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAceptar;
+
+        /// <summary>
+        /// cantidadListado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label cantidadListado;
     }
 }

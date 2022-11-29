@@ -15,7 +15,6 @@
     <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false"
             OnClass="table" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
         <Columns>
-
             <asp:BoundField HeaderText="Tipo" DataField="Tipo" />
             <asp:BoundField HeaderText="Marca" DataField="Marca" />
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
@@ -23,7 +22,6 @@
             <asp:BoundField HeaderText="Stock Min." DataField="StockMinimo" />
             <asp:BoundField HeaderText="$" DataField="Precio" />
             <asp:CommandField HeaderText="Modifica/Elimina" ShowSelectButton="true" SelectText="Modificar/Eliminar" />
-          
 
         </Columns>
     </asp:GridView>

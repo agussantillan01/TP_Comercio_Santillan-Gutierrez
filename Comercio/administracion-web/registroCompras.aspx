@@ -4,14 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Desde Registro de compras</h1>
-    
-    <asp:GridView runat="server">
+
+    <asp:GridView runat="server" Style="width: 100%;" ID="dgvComprasTotales" DataKeyNames="Id" OnClass="table" AutoGenerateColumns="false" OnSelectedIndexChanged="dgvComprasTotales_SelectedIndexChanged" >
         <Columns>
-            <asp:BoundField HeaderText="Productos" DataField="" />
-            <asp:BoundField HeaderText="Precio" DataField="" />
-            <asp:BoundField HeaderText="Stock" DataField="" />
-            <asp:BoundField HeaderText="Ganancia" DataField="" />
-            <asp:BoundField HeaderText="Proveedor" DataField="" />
+            <asp:BoundField HeaderText="Proveedor" DataField="Proveedor"/>
+            <asp:BoundField HeaderText="Producto" DataField="Producto"/>
+            <asp:BoundField HeaderText="Cantidad" DataField="Cantidad"/>
+            <asp:BoundField HeaderText="Precio" DataField="Precio"/>
         </Columns>
     </asp:GridView>
 </asp:Content>
