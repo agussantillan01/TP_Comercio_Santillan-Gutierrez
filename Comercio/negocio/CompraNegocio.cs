@@ -87,29 +87,31 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }*/
-        //public void agregarConSP(Compra nuevo)
-        //{
-        //    AccesoDatos datos = new AccesoDatos();
-        //    try
-        //    {
-        //        datos.setearProcedimiento("SP_AgregarProducto");
-        //        datos.setearParametro("@Id", nuevo.Id);
-        //        datos.setearParametro("@Producto", nuevo.Producto);
-        //        datos.setearParametro("@Proveedor", nuevo.Proveedor);
-        //        datos.setearParametro("@Cantidad", nuevo.Cantidad);
-        //        datos.setearParametro("@Precio", nuevo.Precio);
-
-        //        datos.ejectutarAccion();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        datos.cerrarConexion();
-        //    }
-        //}
+        public int agregarConSP(List<Compra> nuevo)
+        {
+            int cantidad = nuevo.Count();
+            return cantidad;
+            //AccesoDatos datos = new AccesoDatos();
+            //try
+            //{
+            //    datos.setearProcedimiento("SP_AgregarProducto");
+            //    datos.setearParametro("@Id", nuevo.Id);
+            //    datos.setearParametro("@Producto", nuevo.Producto);
+            //    datos.setearParametro("@Proveedor", nuevo.Proveedor);
+            //    datos.setearParametro("@Cantidad", nuevo.Cantidad);
+            //    datos.setearParametro("@Precio", nuevo.Precio);
+            //
+            //    datos.ejectutarAccion();
+            //
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+            //finally
+            //{
+            //    datos.cerrarConexion();
+            //}
+        }
     }
 }

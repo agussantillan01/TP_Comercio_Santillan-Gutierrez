@@ -188,10 +188,15 @@ namespace administracion_web
             tabla_productos.DataSource = null;
             tabla_productos.DataSource = listaCompra;
             tabla_productos.DataBind();
+
+            if(carrito.listado.Count()==0) ddlProveedor.Enabled = true;
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            carrito = (listaTotalProductos)Session["total"];
+            CompraNegocio negocio = new CompraNegocio();
+            int cantidad= negocio.agregarConSP(carrito.listado);
 
         }
 
