@@ -196,8 +196,70 @@ namespace administracion_web
         {
             carrito = (listaTotalProductos)Session["total"];
             CompraNegocio negocio = new CompraNegocio();
-            int cantidad= negocio.agregarConSP(carrito.listado);
+            ////int cantidad= negocio.agregarConSP(carrito.listado);
+            //Compra nuevo = new Compra();
+            //nuevo.Cantidad = Int16.Parse(txtCantidad.Text);
+            //nuevo.Precio = decimal.Parse(txtPrecio.Text);
 
+
+            //ListaCompra = (List<Compra>)Session["listaEnCarro"];
+            //carrito = (listaTotalProductos)Session["total"];
+            //bool IngresoCantidadIncorrecta = convierteTextoAInt(txtCantidad.Text);
+            //bool IngresoPrecioIncorrecto = convierteTextoADecimal(txtPrecio.Text);
+            //if (!IngresoCantidadIncorrecta && !IngresoPrecioIncorrecto)
+            //{
+            //    if (ListaCompra == null)
+            //        ListaCompra = new List<Compra>();
+
+
+            //    if (carrito == null)
+            //    {
+            //        carrito = new listaTotalProductos();
+            //    }
+            //    else
+            //    {
+            //        foreach (Compra item in carrito.listado)
+            //        {
+            //            if (item.Producto.Id == idProductoSeleccionado)
+            //                ProductoYaSeleccionado = true;
+            //        }
+            //    }
+
+
+            //    if (idProductoSeleccionado != 0 && !ProductoYaSeleccionado)
+            //    {
+            //        Compra aux = new Compra();
+
+            //        foreach (var item in listaProducto)
+            //        {
+            //            if (item.Id == idProductoSeleccionado)
+            //            {
+            //                aux.Producto = item;
+            //                aux.Id = idProductoSeleccionado;
+            //                break;
+            //            }
+            //        }
+
+            //        List<Proveedor> listaProveedores = listadoProveedores();
+
+            //        aux.Proveedor = listaProveedores.Find(x => x.Id == idProveedor);
+
+            //        carrito.total += aux.Precio * aux.Cantidad;
+            //        ListaCompra.Add(aux);
+
+            //        carrito.listado = ListaCompra;
+
+            //    }
+            //    tabla_productos.DataSource = ListaCompra;
+            //    tabla_productos.DataBind();
+
+            //    lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
+            //    Session.Add("listaEnCarro", ListaCompra);
+            //    Session.Add("total", carrito);
+            //}
+
+
+            //negocio.agregarConSP(nuevo);
         }
 
 

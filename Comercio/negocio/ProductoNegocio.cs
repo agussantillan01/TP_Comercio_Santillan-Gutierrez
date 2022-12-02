@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using dominio;
 using System.Xml.Linq;
-
+using System.Threading;
 
 namespace negocio
 {
     public class ProductoNegocio
     {
+
 
         public List<Producto> listar(string id="")
         {

@@ -55,7 +55,7 @@
                     <ItemTemplate>
 
                         <tr>
-                            <td style="padding-right: 200px;"><%#Eval("Producto.Nombre")%></td>
+                            <td style="padding-right: 200px;"><%#Eval("Producto.Nombre")%> </td>
                             <td style="padding-right: 200px;"><%#Eval("Cantidad") %></td>
                             <td style="padding-right: 80px;"><%#Eval("Precio") %></td>
                             <td>
