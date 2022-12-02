@@ -247,3 +247,22 @@ Update Proveedores set Nombre=@Nombre,Cuil=@Cuil,Domicilio=@Domicilio, Email=@Em
 Where IdProveedor=@IdProveedor
 END
 
+
+GO
+--AGREGAR COMPRA
+CREATE PROCEDURE SP_AgregarCompra (
+	@IDProducto bigint, 
+	@IdProveedor bigint, 
+	@Cantidad smallint,
+	@Precio Money
+)AS 
+BEGIN 
+	Insert into Compra_movimiento(IdProducto,IdProveedores, Cantidad, Precio)
+	values (@IDProducto,@IdProveedor,@Cantidad,@Precio)
+	
+	declare @cantidadStock int 
+	declare @stockActual int 
+	Select @cantidadStock=Stock from Productos
+	set @stockActual = @cantidadStock+ @Cantidad
+	Update Productos SET Stock=@stockActual
+END

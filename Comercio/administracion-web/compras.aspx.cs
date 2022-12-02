@@ -196,6 +196,12 @@ namespace administracion_web
         {
             carrito = (listaTotalProductos)Session["total"];
             CompraNegocio negocio = new CompraNegocio();
+            negocio.agregarConSP(carrito.listado);
+            //carrito.listado.RemoveAll(i => i.Id != 0);
+            //int cantidad = carrito.listado.Count();
+
+            Response.Redirect("registroProductos.aspx");
+
             ////int cantidad= negocio.agregarConSP(carrito.listado);
             //Compra nuevo = new Compra();
             //nuevo.Cantidad = Int16.Parse(txtCantidad.Text);
