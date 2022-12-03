@@ -80,6 +80,7 @@
     <Content Include="registroMarcas.aspx" />
     <Content Include="registroProductos.aspx" />
     <Content Include="registroVentas.aspx" />
+    <Content Include="ventas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +206,13 @@
     </Compile>
     <Compile Include="registroVentas.aspx.designer.cs">
       <DependentUpon>registroVentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ventas.aspx.cs">
+      <DependentUpon>ventas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ventas.aspx.designer.cs">
+      <DependentUpon>ventas.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

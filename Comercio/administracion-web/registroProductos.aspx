@@ -30,7 +30,7 @@
         </div>
         <div style="text-align: right;">
             <a type="submit" class="btn btn-primary" href="compras.aspx">Comprar</a>
-            <a type="submit" class="btn btn-primary" href="#">Vender</a>
+            <a type="submit" class="btn btn-primary" href="ventas.aspx">Vender</a>
         </div>
     
 

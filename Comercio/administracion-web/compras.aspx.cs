@@ -163,7 +163,6 @@ namespace administracion_web
                 }
                 tabla_productos.DataSource = ListaCompra;
                 tabla_productos.DataBind();
-
                 lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
                 Session.Add("listaEnCarro", ListaCompra);
                 Session.Add("total", carrito);
