@@ -26,12 +26,9 @@ Estado bit not null default 1
 go 
 Create table Usuarios (
 IdUsuario bigint not null identity (1,1) primary key, 
-Nombre varchar (50) not null,
-Apellido varchar (50) not null,
 Email varchar (100) not null,
 Contraseña varchar (100) not null,
-FechaNacimiento date not null, 
-Estado bit not null default 1
+TipoUser int not null
 )
 go 
 Create table Usuario_X_Productos (
@@ -121,15 +118,14 @@ Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@Sto
 go
 
 -- VALIDA USUARIO  => CHEQUEAR
-create procedure SP_ValidacionUsuario (
-	@Email varchar (100),
-	@Contraseña varchar(100)
-)as 
-BEGIN
-Select U.IdUsuario from Usuarios U
-Where U.Email = @Email AND U.Contraseña = @Contraseña
-END
-
+--create procedure SP_ValidacionUsuario (
+--	@Email varchar (100),
+--	@Contraseña varchar(100)
+--)as 
+--BEGIN
+--Select U.IdUsuario from Usuarios U
+--Where U.Email = @Email AND U.Contraseña = @Contraseña
+--END
 
 
 --ELIMINA PRODUCTO

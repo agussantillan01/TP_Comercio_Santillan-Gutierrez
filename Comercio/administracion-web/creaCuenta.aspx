@@ -6,12 +6,8 @@
 
 
     <div class="row">
-        <h1>Agrega un Producto!</h1>
         <div class="col">
-            <div class="mb-3">
-                <asp:Label Text="Id(*)" CssClass="form-label" runat="server" />
-                <asp:TextBox ID="txtId" CssClass="form-control" runat="server" />
-            </div>
+            <h1>Registrarte!</h1>
             <div class="mb-3">
                 <asp:Label Text="Nombre(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
@@ -30,13 +26,14 @@
             </div>
             <div class="mb-3">
                 <asp:Label Text="Fecha Nacimiento(*)" CssClass="form-label" runat="server" />
-                <asp:TextBox ID="txtFecha" runat="server" />
+                <br />
+                <asp:TextBox ID="txtFecha"  TextMode="Date" class="form-control" runat="server" />
             </div>
         </div>
 
         <%--<asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />--%>
 
-
+        <div class="col-4"></div>
         <div class="col-4"></div>
     </div>
 

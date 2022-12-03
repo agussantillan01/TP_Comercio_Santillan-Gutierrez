@@ -8,12 +8,12 @@
     <br />
     <br />
     <div class="text-center">
-        <img style="width: 250px;" src="https://www.nicepng.com/png/detail/107-1074679_dental-implant-logo.png"  class="rounded" alt="...">
+        <img style="width: 250px;" src="https://www.nicepng.com/png/detail/107-1074679_dental-implant-logo.png" class="rounded" alt="...">
     </div>
 
 
     <div class="row">
-       
+
         <div class="col-3"></div>
         <div class="col">
             <div class="mb-3">
@@ -22,18 +22,18 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <asp:TextBox type="password" id="txtPassword" class="form-control"  runat="server" />
-                
+                <asp:TextBox type="password" ID="txtPassword" class="form-control" runat="server" />
+
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Administrador</label>
             </div>
-            <a class="btn btn-primary" href="registroProductos.aspx" role="button">Ingresar</a>
+            <%--<a class="btn btn-primary" href="registroProductos.aspx" role="button">Ingresar</a>--%>
+            <asp:Button Text="Ingresar" ID="btnIngresar" OnClick="btnIngresar_Click1" CssClass="btn btn-primary" runat="server" />
             <a href="creaCuenta.aspx">Crea una cuenta</a>
-            <%--<asp:Button Text="Ingresar" id="btnIngresar" onclick="btnIngresar_Click" CssClass="btn btn-primary" runat="server" />--%>
         </div>
-                
+
         <div class="col-3"></div>
     </div>
 

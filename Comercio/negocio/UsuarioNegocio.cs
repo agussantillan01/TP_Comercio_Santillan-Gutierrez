@@ -9,31 +9,34 @@ namespace negocio
 {
     public  class UsuarioNegocio
     {
-        public bool SP_validarUsuario(string email, string pass)
-        {
+       public bool Loguear(Usuario usuario)
+       {
             AccesoDatos datos = new AccesoDatos();
+			try
+			{
+				datos.setearConsulta("Select IdUsuario,TipoUser from Usuarios Where Email=@Email AND Contraseña=@Contraseña");
+				datos.setearParametro("@Email", usuario.Email);
+                datos.setearParametro("@Contraseña", usuario.Contraseña);
 
-            try
-            {
-                datos.setearProcedimiento("SP_ValidacionUsuario");
                 datos.ejecutarLectura();
-
-                //tengo que ver si existe ese email y password en la BD 
-                // si existe, retorno true 
-                // si no existe retorno false
-              
-
-                return true;
+                while (datos.Lector.Read())
+                {
+                    usuario.Id = (Int64)datos.Lector["IdUsuario"];
+                    usuario.TipoUsuario = (int)datos.Lector["TipoUser"] == 2 ? TipoUsuario.ADMIN : TipoUsuario.NORMAL;
+                    return true;
+                }
+                return false;
             }
+			catch (Exception ex)
+			{
 
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+				throw ex;
+			}
             finally
             {
                 datos.cerrarConexion();
             }
-        }
+
+       }
     }
 }

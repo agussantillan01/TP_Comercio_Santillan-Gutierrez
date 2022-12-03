@@ -12,9 +12,17 @@ namespace administracion_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProductoNegocio negocio = new ProductoNegocio();
-            dgvProductos.DataSource = negocio.listar();
-            dgvProductos.DataBind();
+            if (Session["usuario"] == null)
+            {
+                Session.Add("Error", "Debes loguearte!");
+                Response.Redirect("ErrorLogin.aspx",false);
+            }else
+            {
+                ProductoNegocio negocio = new ProductoNegocio();
+                dgvProductos.DataSource = negocio.listar();
+                dgvProductos.DataBind();
+            }
+  
         }
 
         protected void dgvProductos_SelectedIndexChanged(object sender, EventArgs e)

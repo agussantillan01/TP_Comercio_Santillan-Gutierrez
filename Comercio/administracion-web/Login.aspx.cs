@@ -1,4 +1,6 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,16 +16,32 @@ namespace administracion_web
 
         }
 
-        protected void btnIngresar_Click(object sender, EventArgs e)
-        {
-            string email;
-            string pass;
-            email = txtEmail.Text;
-            pass = txtPassword.Text;
 
-            //llamado al SP_validacionUsuario 
-            // si NO devuelve nulo 
-            Response.Redirect("registroProductos.aspx?IdUsuario=" + 1, false); // mando IdUsuario obtnido en el SP
+        protected void btnIngresar_Click1(object sender, EventArgs e)
+        {
+            Usuario usuario;
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            try
+            {
+                usuario = new Usuario(txtEmail.Text, txtPassword.Text,false);
+                if (usuarioNegocio.Loguear(usuario)) {
+                    Session.Add("usuario", usuario);
+                    Response.Redirect("registroProductos.aspx");
+                }
+                else
+                {
+                    Session.Add("Error", "Email o contraseña incorrecta");
+                    Response.Redirect("ErrorLogin.aspx",false);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error", ex.ToString());
+                Response.Redirect("ErrorLogin.aspx", false);
+
+            }
+            
         }
     }
 }
