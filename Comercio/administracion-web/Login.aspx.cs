@@ -26,7 +26,7 @@ namespace administracion_web
                 usuario = new Usuario(txtEmail.Text, txtPassword.Text,false);
                 if (usuarioNegocio.Loguear(usuario)) {
                     Session.Add("usuario", usuario);
-                    Response.Redirect("registroProductos.aspx");
+                    Response.Redirect("registroProductos.aspx",false);
                 }
                 else
                 {
