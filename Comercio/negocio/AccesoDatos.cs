@@ -53,13 +53,20 @@ namespace negocio
             conexion.Close();
         }
 
-       
+
 
         internal void ejectutarAccion()
         {
             comando.Connection = conexion;
             conexion.Open();
             comando.ExecuteNonQuery();
+        }
+
+        public int ejecutarAccionScalar()
+        {
+            comando.Connection = conexion;
+            conexion.Open();
+            return int.Parse(comando.ExecuteScalar().ToString());
         }
     }
 }

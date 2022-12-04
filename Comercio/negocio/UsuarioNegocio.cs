@@ -37,6 +37,43 @@ namespace negocio
                 datos.cerrarConexion();
             }
 
-       }
+        }
+
+
+        public void AgregarUsuario(Usuario usuario)
+      //              public int AgregarUsuario(Usuario usuario)
+        {
+                AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_AgregarUsuario");
+                datos.setearParametro("@Email", usuario.Email);
+                datos.setearParametro("@Contraseña", usuario.Contraseña);
+                //          return datos.ejecutarAccionScalar();
+                datos.ejectutarAccion();
+      
+
+
+                //FALTAAAA
+
+                //    datos.ejecutarLectura();
+                //    while (datos.Lector.Read())
+                //    {
+                //        usuario.Id = (Int64)datos.Lector["IdUsuario"];
+                //        usuario.TipoUsuario = (int)datos.Lector["TipoUser"] == 2 ? TipoUsuario.ADMIN : TipoUsuario.NORMAL;
+                //        return true;
+                //    }
+                //    return false;
+            }
+            catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+                finally
+                {
+                    datos.cerrarConexion();
+                }
+        }
     }
 }
