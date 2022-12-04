@@ -28,9 +28,11 @@ namespace administracion_web
                 usuario = new Usuario(txtEmail.Text, txtConstraseña.Text, false);
                 usuario.Email = txtEmail.Text;
                 usuario.Contraseña = txtConstraseña.Text;
+     
 
-                    //   int id = usuarioNegocio.AgregarUsuario(usuario);
-                    usuarioNegocio.AgregarUsuario(usuario);
+
+                    int id = usuarioNegocio.AgregarUsuario(usuario);
+             
 
                     Response.Redirect("Login.aspx", false);
 
