@@ -14,5 +14,7 @@
                 <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
             </Columns>
         </asp:GridView>
+               <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
     <a type="submit" class="btn btn-primary" href="agregarProveedores.aspx">--Agregar Proveedor--</a>
+         <% } %>
 </asp:Content>

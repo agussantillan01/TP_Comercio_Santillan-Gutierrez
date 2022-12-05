@@ -11,7 +11,9 @@
             
         </Columns>
     </asp:GridView>
+               <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
     <a type="submit" class="btn btn-primary" href="agregarMarca.aspx">--Agregar Marca--</a>
+         <% } %>
 
 
 </asp:Content>

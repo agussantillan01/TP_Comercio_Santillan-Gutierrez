@@ -24,10 +24,13 @@
             <asp:CommandField HeaderText="Modifica/Elimina" ShowSelectButton="true" SelectText="Modificar/Eliminar" />
 
         </Columns>
+ 
     </asp:GridView>
+           <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
         <div style="text-align: left;">
             <a type="submit" class="btn btn-primary" href="agregarProducto.aspx">--Agregar Producto--</a>
         </div>
+        <% } %>
         <div style="text-align: right;">
             <a type="submit" class="btn btn-primary" href="compras.aspx">Comprar</a>
             <a type="submit" class="btn btn-primary" href="ventas.aspx">Vender</a>
