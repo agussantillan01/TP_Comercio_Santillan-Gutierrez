@@ -28,6 +28,9 @@
                             <a class="nav-link active" aria-current="page" href="registroProductos.aspx">Productos</a>
                             <a class="nav-link" href="registroCompras.aspx">Compras</a>
                             <a class="nav-link" href="registroVentas.aspx">Ventas</a>
+                                      <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
+                            <a class="nav-link" href="registroUsuarios.aspx">Usuarios</a>
+                                     <% } %>
                         </div>
                     </div>
                 </div>

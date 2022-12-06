@@ -93,5 +93,29 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public void HacerAdmin(Int64 ID)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                Usuario aux = new Usuario();
+                datos.setearProcedimiento("SP_HacerAdmin");
+                datos.setearParametro("@IdUsuario", ID);
+
+                datos.ejectutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
     }
 }

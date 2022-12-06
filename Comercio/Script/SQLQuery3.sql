@@ -55,6 +55,7 @@ FechaNacimiento datetime not null,
 Estado bit default 1
 )
 go
+
 --Productos (mios) que se vende a clientes
 Create table Ventas_movimiento (
 IdVentaMovimiento bigint not null identity(1,1) primary key, 
@@ -64,6 +65,7 @@ FechaVenta datetime null,
 Cantidad int not null, 
 Precio decimal not null
 )
+
 go
 --Productos que se compra a los proveedores
 Create table Compra_movimiento(
@@ -120,14 +122,14 @@ Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@Sto
 go
 
 -- VALIDA USUARIO  => CHEQUEAR
---create procedure SP_ValidacionUsuario (
---	@Email varchar (100),
---	@Contraseña varchar(100)
---)as 
---BEGIN
---Select U.IdUsuario from Usuarios U
---Where U.Email = @Email AND U.Contraseña = @Contraseña
---END
+create procedure SP_ValidacionUsuario (
+	@Email varchar (100),
+	@Contraseña varchar(100)
+)as 
+BEGIN
+Select U.IdUsuario from Usuarios U
+Where U.Email = @Email AND U.Contraseña = @Contraseña
+END
 
 
 --ELIMINA PRODUCTO
@@ -247,6 +249,7 @@ END
 
 
 GO
+
 --AGREGAR COMPRA
 CREATE PROCEDURE SP_AgregarCompra (
 	@IDProducto bigint, 
@@ -264,14 +267,16 @@ BEGIN
 	set @stockActual = @cantidadStock+ @Cantidad 
 	Update Productos SET Stock=@stockActual WHERE IdProducto= @IdProducto
 END
-Go
+
+GO
 --AGREGAR USUARIO
-CREATE PROCEDURE SP_AgregarUsuario( 
+ALTER PROCEDURE SP_AgregarUsuario( 
 @Email varchar (100),
 @Contraseña varchar(100)
 ) AS
 BEGIN
 insert into Usuarios (Email,Contraseña,TipoUser) output inserted.IdUsuario values (@Email,@Contraseña,2)
+
 
 END
 
@@ -293,3 +298,12 @@ BEGIN
 	set @stockActual = @cantidadStock- @Cantidad 
 	Update Productos SET Stock=@stockActual WHERE IdProducto= @IdProducto
 END
+
+--LISTA USUARIOS
+Go
+CREATE PROCEDURE SP_listarUsuarios AS 
+BEGIN 
+	Select u.IdUsuario,Email,Contraseña,TipoUser from usuarios U
+END
+
+select * From Usuarios
