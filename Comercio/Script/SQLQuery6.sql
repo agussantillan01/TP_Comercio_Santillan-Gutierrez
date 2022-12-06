@@ -60,7 +60,9 @@ Create table Ventas_movimiento (
 IdVentaMovimiento bigint not null identity(1,1) primary key, 
 IdCliente bigint not null foreign key references Clientes (IdCliente), 
 IdProducto bigint not null foreign key references Productos (IdProducto), 
-Cantidad int not null
+FechaVenta datetime null,
+Cantidad int not null, 
+Precio decimal not null
 )
 go
 --Productos que se compra a los proveedores
@@ -246,7 +248,7 @@ END
 
 GO
 --AGREGAR COMPRA
-ALTER PROCEDURE SP_AgregarCompra (
+CREATE PROCEDURE SP_AgregarCompra (
 	@IDProducto bigint, 
 	@IdProveedor bigint, 
 	@Cantidad smallint,
@@ -258,18 +260,36 @@ BEGIN
 	
 	declare @cantidadStock int 
 	declare @stockActual int 
-	Select @cantidadStock=Stock from Productos
+	Select @cantidadStock=Stock from Productos where idProducto=@IDProducto
 	set @stockActual = @cantidadStock+ @Cantidad 
 	Update Productos SET Stock=@stockActual WHERE IdProducto= @IdProducto
 END
 Go
 --AGREGAR USUARIO
-ALTER PROCEDURE SP_AgregarUsuario( 
+CREATE PROCEDURE SP_AgregarUsuario( 
 @Email varchar (100),
 @Contraseña varchar(100)
 ) AS
 BEGIN
 insert into Usuarios (Email,Contraseña,TipoUser) output inserted.IdUsuario values (@Email,@Contraseña,2)
 
+END
 
+--AGREGA VENTA 
+Go
+CREATE PROCEDURE SP_AgregarVenta (
+	@IdCliente bigint, 
+	@IdProducto bigint, 
+	@Cantidad int, 
+	@Precio decimal
+)AS
+BEGIN
+		Insert into Ventas_movimiento (IdCliente, IdProducto, FechaVenta, Cantidad, Precio)
+		values (@IdCliente,@IdProducto,getdate(),@Cantidad, @Precio)
+
+	declare @cantidadStock int 
+	declare @stockActual int 
+	Select @cantidadStock=Stock from Productos where IdProducto=@IdProducto
+	set @stockActual = @cantidadStock- @Cantidad 
+	Update Productos SET Stock=@stockActual WHERE IdProducto= @IdProducto
 END

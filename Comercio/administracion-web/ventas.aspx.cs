@@ -22,7 +22,7 @@ namespace administracion_web
         ProductoNegocio negocioProducto = new ProductoNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtPrecio.Enabled = false;
+           
             try
             {
                 ClienteNegocio clienteNegocio = new ClienteNegocio();
@@ -109,21 +109,26 @@ namespace administracion_web
                 Session.Add("listaVentaEnCarro", listaEnCarrito);
                 Session.Add("TotalVenta", carrito);
 
+                ddlClientes.Enabled = false;
+
             }
-
-
-
-
-
-            
-
-
-
 
 
         }
 
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+            carrito = (listaTotalVenta)Session["TotalVenta"];
+            VentaNegocio negocio = new VentaNegocio();
+            foreach (Venta item in carrito.listado)
+            {
+                negocio.agregarConSP(item);
 
+            }
+            carrito.listado.RemoveAll(i => i.Id != 0);
+            Response.Redirect("registroProductos.aspx", false);
+
+        }
 
 
         public bool AlertaNoHayStock()
@@ -154,6 +159,7 @@ namespace administracion_web
             return false;
 
         }
+
         protected void ddlClientes_DataBound(object sender, EventArgs e)
         {
             ddlClientes.Items.Insert(0, "--Seleccione un cliente--");
@@ -174,5 +180,7 @@ namespace administracion_web
             idProducto = Int64.Parse(ddlProductos.SelectedItem.Value);
 
         }
+
+
     }
 }

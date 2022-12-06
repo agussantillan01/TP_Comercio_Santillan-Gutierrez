@@ -21,10 +21,6 @@
                 <asp:Label Text="Cantidad(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox Text="1" ID="txtCantidad" CssClass="form-control" runat="server" />
             </div>
-            <div class="mb-3">
-                <asp:Label Text="Precio(*)" CssClass="form-label" runat="server" />
-                <asp:TextBox Text="0" ID="txtPrecio" CssClass="form-control" runat="server" />
-            </div>
             <asp:Button Text="+" CssClass="btn btn-success" ID="btnSumarProducto" AutoPostBack="false" OnClick="btnSumarProducto_Click" runat="server" />
             <asp:Label Text="" Style="color: red;" ID="lblError" runat="server" />
         </div>
@@ -63,7 +59,7 @@
             <hr />
         </div>
         <div>
-            <asp:Button Style="float: right;" Text="Aceptar" CssClass="btn btn-success" ID="btnAceptar" runat="server" />
+            <asp:Button Style="float: right;" Text="Aceptar" CssClass="btn btn-success" ID="btnAceptar" OnClick="btnAceptar_Click" runat="server" />
 
         </div>
     </div>

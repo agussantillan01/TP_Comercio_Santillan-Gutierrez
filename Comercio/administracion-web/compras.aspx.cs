@@ -203,7 +203,6 @@ namespace administracion_web
                 }
 
                 carrito.listado.RemoveAll(i => i.Id != 0);
-                int cantidad = carrito.listado.Count();
                 Response.Redirect("registroProductos.aspx");
         }
 
