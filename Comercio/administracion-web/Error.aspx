@@ -8,8 +8,7 @@
         <asp:Label Text="" ID="lblError" runat="server" />
     </div>
     <div style="text-align:center;">
-    <asp:Image ImageUrl="https://cdn-icons-png.flaticon.com/512/2828/2828913.png" runat="server" />
-
+        <img src="../img/error.png" alt="Alternate Text" />
     </div>
 
 </asp:Content>

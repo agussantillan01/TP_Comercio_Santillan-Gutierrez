@@ -246,7 +246,7 @@ END
 
 GO
 --AGREGAR COMPRA
-CREATE PROCEDURE SP_AgregarCompra (
+ALTER PROCEDURE SP_AgregarCompra (
 	@IDProducto bigint, 
 	@IdProveedor bigint, 
 	@Cantidad smallint,
@@ -259,6 +259,17 @@ BEGIN
 	declare @cantidadStock int 
 	declare @stockActual int 
 	Select @cantidadStock=Stock from Productos
-	set @stockActual = @cantidadStock+ @Cantidad
-	Update Productos SET Stock=@stockActual
+	set @stockActual = @cantidadStock+ @Cantidad 
+	Update Productos SET Stock=@stockActual WHERE IdProducto= @IdProducto
+END
+Go
+--AGREGAR USUARIO
+ALTER PROCEDURE SP_AgregarUsuario( 
+@Email varchar (100),
+@Contraseña varchar(100)
+) AS
+BEGIN
+insert into Usuarios (Email,Contraseña,TipoUser) output inserted.IdUsuario values (@Email,@Contraseña,2)
+
+
 END

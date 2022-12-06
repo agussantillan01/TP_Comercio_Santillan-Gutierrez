@@ -3,7 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:GridView ID="dgvMarcas" Style="width: 100%;" runat="server" DataKeyNames="Id" AutogenerateColumns="false"
+    <br />
+<br />
+    <asp:GridView ID="dgvMarcas" Style="width: 50%;" runat="server" DataKeyNames="Id" AutogenerateColumns="false"
         Onclass="table" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged">
         <Columns>
             <asp:BoundField HeaderText="Marca" DataField="NombreMarca" />
@@ -11,6 +13,7 @@
             
         </Columns>
     </asp:GridView>
+    <br />
                <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
     <a type="submit" class="btn btn-primary" href="agregarMarca.aspx">--Agregar Marca--</a>
          <% } %>

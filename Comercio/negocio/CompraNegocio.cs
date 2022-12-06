@@ -8,6 +8,8 @@ using dominio;
 using System.Xml.Linq;
 using System.Data;
 using System.Collections;
+using Microsoft.Win32;
+using static System.Collections.Specialized.BitVector32;
 
 namespace negocio
 {
@@ -62,25 +64,23 @@ namespace negocio
 
         //}
 
-        public void agregarConSP(List<Compra> nuevo)
+        public void agregarConSP(Compra item)
         {
 
             AccesoDatos datos = new AccesoDatos();
    
             try
             {
-                for (int i = 0; i < nuevo.Count(); i++)
-                {
-                   datos.setearProcedimiento("SP_AgregarCompra");
-                   datos.setearParametro("@IDProducto", nuevo[i].Producto.Id);
-                   datos.setearParametro("@IdProveedor", nuevo[i].Proveedor.Id);
-                   datos.setearParametro("@Cantidad", nuevo[i].Cantidad);
-                   datos.setearParametro("@Precio", nuevo[i].Precio);
+                    datos.setearProcedimiento("SP_AgregarCompra");
+                    datos.setearParametro("@IDProducto", item.Producto.Id);
+                    datos.setearParametro("@IdProveedor", item.Proveedor.Id);
+                    datos.setearParametro("@Cantidad", item.Cantidad);
+                    datos.setearParametro("@Precio", item.Precio);
 
                     datos.ejectutarAccion();
                     datos.cerrarConexion();
 
-                }
+                
 
             }
             catch (Exception ex)

@@ -27,15 +27,15 @@
             <div class="mb-3">
                 <asp:Label Text="Fecha Nacimiento(*)" CssClass="form-label" runat="server" />
                 <br />
-                <asp:TextBox ID="txtFecha"  TextMode="Date" class="form-control" runat="server" />
+                <asp:TextBox ID="txtFecha" TextMode="Date" class="form-control" runat="server" />
             </div>
-        </div>
+            <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
 
-        <asp:Button Text="Agregar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
- 
-<%--        <a href="/";>Cancelar </a>--%>
+        </div>
         <div class="col-4"></div>
         <div class="col-4"></div>
-     </div>
+
+        <%--        <a href="/";>Cancelar </a>--%>
+    </div>
 
 </asp:Content>

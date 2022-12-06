@@ -26,7 +26,7 @@
             </div>
 
             <div class="mb-3">
-                <asp:Label Text="Marca o Categoria" for="exampleInputEmail1" class="form-label" runat="server" />
+                <asp:Label Text="Tipo de producto" for="exampleInputEmail1" class="form-label" runat="server" />
                 <asp:TextBox ID="txtNombre" class="form-control" runat="server" />
             </div>
             <asp:Button Text="Aceptar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />

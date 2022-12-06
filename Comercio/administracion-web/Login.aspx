@@ -11,9 +11,7 @@
         <img style="width: 250px;" src="https://www.nicepng.com/png/detail/107-1074679_dental-implant-logo.png" class="rounded" alt="...">
     </div>
 
-
     <div class="row">
-
         <div class="col-3"></div>
         <div class="col">
             <div class="mb-3">

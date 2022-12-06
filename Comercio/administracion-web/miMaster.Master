@@ -34,6 +34,10 @@
                 <div class="navbar-nav" style="float: right;">
                     <a class="nav-link" href="registroMarcas.aspx">Marcas</a>
                     <a class="nav-link" href="registroCategorias.aspx">Categorias</a>
+                    <a href="Login.aspx">
+                        <img style="width:35px;padding-top: 11px; padding-left:6px;padding-right:6px;" src="../img/cerrarSesion.png" alt="" />
+                    </a>
+
                 </div>
             </nav>
             <div class="container">

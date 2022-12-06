@@ -8,7 +8,7 @@
         <asp:Label Text="" ID="lblErrorLogin" Style="color: red;" runat="server" />
     </div>
     <div style="text-align:center;">
-        <asp:Image ImageUrl="https://cdn-icons-png.flaticon.com/512/4319/4319124.png" runat="server" />
+        <img src="../img/errorLogin.png" alt="Error" />
     </div>
 
 </asp:Content>
