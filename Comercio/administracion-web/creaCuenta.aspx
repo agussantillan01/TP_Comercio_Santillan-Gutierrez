@@ -19,6 +19,7 @@
             <div class="mb-3">
                 <asp:Label Text="Email(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox ID="txtEmail" CssClass="form-control" runat="server" />
+                <asp:Label Text="" style="color:red;" ID="lblEmailEncontrado" runat="server" />
             </div>
             <div class="mb-3">
                 <asp:Label Text="Contraseña(*)" CssClass="form-label" runat="server" />

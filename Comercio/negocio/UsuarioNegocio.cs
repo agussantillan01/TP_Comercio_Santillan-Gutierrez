@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace negocio
 {
-    public  class UsuarioNegocio
+    public class UsuarioNegocio
     {
-       public bool Loguear(Usuario usuario)
-       {
+        public bool Loguear(Usuario usuario)
+        {
             AccesoDatos datos = new AccesoDatos();
-			try
-			{
-				datos.setearConsulta("Select IdUsuario,TipoUser from Usuarios Where Email=@Email AND Contraseña=@Contraseña");
-				datos.setearParametro("@Email", usuario.Email);
+            try
+            {
+                datos.setearConsulta("Select IdUsuario,TipoUser from Usuarios Where Email=@Email AND Contraseña=@Contraseña");
+                datos.setearParametro("@Email", usuario.Email);
                 datos.setearParametro("@Contraseña", usuario.Contraseña);
 
                 datos.ejecutarLectura();
@@ -27,11 +27,11 @@ namespace negocio
                 }
                 return false;
             }
-			catch (Exception ex)
-			{
+            catch (Exception ex)
+            {
 
-				throw ex;
-			}
+                throw ex;
+            }
             finally
             {
                 datos.cerrarConexion();
@@ -40,28 +40,58 @@ namespace negocio
         }
 
 
-    //    public void AgregarUsuario(Usuario usuario)
-                   public int AgregarUsuario(Usuario usuario)
+        //    public void AgregarUsuario(Usuario usuario)
+        public int AgregarUsuario(Usuario usuario)
         {
-                AccesoDatos datos = new AccesoDatos();
+            AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearProcedimiento("SP_AgregarUsuario");
                 datos.setearParametro("@Email", usuario.Email);
                 datos.setearParametro("@Contraseña", usuario.Contraseña);
-                         return datos.ejecutarAccionScalar();
-     
-      
+                return datos.ejecutarAccionScalar();
+
+
             }
             catch (Exception ex)
-                {
+            {
 
-                    throw ex;
-                }
-                finally
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Usuario> listarSP()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_listarUsuarios");
+
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
                 {
-                    datos.cerrarConexion();
+                    Usuario aux = new Usuario();
+                    aux.Id = (Int64)datos.Lector["IdUsuario"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Contraseña = (string)datos.Lector["Contraseña"];
+                    aux.TipoUsuario = (TipoUsuario)datos.Lector["TipoUser"];
+                    lista.Add(aux);
                 }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }
