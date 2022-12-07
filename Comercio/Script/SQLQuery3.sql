@@ -275,9 +275,14 @@ ALTER PROCEDURE SP_AgregarUsuario(
 @Contraseña varchar(100)
 ) AS
 BEGIN
+Declare @CantidadUsuarios int 
+Select @CantidadUsuarios= COUNT(DISTINCT U.IdUsuario) from Usuarios U 
+IF (@CantidadUsuarios = 0) BEGIN 
 insert into Usuarios (Email,Contraseña,TipoUser) output inserted.IdUsuario values (@Email,@Contraseña,2)
-
-
+END 
+ELSE BEGIN
+insert into Usuarios (Email,Contraseña,TipoUser) output inserted.IdUsuario values (@Email,@Contraseña,1)
+END 
 END
 
 --AGREGA VENTA 
@@ -301,9 +306,19 @@ END
 
 --LISTA USUARIOS
 Go
-CREATE PROCEDURE SP_listarUsuarios AS 
+ALTER PROCEDURE SP_listarUsuarios (
+	@Email varchar (100)
+)AS 
 BEGIN 
 	Select u.IdUsuario,Email,Contraseña,TipoUser from usuarios U
+	Where Email not like @Email AND TipoUser = 1
 END
 
-select * From Usuarios
+--HACER ADMIN
+go
+create Procedure SP_HacerAdmin(@IdUsuario bigint)
+as
+Begin
+update Usuarios SET TipoUser=2  Where IdUsuario = @IdUsuario
+end
+go

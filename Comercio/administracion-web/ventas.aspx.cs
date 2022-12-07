@@ -15,6 +15,7 @@ namespace administracion_web
         Int64 idCliente;
         Int64 idProducto;
 
+        int numCompra = 0;
         public listaTotalVenta carrito = new listaTotalVenta();
         public List<Venta> listaEnCarrito;
 
@@ -118,6 +119,7 @@ namespace administracion_web
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            numCompra++;
             carrito = (listaTotalVenta)Session["TotalVenta"];
             VentaNegocio negocio = new VentaNegocio();
             foreach (Venta item in carrito.listado)
@@ -125,9 +127,29 @@ namespace administracion_web
                 negocio.agregarConSP(item);
 
             }
-            carrito.listado.RemoveAll(i => i.Id != 0);
-            Response.Redirect("registroProductos.aspx", false);
+            
 
+            Int64 idCliente = Int64.Parse(ddlClientes.SelectedItem.Value.ToString());
+            string emailClienteVenta  = "";
+            foreach (Venta item in carrito.listado)
+            {
+                if (item.Cliente.Id == idCliente)
+                {
+                    emailClienteVenta= item.Cliente.Email.ToString();
+                    break;
+                }
+            }
+
+            if (emailClienteVenta != "")
+            {
+                 EmailServices emailServices = new EmailServices();
+                string msjAsunto = "#"+ numCompra.ToString();
+                 emailServices.armarCorreoCompra(emailClienteVenta, msjAsunto, carrito.listado.ToString());
+                emailServices.enviarEmail();
+            }
+
+            Response.Redirect("registroProductos.aspx", false);
+            carrito.listado.RemoveAll(i => i.Id != 0);
         }
 
 

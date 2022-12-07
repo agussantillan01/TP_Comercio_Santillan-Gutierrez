@@ -21,11 +21,6 @@
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <asp:TextBox type="password" ID="txtPassword" class="form-control" runat="server" />
-
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Administrador</label>
             </div>
             <%--<a class="btn btn-primary" href="registroProductos.aspx" role="button">Ingresar</a>--%>
             <asp:Button Text="Ingresar" ID="btnIngresar" OnClick="btnIngresar_Click1" CssClass="btn btn-primary" runat="server" />

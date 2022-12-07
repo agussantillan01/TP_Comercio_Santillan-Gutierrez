@@ -15,7 +15,6 @@ namespace administracion_web
         public Int64 idTipo;
         public Int64 idMarca;
         public Int64 idProductoSeleccionado;
-       
 
 
         public List<Compra> ListaCompra;
@@ -193,7 +192,7 @@ namespace administracion_web
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-
+                
                 carrito = (listaTotalProductos)Session["total"];
                 CompraNegocio negocio = new CompraNegocio();
 
@@ -204,6 +203,8 @@ namespace administracion_web
 
                 carrito.listado.RemoveAll(i => i.Id != 0);
                 Response.Redirect("registroProductos.aspx");
+
+
         }
 
 

@@ -64,7 +64,7 @@ namespace negocio
             }
         }
 
-        public List<Usuario> listarSP()
+        public List<Usuario> listarSP(string email="")
         {
             List<Usuario> lista = new List<Usuario>();
             AccesoDatos datos = new AccesoDatos();
@@ -72,6 +72,7 @@ namespace negocio
             {
                 datos.setearProcedimiento("SP_listarUsuarios");
 
+                datos.setearParametro("@Email", email);
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {

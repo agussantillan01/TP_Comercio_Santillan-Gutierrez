@@ -18,22 +18,19 @@ namespace administracion_web
 
         public void btnAgregar_Click(object sender, EventArgs e)
         {
-          
-            
-
           Usuario usuario;
           UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             bool seEncontroEmail = false;
             List<Usuario> lista = usuarioNegocio.listarSP();
             foreach (Usuario item in lista)
             {
-                if (txtEmail.Text == item.Email) seEncontroEmail = true;
+                if (txtEmail.Text.ToLower() == item.Email.ToLower()) seEncontroEmail = true;
             }
             
 
             try
             {
-                if (!seEncontroEmail)
+                if (!seEncontroEmail && txtEmail.Text != null && txtConstraseña.Text != null)
                 {
                     usuario = new Usuario(txtEmail.Text, txtConstraseña.Text, false);
                     usuario.Email = txtEmail.Text;
@@ -45,6 +42,10 @@ namespace administracion_web
 
 
                     Response.Redirect("Login.aspx", false);
+                    EmailServices email = new EmailServices();
+                    string msjAsunto = "Bienvenido/a " + txtNombre.Text + "!!!";
+                    email.armarCorreoBienvenida(usuario.Email.ToString(), msjAsunto);
+                    email.enviarEmail();
 
                 } 
                 else

@@ -11,17 +11,46 @@ namespace administracion_web
 {
     public partial class registroUsuarios : System.Web.UI.Page
     {
+        public List<Usuario> cantidadUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            string emailParametro = (string)Session["emailParametro"];
             UsuarioNegocio negocio = new UsuarioNegocio();
-            dgvUsuario.DataSource = negocio.listarSP();
-            dgvUsuario.DataBind();
+            
+
+            if (!IsPostBack)
+            {
+                cantidadUsuario = negocio.listarSP(emailParametro);
+                if (cantidadUsuario.Count() != 0)
+                {
+                    dgvUsuario.DataSource = negocio.listarSP(emailParametro);
+                    dgvUsuario.DataBind();
+
+
+                }
+                else
+                {
+                    dgvUsuario.DataSource = null;
+                }
+            }
+            
+               
+            
+
+
         }
         protected void dgvUsuario_SelectedIndexChanged(object sender, EventArgs e)
         {
             Int64 id = (Int64.Parse(dgvUsuario.SelectedDataKey.Value.ToString()));
             UsuarioNegocio negocio = new UsuarioNegocio();
             negocio.HacerAdmin(id);
+
+            dgvUsuario.DataSource = null;
+            string emailParametro = (string)Session["emailParametro"];
+            dgvUsuario.DataSource = negocio.listarSP(emailParametro);
+            dgvUsuario.DataBind();
             Response.Redirect("registroUsuarios.aspx");
 
         }
