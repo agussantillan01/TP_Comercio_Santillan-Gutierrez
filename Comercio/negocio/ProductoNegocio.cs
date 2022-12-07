@@ -67,6 +67,60 @@ namespace negocio
 
         }
 
+        public List<Producto> listarConFiltro(string id)
+        {
+            List<Producto> lista = new List<Producto>();
+            SqlConnection conexion = new SqlConnection();
+            SqlCommand comando = new SqlCommand();
+            SqlDataReader lector;
+
+            try
+            {
+                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
+                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca where PR.Nombre like '%"+ id +"%'";
+                comando.Connection = conexion;
+
+                conexion.Open();
+                lector = comando.ExecuteReader();
+
+                while (lector.Read())
+                {
+                    Producto prod = new Producto();
+                    prod.Id = (Int64)lector["IdProducto"];
+                    prod.Nombre = (string)lector["Nombre"];
+                    prod.Descripcion = (string)lector["Descripcion"];
+                    prod.stock = (int)lector["Stock"];
+                    prod.stockMinimo = (Int16)lector["StockMinimo"];
+                    prod.Precio = (decimal)lector["Precio"];
+                    prod.Estado = (bool)lector["Estado"];
+
+
+                    prod.Tipo = new Tipo();
+                    prod.Tipo.IdTipo = (Int64)lector["IdTipo"];
+                    prod.Tipo.NombreTipo = (string)lector["Tipo"];
+
+
+                    prod.Marca = new Marca();
+                    prod.Marca.Id = (Int64)lector["IdMarca"];
+                    prod.Marca.NombreMarca = (string)lector["Marca"];
+
+                    lista.Add(prod);
+                }
+
+                conexion.Close();
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+
 
         public void agregarConSP(Producto nuevo)
         {

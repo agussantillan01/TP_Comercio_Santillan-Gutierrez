@@ -4,10 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div style="text-align:center;">
-        <h1>Hubo un probelma</h1>
+        <h1 style="color:grey;">Hubo un probelma</h1>
         <asp:Label Text="" ID="lblError" runat="server" />
     </div>
-    <div style="text-align:center;">
+    <div style="text-align:center;width: 107px;">
         <img src="../img/error.png" alt="Alternate Text" />
     </div>
 
