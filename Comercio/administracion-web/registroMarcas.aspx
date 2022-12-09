@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
 <br />
-    <asp:GridView ID="dgvMarcas" Style="width: 50%;" runat="server" DataKeyNames="Id" AutogenerateColumns="false"
+    <asp:GridView ID="dgvMarcas" Style="width: 50%;" runat="server" DataKeyNames="Id" AutogenerateColumns="false" cssClass="table table-success table-striped"
         Onclass="table" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged">
         <Columns>
             <asp:BoundField HeaderText="Marca" DataField="NombreMarca" />

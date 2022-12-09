@@ -23,7 +23,7 @@
     </div>
 
 
-    <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false"
+    <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false" cssClass="table table-ligth table-striped"
         OnClass="table" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
         <columns>
             <asp:BoundField HeaderText="Tipo" DataField="Tipo" />

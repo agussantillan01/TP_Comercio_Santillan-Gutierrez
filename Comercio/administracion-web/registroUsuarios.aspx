@@ -7,7 +7,7 @@
     <br />
     <%if (cantidadUsuario.Count() != 0)
         { %>
-    <asp:GridView ID="dgvUsuario" Style="width: 50%;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false"
+    <asp:GridView ID="dgvUsuario" Style="width: 50%;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false" cssClass="table table-ligth table-striped"
         Onclass="table" OnSelectedIndexChanged="dgvUsuario_SelectedIndexChanged">
         <Columns>
             <asp:BoundField HeaderText="Id" DataField="Id" />

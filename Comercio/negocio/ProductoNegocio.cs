@@ -79,7 +79,7 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca where PR.Nombre like '%"+ id +"%'";
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.StockMinimo, PR.Precio,PR.Porcentaje ,PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca where PR.Nombre like '%" + id + "' OR M.Nombre LIKE '%" + id + "'  OR T.Nombre LIKE '%" + id + "%'";
                 comando.Connection = conexion;
 
                 conexion.Open();
