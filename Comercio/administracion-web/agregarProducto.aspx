@@ -45,6 +45,10 @@
                 <asp:Label Text="Precio(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox ID="txtPrecio" CssClass="form-control" runat="server" />
             </div>
+                      <div class="mb-3">
+                <asp:Label Text="Porcentaje de ganancia(*)" CssClass="form-label" runat="server" />
+                <asp:TextBox ID="txtPorcentaje" CssClass="form-control" runat="server" />
+            </div>
 
             <asp:Button Text="Aceptar" ID="btnAgregar" OnClick="btnAgregar_Click" CssClass="btn btn-success" runat="server" />
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>

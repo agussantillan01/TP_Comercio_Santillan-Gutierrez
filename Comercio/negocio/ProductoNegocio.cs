@@ -25,7 +25,7 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca ";
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.Porcentaje, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca ";
                 if (id != "")
                 comando.CommandText += "where PR.IdProducto = " + id;
                 comando.Connection = conexion;
@@ -42,6 +42,7 @@ namespace negocio
                     prod.stock = (int)lector["Stock"];
                     prod.stockMinimo = (Int16)lector["StockMinimo"];
                     prod.Precio = (decimal)lector["Precio"];
+                    prod.Porcentaje = (int)lector["Porcentaje"];
                     prod.Estado = (bool)lector["Estado"];
 
 
@@ -93,6 +94,7 @@ namespace negocio
                     prod.stock = (int)lector["Stock"];
                     prod.stockMinimo = (Int16)lector["StockMinimo"];
                     prod.Precio = (decimal)lector["Precio"];
+                    prod.Porcentaje =(int)lector["Porcentaje"];
                     prod.Estado = (bool)lector["Estado"];
 
 
@@ -135,6 +137,7 @@ namespace negocio
                 datos.setearParametro("@Stock",nuevo.stock);
                 datos.setearParametro("@StockMinimo", nuevo.stockMinimo);
                 datos.setearParametro("@Precio", nuevo.Precio);
+                datos.setearParametro("@Porcentaje", nuevo.Porcentaje);
 
                 datos.ejectutarAccion();
 
@@ -164,6 +167,7 @@ namespace negocio
                 datos.setearParametro("@Stock", producto.stock);
                 datos.setearParametro("@StockMinimo", producto.stockMinimo);
                 datos.setearParametro("@Precio", producto.Precio);
+                datos.setearParametro("@Porcentaje", producto.Porcentaje);
 
 
                 datos.ejectutarAccion();

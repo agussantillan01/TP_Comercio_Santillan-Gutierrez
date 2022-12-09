@@ -32,7 +32,7 @@
                 <tr>
                     <td style="padding-right: 150px;"><b>Producto</b> </td>
                     <td style="padding-right: 140px;"><b>Cantidad</b> </td>
-                    <td style="padding-right: 100px;"><b>Precio</b> </td>
+                    <td style="padding-right: 100px;"><b>Precio + % de ganancia</b> </td>
                 </tr>
             </table>
             <table>

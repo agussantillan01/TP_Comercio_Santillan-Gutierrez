@@ -12,7 +12,9 @@ IdTipo bigint not null identity(1,1) primary key,
 Nombre varchar (100) not null
 )
 go
-Create table Productos(
+
+
+create table Productos(
 IdProducto bigint not null identity(1,1) primary key,
 Nombre varchar (100) not null, 
 IdTipo bigint not null foreign key references Tipo_Productos (IdTipo),
@@ -21,6 +23,7 @@ IdMarca bigint not null foreign key references Marcas (IdMarca),
 Stock int not null, 
 StockMinimo smallint not null,
 Precio Money not null,
+Porcentaje int not null,
 Estado bit not null default 1
 )
 go 
@@ -67,6 +70,8 @@ Precio decimal not null
 )
 
 go
+
+
 --Productos que se compra a los proveedores
 Create table Compra_movimiento(
 IdCompraMovimiento bigint not null identity (1,1) primary key, 
@@ -89,7 +94,8 @@ Create Procedure SP_ModificaProducto(
 @IdMarca bigint,
 @Stock int, 
 @StockMinimo smallint, 
-@Precio money
+@Precio money,
+@Porcentaje int
 )
 as
 Begin
@@ -100,7 +106,8 @@ IdMarca = @IDMarca,
 IdTipo = @IdTipo,
 Precio = @precio,
 Stock = @stock, 
-StockMinimo = @StockMinimo
+StockMinimo = @StockMinimo,
+Porcentaje = @Porcentaje
 Where IdProducto = @Id
 end
 
@@ -114,9 +121,10 @@ create procedure SP_AgregarProducto(
 	@IdMarca bigint,
 	@Stock int,
 	@StockMinimo smallint,
-	@Precio money
+	@Precio money,
+	@Porcentaje int
 )as
-Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@StockMinimo,@Precio,1)
+Insert into Productos values (@Nombre,@IdTipo, @Descripcion,@IdMarca,@Stock,@StockMinimo,@Precio,@Porcentaje,1)
 
 
 go
@@ -260,17 +268,19 @@ CREATE PROCEDURE SP_AgregarCompra (
 BEGIN 
 	Insert into Compra_movimiento(IdProducto,IdProveedores, Cantidad, Precio)
 	values (@IDProducto,@IdProveedor,@Cantidad,@Precio)
+
 	
 	declare @cantidadStock int 
 	declare @stockActual int 
 	Select @cantidadStock=Stock from Productos where idProducto=@IDProducto
 	set @stockActual = @cantidadStock+ @Cantidad 
 	Update Productos SET Stock=@stockActual WHERE IdProducto= @IdProducto
+	Update Productos SET Precio=@Precio WHERE IdProducto= @IdProducto
 END
 
 GO
 --AGREGAR USUARIO
-ALTER PROCEDURE SP_AgregarUsuario( 
+CREATE PROCEDURE SP_AgregarUsuario( 
 @Email varchar (100),
 @Contraseña varchar(100)
 ) AS
@@ -306,7 +316,7 @@ END
 
 --LISTA USUARIOS
 Go
-ALTER PROCEDURE SP_listarUsuarios (
+CREATE PROCEDURE SP_listarUsuarios (
 	@Email varchar (100)
 )AS 
 BEGIN 

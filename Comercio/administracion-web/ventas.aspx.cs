@@ -96,7 +96,7 @@ namespace administracion_web
                     aux.Cliente = listaCliente.Find(x => x.Id == idCliente);
                     aux.Producto = listaProducto.Find(x => x.Id == idProducto);
                     aux.Cantidad= Int16.Parse(txtCantidad.Text);
-                    aux.Precio = aux.Cantidad * aux.Producto.Precio;
+                    aux.Precio =( aux.Cantidad * aux.Producto.Precio + (aux.Producto.Precio * aux.Producto.Porcentaje / 100));
 
                     carrito.total += aux.Precio * aux.Cantidad;
                     listaEnCarrito.Add(aux);

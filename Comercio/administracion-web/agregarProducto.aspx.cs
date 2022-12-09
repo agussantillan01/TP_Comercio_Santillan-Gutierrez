@@ -52,6 +52,7 @@ namespace administracion_web
                     txtStock.Text = seleccionado.stock.ToString();
                     txtStockMinimo.Text = seleccionado.stockMinimo.ToString();
                     txtPrecio.Text = seleccionado.Precio.ToString();
+                    txtPorcentaje.Text = seleccionado.Porcentaje.ToString();
 
                     ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
                     ddlTipo.SelectedValue = seleccionado.Tipo.IdTipo.ToString();
@@ -79,6 +80,7 @@ namespace administracion_web
             nuevo.stock = int.Parse(txtStock.Text);
             nuevo.stockMinimo = int.Parse(txtStockMinimo.Text);
             nuevo.Precio = decimal.Parse(txtPrecio.Text);
+            nuevo.Porcentaje = int.Parse(txtPorcentaje.Text);
 
             nuevo.Tipo = new Tipo();
             nuevo.Tipo.IdTipo = Int64.Parse(ddlTipo.SelectedValue);
@@ -124,6 +126,7 @@ namespace administracion_web
                 { 
                 ProductoNegocio negocio = new ProductoNegocio();
                 negocio.eliminarConSP(int.Parse(txtId.Text));
+   
                     Response.Redirect("registroProductos.aspx");
                 }
             }
