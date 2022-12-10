@@ -45,7 +45,7 @@ namespace administracion_web
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 Session.Add("Error", "Error al completarse los datos");
@@ -95,6 +95,7 @@ namespace administracion_web
                         List<Producto> listaProducto = negocioProducto.listar();
 
                         Venta aux = new Venta();
+                        aux.Id = idProducto;
                         aux.Cliente = listaCliente.Find(x => x.Id == idCliente);
                         aux.Producto = listaProducto.Find(x => x.Id == idProducto);
                         aux.Cantidad = Int16.Parse(txtCantidad.Text);
@@ -225,6 +226,33 @@ namespace administracion_web
 
         }
 
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                carrito = (listaTotalVenta)Session["TotalVenta"];
+                Int64 idEliminarProducto = Int64.Parse(ddlProductos.SelectedItem.Value.ToString());
+                List<Venta> listVenta = (List<Venta>)Session["listaVentaEnCarro"];
+                Venta elim = listVenta.Find(x => x.Id == idEliminarProducto);
+                listVenta.Remove(elim);
 
+                carrito.total -= elim.Precio * elim.Cantidad;
+                if (carrito.total < 0) carrito.total = 0;
+                lblPrecioTotal.Text = "Total: " + carrito.total.ToString("00.00");
+                Session.Add("listaVentaEnCarro", listVenta);
+                Session.Add("TotalVenta", carrito);
+                tabla_productosVenta.DataSource = null;
+                tabla_productosVenta.DataSource = listVenta;
+                tabla_productosVenta.DataBind();
+
+                if (carrito.listado.Count() == 0) ddlClientes.Enabled = true;
+            }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "asdadsa");
+                Response.Redirect("Error.aspx", false);
+            }
+        }
     }
 }

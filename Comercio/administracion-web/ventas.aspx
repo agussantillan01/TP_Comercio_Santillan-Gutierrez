@@ -44,7 +44,7 @@
                             <td style="padding-right: 200px;"><%#Eval("Cantidad") %></td>
                             <td style="padding-right: 80px;"><%#Eval("Precio") %></td>
                             <td>
-                                <asp:Button CssClass="btn btn-danger" Text="-" ID="btnEliminar" runat="server" />
+                                <asp:Button CssClass="btn btn-danger" Text="-" ID="btnEliminar" OnClick="btnEliminar_Click" runat="server" />
                             </td>
                             <td>
                                 <asp:Label Text="" ID="lblSubTotal" runat="server" />

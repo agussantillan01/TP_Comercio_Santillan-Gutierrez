@@ -211,8 +211,6 @@ namespace administracion_web
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            try
-            {
                 carrito = (listaTotalProductos)Session["total"];
                 CompraNegocio negocio = new CompraNegocio();
 
@@ -223,16 +221,6 @@ namespace administracion_web
 
                 carrito.listado.RemoveAll(i => i.Id != 0);
                 Response.Redirect("registroProductos.aspx");
-            }
-            catch (Exception)
-            {
-
-                Session.Add("Error", "Hubo un error al realizar la compra");
-                Response.Redirect("Error.aspx", false);
-            }
-                
-               
-
 
         }
 
