@@ -34,10 +34,12 @@ namespace administracion_web
                     
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw;
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false);
             }
             
 
@@ -47,30 +49,40 @@ namespace administracion_web
 
         protected void btnAceptar_Click2(object sender, EventArgs e)
         {
-            if (txtNombre.Text != "" && txtDomicilio.Text != "" && txtCuil .Text!= "")
+            try
             {
-                
-                ProveedorNegocio negocio = new ProveedorNegocio();
-                Proveedor proveedores = new Proveedor();
-                proveedores.Nombre = txtNombre.Text;
-                proveedores.Domicilio = txtDomicilio.Text;
-                proveedores.Email = txtEmail.Text;
-                proveedores.Cuil = txtCuil.Text;
-                if (Request.QueryString["IdProveedor"] != null)
+                if (txtNombre.Text != "" && txtDomicilio.Text != "" && txtCuil.Text != "")
                 {
-                    proveedores.Id = Int64.Parse(txtIdProveedores.Text);
-                    negocio.modificarConSP(proveedores);
+
+                    ProveedorNegocio negocio = new ProveedorNegocio();
+                    Proveedor proveedores = new Proveedor();
+                    proveedores.Nombre = txtNombre.Text;
+                    proveedores.Domicilio = txtDomicilio.Text;
+                    proveedores.Email = txtEmail.Text;
+                    proveedores.Cuil = txtCuil.Text;
+                    if (Request.QueryString["IdProveedor"] != null)
+                    {
+                        proveedores.Id = Int64.Parse(txtIdProveedores.Text);
+                        negocio.modificarConSP(proveedores);
+                    }
+                    else
+                    {
+                        negocio.agregarConSP(proveedores);
+                    }
+
+                    Response.Redirect("registroProveedores.aspx", false);
+
+
+
                 }
-                else
-                {
-                    negocio.agregarConSP(proveedores);
-                }
-
-                Response.Redirect("registroProveedores.aspx", false);
-
-
-
             }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false);
+            }
+           
 
 
         }

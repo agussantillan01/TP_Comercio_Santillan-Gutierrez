@@ -48,7 +48,8 @@ namespace administracion_web
             catch (Exception ex)
             {
 
-                throw ex;
+                Session.Add("Error", "Error al completarse los datos");
+                Response.Redirect("Error.aspx", false);
             }
 
 
@@ -57,62 +58,71 @@ namespace administracion_web
 
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
-
-            bool noHayStockSuficiente = AlertaNoHayStock(); // si el cantidad ingresada supera el stock, aparece una alerta
-            bool ProductoYaSeleccionado = false;
-            idProducto = Int64.Parse(ddlProductos.SelectedItem.Value);
-            idCliente = Int64.Parse(ddlClientes.SelectedItem.Value);
-
-
-            listaEnCarrito = (List<Venta>)Session["listaVentaEnCarro"];
-            carrito = (listaTotalVenta)Session["TotalVenta"];
-            
-            if (!noHayStockSuficiente && idProducto != 0 && idCliente != 0) // valido que se completen todos los campos
+            try
             {
+                bool noHayStockSuficiente = AlertaNoHayStock(); // si el cantidad ingresada supera el stock, aparece una alerta
+                bool ProductoYaSeleccionado = false;
+                idProducto = Int64.Parse(ddlProductos.SelectedItem.Value);
+                idCliente = Int64.Parse(ddlClientes.SelectedItem.Value);
+
+
                 listaEnCarrito = (List<Venta>)Session["listaVentaEnCarro"];
                 carrito = (listaTotalVenta)Session["TotalVenta"];
-            
-            
-                if (listaEnCarrito == null)
-                    listaEnCarrito = new List<Venta>();
-            
-                if (carrito == null)
-                    carrito = new listaTotalVenta();
-                else
+
+                if (!noHayStockSuficiente && idProducto != 0 && idCliente != 0) // valido que se completen todos los campos
                 {
-                    foreach (Venta item in carrito.listado)
+                    listaEnCarrito = (List<Venta>)Session["listaVentaEnCarro"];
+                    carrito = (listaTotalVenta)Session["TotalVenta"];
+
+
+                    if (listaEnCarrito == null)
+                        listaEnCarrito = new List<Venta>();
+
+                    if (carrito == null)
+                        carrito = new listaTotalVenta();
+                    else
                     {
-                        if (item.Producto.Id == idProducto)
-                            ProductoYaSeleccionado = true;
+                        foreach (Venta item in carrito.listado)
+                        {
+                            if (item.Producto.Id == idProducto)
+                                ProductoYaSeleccionado = true;
+                        }
                     }
+
+                    if (!ProductoYaSeleccionado)
+                    {
+                        List<Cliente> listaCliente = negocioCliente.listar();
+                        List<Producto> listaProducto = negocioProducto.listar();
+
+                        Venta aux = new Venta();
+                        aux.Cliente = listaCliente.Find(x => x.Id == idCliente);
+                        aux.Producto = listaProducto.Find(x => x.Id == idProducto);
+                        aux.Cantidad = Int16.Parse(txtCantidad.Text);
+                        aux.Precio = (aux.Cantidad * aux.Producto.Precio + (aux.Producto.Precio * aux.Producto.Porcentaje / 100));
+
+                        carrito.total += aux.Precio * aux.Cantidad;
+                        listaEnCarrito.Add(aux);
+                        carrito.listado = listaEnCarrito;
+
+
+                    }
+                    tabla_productosVenta.DataSource = listaEnCarrito;
+                    tabla_productosVenta.DataBind();
+                    lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
+                    Session.Add("listaVentaEnCarro", listaEnCarrito);
+                    Session.Add("TotalVenta", carrito);
+
+                    ddlClientes.Enabled = false;
+
                 }
-
-                if (!ProductoYaSeleccionado)
-                {
-                    List<Cliente> listaCliente = negocioCliente.listar();
-                    List<Producto> listaProducto = negocioProducto.listar();
-
-                    Venta aux = new Venta();
-                    aux.Cliente = listaCliente.Find(x => x.Id == idCliente);
-                    aux.Producto = listaProducto.Find(x => x.Id == idProducto);
-                    aux.Cantidad= Int16.Parse(txtCantidad.Text);
-                    aux.Precio =( aux.Cantidad * aux.Producto.Precio + (aux.Producto.Precio * aux.Producto.Porcentaje / 100));
-
-                    carrito.total += aux.Precio * aux.Cantidad;
-                    listaEnCarrito.Add(aux);
-                    carrito.listado = listaEnCarrito;
-                    
-
-                }
-                tabla_productosVenta.DataSource = listaEnCarrito;
-                tabla_productosVenta.DataBind();
-                lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
-                Session.Add("listaVentaEnCarro", listaEnCarrito);
-                Session.Add("TotalVenta", carrito);
-
-                ddlClientes.Enabled = false;
-
             }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Camplos incorrectos. Revise los datos ingresados");
+                Response.Redirect("Error.aspx", false); 
+            }
+            
 
 
         }
@@ -120,36 +130,48 @@ namespace administracion_web
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             numCompra++;
-            carrito = (listaTotalVenta)Session["TotalVenta"];
-            VentaNegocio negocio = new VentaNegocio();
-            foreach (Venta item in carrito.listado)
+            try
             {
-                negocio.agregarConSP(item);
+                
+                carrito = (listaTotalVenta)Session["TotalVenta"];
+                VentaNegocio negocio = new VentaNegocio();
+                foreach (Venta item in carrito.listado)
+                {
+                    negocio.agregarConSP(item);
 
+                }
+
+
+                Int64 idCliente = Int64.Parse(ddlClientes.SelectedItem.Value.ToString());
+                string emailClienteVenta = "";
+                foreach (Venta item in carrito.listado)
+                {
+                    if (item.Cliente.Id == idCliente)
+                    {
+                        emailClienteVenta = item.Cliente.Email.ToString();
+                        break;
+                    }
+                }
+
+                if (emailClienteVenta != "")
+                {
+                    EmailServices emailServices = new EmailServices();
+                    string msjAsunto = "#" + numCompra.ToString();
+                    string msjCuerpo = "Usted realizó una compra en Implante Dental, de un total de ... $" + carrito.total.ToString();
+                    emailServices.armarCorreoCompra(emailClienteVenta, msjAsunto, msjCuerpo);
+                    emailServices.enviarEmail();
+                }
+
+                Response.Redirect("registroProductos.aspx", false);
+                carrito.listado.RemoveAll(i => i.Id != 0);
+            }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Hubo un error al Realizar la venta");
+                Response.Redirect("Error.aspx", false);
             }
             
-
-            Int64 idCliente = Int64.Parse(ddlClientes.SelectedItem.Value.ToString());
-            string emailClienteVenta  = "";
-            foreach (Venta item in carrito.listado)
-            {
-                if (item.Cliente.Id == idCliente)
-                {
-                    emailClienteVenta= item.Cliente.Email.ToString();
-                    break;
-                }
-            }
-
-            if (emailClienteVenta != "")
-            {
-                 EmailServices emailServices = new EmailServices();
-                string msjAsunto = "#"+ numCompra.ToString();
-                 emailServices.armarCorreoCompra(emailClienteVenta, msjAsunto, carrito.listado.ToString());
-                emailServices.enviarEmail();
-            }
-
-            Response.Redirect("registroProductos.aspx", false);
-            carrito.listado.RemoveAll(i => i.Id != 0);
         }
 
 

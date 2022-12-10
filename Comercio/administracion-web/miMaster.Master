@@ -28,18 +28,20 @@
                             <a class="nav-link active" aria-current="page" href="registroProductos.aspx">Productos</a>
                             <a class="nav-link" href="registroCompras.aspx">Compras</a>
                             <a class="nav-link" href="registroVentas.aspx">Ventas</a>
-                                      <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
+                             <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
                             <a class="nav-link" href="registroUsuarios.aspx">Usuarios</a>
-                                     <% } %>
+                            <% } %>
                         </div>
                     </div>
                 </div>
                 <div class="navbar-nav" style="float: right;">
                     <a class="nav-link" href="registroMarcas.aspx">Marcas</a>
                     <a class="nav-link" href="registroCategorias.aspx">Categorias</a>
-                    <a href="Login.aspx">
+                    <asp:Button Text="Cerrar Sesion" ID="btnCerrarSesion" CssClass="btn btn-outline-danger" OnClick="btnCerrarSesion_Click" runat="server" />
+
+<%--                    <a href="Login.aspx">
                         <img style="width:35px;padding-top: 11px; padding-left:6px;padding-right:6px;" src="../img/cerrarSesion.png" alt="" />
-                    </a>
+                    </a>--%>
 
                 </div>
             </nav>

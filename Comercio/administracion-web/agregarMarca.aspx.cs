@@ -40,10 +40,12 @@ namespace administracion_web
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw;
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false);
             }
  
 
@@ -53,33 +55,44 @@ namespace administracion_web
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
 
-            string Seleccionado = ddlProductoMarca.SelectedItem.ToString();
-            if (Seleccionado== "Marca" && txtNombre.Text != "")
+            try
             {
-
-                Response.Redirect("registroMarcas.aspx", false);
-                MarcaNegocio negocio = new MarcaNegocio();
-                Marca marca = new Marca();
-                marca.NombreMarca = txtNombre.Text;
-                if (Request.QueryString["IdMarca"] != null)
+                string Seleccionado = ddlProductoMarca.SelectedItem.ToString();
+                if (Seleccionado == "Marca" && txtNombre.Text != "")
                 {
-                    marca.Id = Int64.Parse(txtIdMarca.Text);
-                    negocio.modificarConSP(marca);
+
+                    Response.Redirect("registroMarcas.aspx", false);
+                    MarcaNegocio negocio = new MarcaNegocio();
+                    Marca marca = new Marca();
+                    marca.NombreMarca = txtNombre.Text;
+                    if (Request.QueryString["IdMarca"] != null)
+                    {
+                        marca.Id = Int64.Parse(txtIdMarca.Text);
+                        negocio.modificarConSP(marca);
+                    }
+                    else
+                    {
+                        negocio.agregar(marca);
+                    }
+
+
+
                 }
                 else
                 {
-                    negocio.agregar(marca);
+                    noHayRegistro = true;
+                    lblAlertError.Text = "Recuerde llenar los campos!";
                 }
-
-                
-                
+                Response.Redirect("registroMarcas.aspx", false);
             }
-            else
+            catch (Exception)
             {
-                noHayRegistro = true;
-                lblAlertError.Text = "Recuerde llenar los campos!";
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false); ; ;
             }
-            Response.Redirect("registroMarcas.aspx", false);
+
+            
 
         }
     }

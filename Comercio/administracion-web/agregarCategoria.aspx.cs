@@ -34,40 +34,51 @@ namespace administracion_web
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw;
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false);
             }
 
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            string Seleccionado = ddlProductoCategoria.SelectedItem.ToString();
-
-            if (Seleccionado == "Categoria" && txtNombre.Text != "")
+            try
             {
-                Response.Redirect("registroCategorias.aspx", false);
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                Tipo tipo = new Tipo();
-                tipo.NombreTipo = txtNombre.Text;
-                if (Request.QueryString["IdCategoria"] != null)
+                string Seleccionado = ddlProductoCategoria.SelectedItem.ToString();
+
+                if (Seleccionado == "Categoria" && txtNombre.Text != "")
                 {
-                    tipo.IdTipo = Int64.Parse(txtIdCategoria.Text);
-                    negocio.modificarConSP(tipo);
+                    Response.Redirect("registroCategorias.aspx", false);
+                    CategoriaNegocio negocio = new CategoriaNegocio();
+                    Tipo tipo = new Tipo();
+                    tipo.NombreTipo = txtNombre.Text;
+                    if (Request.QueryString["IdCategoria"] != null)
+                    {
+                        tipo.IdTipo = Int64.Parse(txtIdCategoria.Text);
+                        negocio.modificarConSP(tipo);
+                    }
+                    else
+                    {
+
+                        negocio.agregar(tipo);
+                    }
                 }
                 else
                 {
-
-                negocio.agregar(tipo);
+                    noHayRegistro = true;
+                    lblAlertError.Text = "Recuerde llenar los campos!";
                 }
             }
-            else
+            catch (Exception)
             {
-                noHayRegistro = true;
-                lblAlertError.Text = "Recuerde llenar los campos!";
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false); ;
             }
+
         }
     }
 }

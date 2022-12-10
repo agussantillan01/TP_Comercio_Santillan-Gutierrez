@@ -1,4 +1,5 @@
 ﻿using negocio;
+using dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace administracion_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null)
+            Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (usuario == null)
             {
                 Session.Add("Error", "Debes loguearte!");
                 Response.Redirect("ErrorLogin.aspx",false);

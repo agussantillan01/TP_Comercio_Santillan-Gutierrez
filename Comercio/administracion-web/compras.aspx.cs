@@ -24,7 +24,6 @@ namespace administracion_web
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
             txtId.Enabled = false;
             ddlMarca.Enabled = true;
             ddlProducto.Enabled = true;
@@ -93,106 +92,127 @@ namespace administracion_web
 
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
-
-            ddlProveedor.Enabled = false;
-            bool ProductoYaSeleccionado = false;
-            Int64 IdProveedor = Int64.Parse(ddlProveedor.SelectedItem.Value);
-
-            string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
-            //Guardo en la lista completa de Productos
-            List<Producto> listaProducto = listadoProductos();
-            foreach (var item in listaProducto) // Recorro la lista completa de productos
+            try
             {
-                if (item.Nombre.ToString() == nombreProductoSeleccionado) // si el nombre del producto = producto seleccionado
-                {
-                    idProductoSeleccionado = item.Id;
-                    break;
-                }
-            }
 
-            //******* LISTA DE COMPRA*****************
-            ListaCompra = (List<Compra>)Session["listaEnCarro"];
-            carrito = (listaTotalProductos)Session["total"];
-            bool IngresoCantidadIncorrecta = convierteTextoAInt(txtCantidad.Text);
-            bool IngresoPrecioIncorrecto = convierteTextoADecimal(txtPrecio.Text);
-            if (!IngresoCantidadIncorrecta && !IngresoPrecioIncorrecto)
-            {
-                if (ListaCompra == null)
-                    ListaCompra = new List<Compra>();
+                ddlProveedor.Enabled = false;
+                bool ProductoYaSeleccionado = false;
+                Int64 IdProveedor = Int64.Parse(ddlProveedor.SelectedItem.Value);
 
-
-                if (carrito == null)
+                string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
+                                                                                               //Guardo en la lista completa de Productos
+                List<Producto> listaProducto = listadoProductos();
+                foreach (var item in listaProducto) // Recorro la lista completa de productos
                 {
-                    carrito = new listaTotalProductos();
-                }
-                else
-                {
-                    foreach (Compra item in carrito.listado)
+                    if (item.Nombre.ToString() == nombreProductoSeleccionado) // si el nombre del producto = producto seleccionado
                     {
-                        if (item.Producto.Id == idProductoSeleccionado)
-                            ProductoYaSeleccionado = true;
+                        idProductoSeleccionado = item.Id;
+                        break;
                     }
                 }
 
-
-                if (idProductoSeleccionado != 0 && !ProductoYaSeleccionado)
+                //******* LISTA DE COMPRA*****************
+                ListaCompra = (List<Compra>)Session["listaEnCarro"];
+                carrito = (listaTotalProductos)Session["total"];
+                bool IngresoCantidadIncorrecta = convierteTextoAInt(txtCantidad.Text);
+                bool IngresoPrecioIncorrecto = convierteTextoADecimal(txtPrecio.Text);
+                if (!IngresoCantidadIncorrecta && !IngresoPrecioIncorrecto)
                 {
-                    Compra aux = new Compra();
-                    aux.Cantidad = Int16.Parse(txtCantidad.Text);
-                    aux.Precio = decimal.Parse(txtPrecio.Text);
-                    foreach (var item in listaProducto)
+                    if (ListaCompra == null)
+                        ListaCompra = new List<Compra>();
+
+
+                    if (carrito == null)
                     {
-                        if (item.Id == idProductoSeleccionado)
+                        carrito = new listaTotalProductos();
+                    }
+                    else
+                    {
+                        foreach (Compra item in carrito.listado)
                         {
-                            aux.Producto = item;
-                            aux.Id = idProductoSeleccionado;
-                            break;
+                            if (item.Producto.Id == idProductoSeleccionado)
+                                ProductoYaSeleccionado = true;
                         }
                     }
 
-                    List<Proveedor> listaProveedores = listadoProveedores();
 
-                    aux.Proveedor = listaProveedores.Find(x => x.Id == IdProveedor);
+                    if (idProductoSeleccionado != 0 && !ProductoYaSeleccionado)
+                    {
+                        Compra aux = new Compra();
+                        aux.Cantidad = Int16.Parse(txtCantidad.Text);
+                        aux.Precio = decimal.Parse(txtPrecio.Text);
+                        foreach (var item in listaProducto)
+                        {
+                            if (item.Id == idProductoSeleccionado)
+                            {
+                                aux.Producto = item;
+                                aux.Id = idProductoSeleccionado;
+                                break;
+                            }
+                        }
 
-                    carrito.total += aux.Precio * aux.Cantidad;
-                    ListaCompra.Add(aux);
+                        List<Proveedor> listaProveedores = listadoProveedores();
 
-                    carrito.listado = ListaCompra;
+                        aux.Proveedor = listaProveedores.Find(x => x.Id == IdProveedor);
 
+                        carrito.total += aux.Precio * aux.Cantidad;
+                        ListaCompra.Add(aux);
+
+                        carrito.listado = ListaCompra;
+
+                    }
+                    tabla_productos.DataSource = ListaCompra;
+                    tabla_productos.DataBind();
+                    lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
+                    Session.Add("listaEnCarro", ListaCompra);
+                    Session.Add("total", carrito);
                 }
-                tabla_productos.DataSource = ListaCompra;
-                tabla_productos.DataBind();
-                lblPrecioTotal.Text = "Total: $" + carrito.total.ToString("00.00");
-                Session.Add("listaEnCarro", ListaCompra);
-                Session.Add("total", carrito);
             }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false); 
+            }
+
 
             
         }
 
         protected void btnEliminarProductoLista_Click(object sender, EventArgs e)
         {
-            carrito =(listaTotalProductos)Session["total"];
-            Int64 idEliminarProducto= Int64.Parse(((Button)sender).CommandArgument);
-            List<Compra> listaCompra = (List<Compra>)Session["listaEnCarro"];
-            Compra elim = listaCompra.Find(x => x.Id == idEliminarProducto);
-            listaCompra.Remove(elim);
+            try
+            {
+                carrito = (listaTotalProductos)Session["total"];
+                Int64 idEliminarProducto = Int64.Parse(((Button)sender).CommandArgument);
+                List<Compra> listaCompra = (List<Compra>)Session["listaEnCarro"];
+                Compra elim = listaCompra.Find(x => x.Id == idEliminarProducto);
+                listaCompra.Remove(elim);
 
-            carrito.total -= elim.Precio * elim.Cantidad;
-            if (carrito.total < 0) carrito.total = 0;
-            lblPrecioTotal.Text = "Total: " + carrito.total.ToString("00.00");
-            Session.Add("listaEnCarro", listaCompra);
-            Session.Add("total", carrito);
-            tabla_productos.DataSource = null;
-            tabla_productos.DataSource = listaCompra;
-            tabla_productos.DataBind();
+                carrito.total -= elim.Precio * elim.Cantidad;
+                if (carrito.total < 0) carrito.total = 0;
+                lblPrecioTotal.Text = "Total: " + carrito.total.ToString("00.00");
+                Session.Add("listaEnCarro", listaCompra);
+                Session.Add("total", carrito);
+                tabla_productos.DataSource = null;
+                tabla_productos.DataSource = listaCompra;
+                tabla_productos.DataBind();
 
-            if(carrito.listado.Count()==0) ddlProveedor.Enabled = true;
+                if (carrito.listado.Count() == 0) ddlProveedor.Enabled = true;
+            }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Hubo un error al eliminar el producto");
+                Response.Redirect("Error.aspx", false); 
+            }
+           
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-                
+            try
+            {
                 carrito = (listaTotalProductos)Session["total"];
                 CompraNegocio negocio = new CompraNegocio();
 
@@ -203,6 +223,15 @@ namespace administracion_web
 
                 carrito.listado.RemoveAll(i => i.Id != 0);
                 Response.Redirect("registroProductos.aspx");
+            }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Hubo un error al realizar la compra");
+                Response.Redirect("Error.aspx", false);
+            }
+                
+               
 
 
         }

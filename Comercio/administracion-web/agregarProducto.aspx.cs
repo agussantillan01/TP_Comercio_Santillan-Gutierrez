@@ -62,52 +62,64 @@ namespace administracion_web
 
            }
 
-           catch (Exception ex)
+           catch (Exception )
            {
 
-               throw;
-           }
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false);
+            }
 
             
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            Producto nuevo = new Producto();
-            ProductoNegocio negocio = new ProductoNegocio();
-            nuevo.Nombre = txtNombre.Text;
-            nuevo.Descripcion = txtDescripcion.Text;
-            nuevo.stock = int.Parse(txtStock.Text);
-            nuevo.stockMinimo = int.Parse(txtStockMinimo.Text);
-            nuevo.Precio = decimal.Parse(txtPrecio.Text);
-            nuevo.Porcentaje = int.Parse(txtPorcentaje.Text);
-
-            nuevo.Tipo = new Tipo();
-            nuevo.Tipo.IdTipo = Int64.Parse(ddlTipo.SelectedValue);
-
-            nuevo.Marca = new Marca();
-            nuevo.Marca.Id = Int64.Parse(ddlMarca.SelectedValue);
-            
-            if (Request.QueryString["Id"] != null)
+            try
             {
-                nuevo.Id =Int64.Parse(txtId.Text);
-                negocio.modificarConSP(nuevo);
 
-            }
-            else
-            {
-               bool fueEncontrado= seEncontroProducto(nuevo.Nombre.ToUpper());
-                if (fueEncontrado)
+                Producto nuevo = new Producto();
+                ProductoNegocio negocio = new ProductoNegocio();
+                nuevo.Nombre = txtNombre.Text;
+                nuevo.Descripcion = txtDescripcion.Text;
+                nuevo.stock = int.Parse(txtStock.Text);
+                nuevo.stockMinimo = int.Parse(txtStockMinimo.Text);
+                nuevo.Precio = decimal.Parse(txtPrecio.Text);
+                nuevo.Porcentaje = int.Parse(txtPorcentaje.Text);
+
+                nuevo.Tipo = new Tipo();
+                nuevo.Tipo.IdTipo = Int64.Parse(ddlTipo.SelectedValue);
+
+                nuevo.Marca = new Marca();
+                nuevo.Marca.Id = Int64.Parse(ddlMarca.SelectedValue);
+
+                if (Request.QueryString["Id"] != null)
                 {
-                    Console.WriteLine("El producto ya fue registrado");
-                    lblError.Text = "El Producto " + nuevo.Nombre + " ya se ha registrado.";
+                    nuevo.Id = Int64.Parse(txtId.Text);
+                    negocio.modificarConSP(nuevo);
+
                 }
                 else
                 {
-                negocio.agregarConSP(nuevo);
-                    Response.Redirect("registroProductos.aspx", false);
+                    bool fueEncontrado = seEncontroProducto(nuevo.Nombre.ToUpper());
+                    if (fueEncontrado)
+                    {
+                        Console.WriteLine("El producto ya fue registrado");
+                        lblError.Text = "El Producto " + nuevo.Nombre + " ya se ha registrado.";
+                    }
+                    else
+                    {
+                        negocio.agregarConSP(nuevo);
+                        Response.Redirect("registroProductos.aspx", false);
+                    }
                 }
             }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false);
+            }
+            
                
             
 

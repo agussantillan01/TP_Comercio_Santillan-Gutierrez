@@ -34,10 +34,11 @@ namespace administracion_web
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false); ;
             }
             
 
@@ -47,28 +48,39 @@ namespace administracion_web
 
         protected void btnAceptar_Click1(object sender, EventArgs e)
         {
-            if (txtNombre.Text != "" || txtApellido.Text != "" || txtFechaNacimiento.Text != "")
+            try
             {
-                
-                ClienteNegocio negocio = new ClienteNegocio();
-                Cliente cliente = new Cliente();
-                cliente.Nombre = txtNombre.Text;
-                cliente.Apellido = txtApellido.Text;
-                cliente.Email = txtEmail.Text;
-                cliente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                if(Request.QueryString["IdCliente"] != null)
+                if (txtNombre.Text != "" || txtApellido.Text != "" || txtFechaNacimiento.Text != "")
                 {
-                    cliente.Id = Int64.Parse(txtIdCliente.Text);
-                    negocio.modificarConSP(cliente);
-                }
-                else
-                {
-                    negocio.agregarConSP(cliente);
-                }
-                Response.Redirect("registroClientes.aspx", false);
+
+                    ClienteNegocio negocio = new ClienteNegocio();
+                    Cliente cliente = new Cliente();
+                    cliente.Nombre = txtNombre.Text;
+                    cliente.Apellido = txtApellido.Text;
+                    cliente.Email = txtEmail.Text;
+                    cliente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                    if (Request.QueryString["IdCliente"] != null)
+                    {
+                        cliente.Id = Int64.Parse(txtIdCliente.Text);
+                        negocio.modificarConSP(cliente);
+                    }
+                    else
+                    {
+                        negocio.agregarConSP(cliente);
+                    }
+                    Response.Redirect("registroClientes.aspx", false);
 
 
+                }
             }
+            catch (Exception)
+            {
+
+                Session.Add("Error", "Campos incorrectos");
+                Response.Redirect("Error.aspx", false); ;
+            }
+
+            
 
 
         }
