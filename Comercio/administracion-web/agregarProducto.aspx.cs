@@ -51,7 +51,6 @@ namespace administracion_web
                     txtDescripcion.Text = seleccionado.Descripcion;
                     txtStock.Text = seleccionado.stock.ToString();
                     txtStockMinimo.Text = seleccionado.stockMinimo.ToString();
-                    txtPrecio.Text = seleccionado.Precio.ToString();
                     txtPorcentaje.Text = seleccionado.Porcentaje.ToString();
 
                     ddlMarca.SelectedValue = seleccionado.Marca.Id.ToString();
@@ -83,7 +82,7 @@ namespace administracion_web
                 nuevo.Descripcion = txtDescripcion.Text;
                 nuevo.stock = int.Parse(txtStock.Text);
                 nuevo.stockMinimo = int.Parse(txtStockMinimo.Text);
-                nuevo.Precio = decimal.Parse(txtPrecio.Text);
+                nuevo.Precio = 0;
                 nuevo.Porcentaje = int.Parse(txtPorcentaje.Text);
 
                 nuevo.Tipo = new Tipo();

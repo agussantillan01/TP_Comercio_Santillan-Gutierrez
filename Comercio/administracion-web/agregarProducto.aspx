@@ -6,12 +6,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="row">
-        <%if(Request.QueryString["Id"] != null) {%>
+        <%if (Request.QueryString["Id"] != null)
+            {%>
         <h1>Modifica/Elimina</h1>
-        <%} else
+        <%}
+            else
             {%>
         <h1>Agregue Producto</h1>
-            <%}%>
+        <%}%>
         <div class="col">
             <div class="mb-3">
                 <asp:Label Text="Id(*)" CssClass="form-label" runat="server" />
@@ -42,10 +44,6 @@
                 <asp:TextBox ID="txtStockMinimo" CssClass="form-control" runat="server" />
             </div>
             <div class="mb-3">
-                <asp:Label Text="Precio(*)" CssClass="form-label" runat="server" />
-                <asp:TextBox ID="txtPrecio" CssClass="form-control" runat="server" />
-            </div>
-                      <div class="mb-3">
                 <asp:Label Text="Porcentaje de ganancia(*)" CssClass="form-label" runat="server" />
                 <asp:TextBox ID="txtPorcentaje" CssClass="form-control" runat="server" />
             </div>
@@ -71,7 +69,7 @@
 
         <div class="col-4"></div>
 
-        <asp:Label Text="" ID="lblError" style="color:red;"  runat="server" />
+        <asp:Label Text="" ID="lblError" Style="color: red;" runat="server" />
     </div>
 </asp:Content>
 

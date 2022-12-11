@@ -4,14 +4,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <hr />
-    <asp:GridView ID="dgvClientes" Style="width: 60%; text-align: center;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false"
+    <asp:GridView ID="dgvClientes" Style="width: 60%; text-align: center;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false" cssClass="table table-ligth table-striped"
             OnClass="table" OnSelectedIndexChanged="dgvClientes_SelectedIndexChanged">
             <Columns>
                 <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                 <asp:BoundField HeaderText="Apellido" DataField="Apellido" />
                 <asp:BoundField HeaderText="Email" DataField="Email" />
                 <asp:BoundField HeaderText="Nacimiento" DataField="FechaNacimiento" />
-                <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
+                <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="✏️" />
             </Columns>
         </asp:GridView>
          

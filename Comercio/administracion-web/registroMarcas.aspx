@@ -9,7 +9,7 @@
         Onclass="table" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged">
         <Columns>
             <asp:BoundField HeaderText="Marca" DataField="NombreMarca" />
-            <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
+            <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="✏️" />
             
         </Columns>
     </asp:GridView>

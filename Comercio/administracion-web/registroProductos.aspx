@@ -33,7 +33,7 @@
             <asp:BoundField HeaderText="Stock Min." DataField="StockMinimo" />
             <asp:BoundField HeaderText="Precio Compra" DataField="Precio" />
             <asp:BoundField HeaderText="Porcentaje de ganancia" DataField="Porcentaje" />
-            <asp:CommandField HeaderText="Modifica/Elimina" ShowSelectButton="true" SelectText="Modificar/Eliminar" />
+            <asp:CommandField HeaderText="Modifica/Elimina" ShowSelectButton="true" SelectText="✏️" />
 
         </columns>
 

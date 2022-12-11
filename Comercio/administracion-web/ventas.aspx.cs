@@ -26,7 +26,6 @@ namespace administracion_web
         Int64 idCliente;
         Int64 idProducto;
 
-        int NumVenta = 0;
         public listaTotalVenta carrito = new listaTotalVenta();
         public List<Venta> listaEnCarrito;
 
@@ -145,7 +144,7 @@ namespace administracion_web
        
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            NumVenta++;
+            
 
             //SaveFileDialog guardar = new SaveFileDialog();
             //guardar.FileName ="Boleta Nro " + NumVenta.ToString() + ".pdf";
@@ -184,40 +183,47 @@ namespace administracion_web
                         break;
                     }
                 }
+                DateTime fechaVenta = DateTime.Now;
+
 
                 if (emailClienteVenta != "")
                 {
                     EmailServices emailServices = new EmailServices();
-                    string msjAsunto = "#" + NumVenta.ToString();
-                    string msjCuerpo = "Usted realizó una compra en Implante Dental, de un total de ... $" + carrito.total.ToString();
+                    string msjAsunto = "realizaste una compra en Implante Dental- [ " + fechaVenta.ToString() + " ]";
+                    string msjCuerpo = "";
+                    foreach (Venta item in carrito.listado)
+                    {
+                        msjCuerpo += item.Producto.Nombre.ToString() + ".... $ " + item.Precio.ToString() + "<br>";
+                    }
+                    msjCuerpo += "<br>........................................<br> Total: $" + carrito.total.ToString();
                     emailServices.armarCorreoCompra(emailClienteVenta, msjAsunto, msjCuerpo);
                     emailServices.enviarEmail();
-
-
                 }
 
-               // FileStream fs = new FileStream(@"C:\Users\Probando.pdf", FileMode.Create);
-               // Document doc = new Document(PageSize.A4);
-               // PdfWriter pw = PdfWriter.GetInstance(doc, fs);
 
-               // doc.Open();
+                // FileStream fs = new FileStream(@"C:\Users\Probando.pdf", FileMode.Create);
+                // Document doc = new Document(PageSize.A4);
+                // PdfWriter pw = PdfWriter.GetInstance(doc, fs);
 
-               // iTextSharp.text.Font standarFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                // doc.Open();
 
-               // doc.Add(new Paragraph("Factura"));
-               // doc.Add(Chunk.NEWLINE);
-           
+                // iTextSharp.text.Font standarFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+                // doc.Add(new Paragraph("Factura"));
+                // doc.Add(Chunk.NEWLINE);
 
 
-               //// doc.Add();
 
-               // doc.Close();
-               // pw.Close();
+                //// doc.Add();
+
+                // doc.Close();
+                // pw.Close();
 
 
 
                 Response.Redirect("registroProductos.aspx", false);
                 carrito.listado.RemoveAll(i => i.Id != 0);
+                
             }
             catch (Exception)
             {
