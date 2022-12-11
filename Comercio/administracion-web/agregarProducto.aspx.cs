@@ -141,10 +141,11 @@ namespace administracion_web
                     Response.Redirect("registroProductos.aspx");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                Session.Add("Error al tratar de eliminar",ex);
+                Session.Add("Error", "No se ha podido eliminar el procuto ya que aún cuenta con stock");
+                Response.Redirect("Error.aspx", false);
             }
         }
 
