@@ -11,6 +11,7 @@ namespace administracion_web
 {
     public partial class Default : System.Web.UI.Page
     {
+        [STAThread]
         protected void Page_Load(object sender, EventArgs e)
         {
 

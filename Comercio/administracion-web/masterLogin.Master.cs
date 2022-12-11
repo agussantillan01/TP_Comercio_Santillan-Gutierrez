@@ -9,6 +9,7 @@ namespace administracion_web
 {
     public partial class miMaster : System.Web.UI.MasterPage
     {
+        [STAThread]
         protected void Page_Load(object sender, EventArgs e)
         {
 

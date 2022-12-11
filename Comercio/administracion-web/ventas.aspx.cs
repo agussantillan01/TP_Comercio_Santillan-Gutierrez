@@ -1,5 +1,6 @@
 ﻿using dominio;
 using negocio;
+using Rotativa.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,33 @@ using System.Web;
 using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows;
+using System.IO;
+using Microsoft.Win32;
+using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using System.Xml.Linq;
 
 namespace administracion_web
 {
+
     public partial class ventas : System.Web.UI.Page
     {
+  
         Int64 idCliente;
         Int64 idProducto;
 
-        int numCompra = 0;
+        int NumVenta = 0;
         public listaTotalVenta carrito = new listaTotalVenta();
         public List<Venta> listaEnCarrito;
 
         ClienteNegocio negocioCliente = new ClienteNegocio();
         ProductoNegocio negocioProducto = new ProductoNegocio();
+
+
+   
         protected void Page_Load(object sender, EventArgs e)
         {
            
@@ -101,7 +115,7 @@ namespace administracion_web
                         aux.Cantidad = Int16.Parse(txtCantidad.Text);
                         aux.Precio = (aux.Cantidad * aux.Producto.Precio + (aux.Producto.Precio * aux.Producto.Porcentaje / 100));
 
-                        carrito.total += aux.Precio * aux.Cantidad;
+                        carrito.total += aux.Precio;
                         listaEnCarrito.Add(aux);
                         carrito.listado = listaEnCarrito;
 
@@ -120,7 +134,7 @@ namespace administracion_web
             catch (Exception)
             {
 
-                Session.Add("Error", "Camplos incorrectos. Revise los datos ingresados");
+                Session.Add("Error", "Campos incorrectos. Revise los datos ingresados");
                 Response.Redirect("Error.aspx", false); 
             }
             
@@ -128,12 +142,29 @@ namespace administracion_web
 
         }
 
+       
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            numCompra++;
+            NumVenta++;
+
+            //SaveFileDialog guardar = new SaveFileDialog();
+            //guardar.FileName ="Boleta Nro " + NumVenta.ToString() + ".pdf";
+
+
+            //Response.ContentType = "application/pdf";
+            //Response.AddHeader("content-disposition", "attachment;filename=AlumnosActuales2020" + ".pdf");
+            //HttpContext.Current.Response.Write(document);
+            //Response.Flush();
+            //Response.End();
+
+
+
+
+
+
             try
             {
-                
+
                 carrito = (listaTotalVenta)Session["TotalVenta"];
                 VentaNegocio negocio = new VentaNegocio();
                 foreach (Venta item in carrito.listado)
@@ -157,11 +188,33 @@ namespace administracion_web
                 if (emailClienteVenta != "")
                 {
                     EmailServices emailServices = new EmailServices();
-                    string msjAsunto = "#" + numCompra.ToString();
+                    string msjAsunto = "#" + NumVenta.ToString();
                     string msjCuerpo = "Usted realizó una compra en Implante Dental, de un total de ... $" + carrito.total.ToString();
                     emailServices.armarCorreoCompra(emailClienteVenta, msjAsunto, msjCuerpo);
                     emailServices.enviarEmail();
+
+
                 }
+
+               // FileStream fs = new FileStream(@"C:\Users\Probando.pdf", FileMode.Create);
+               // Document doc = new Document(PageSize.A4);
+               // PdfWriter pw = PdfWriter.GetInstance(doc, fs);
+
+               // doc.Open();
+
+               // iTextSharp.text.Font standarFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.TIMES_ROMAN, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+               // doc.Add(new Paragraph("Factura"));
+               // doc.Add(Chunk.NEWLINE);
+           
+
+
+               //// doc.Add();
+
+               // doc.Close();
+               // pw.Close();
+
+
 
                 Response.Redirect("registroProductos.aspx", false);
                 carrito.listado.RemoveAll(i => i.Id != 0);

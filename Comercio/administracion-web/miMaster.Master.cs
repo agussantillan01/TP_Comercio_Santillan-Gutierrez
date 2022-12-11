@@ -10,6 +10,7 @@ namespace administracion_web
 {
     public partial class Site1 : System.Web.UI.MasterPage
     {
+        [STAThread]
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,9 +24,9 @@ namespace administracion_web
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            
+
             Response.Redirect("Login.aspx", false);
-            Session.Clear();
+
         }
     }
 }
