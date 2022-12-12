@@ -119,18 +119,9 @@ namespace administracion_web
                 bool ProductoYaSeleccionado = false;
                 Int64 IdProveedor = Int64.Parse(ddlProveedor.SelectedItem.Value);
 
-
+                idProductoSeleccionado = Int64.Parse(ddlProducto.SelectedItem.Value);
                 //Guardo en la lista completa de Productos
                 List<Producto> listaProducto = listadoProductos();
-
-                //foreach (var item in listaProducto) // Recorro la lista completa de productos
-                //{
-                //    if (item.Id == IdProductoSeleccionado) // si el nombre del producto = producto seleccionado
-                //    {
-                //        idProductoSeleccionado = item.Id;
-                //        break;
-                //    }
-                //}
 
                 //******* LISTA DE COMPRA*****************
                 ListaCompra = (List<Compra>)Session["listaEnCarro"];
@@ -242,6 +233,7 @@ namespace administracion_web
             }
 
             carrito.listado.RemoveAll(i => i.Id != 0);
+            carrito.total = 0;
             Response.Redirect("registroProductos.aspx");
 
         }
