@@ -25,7 +25,7 @@
             </div>
             <div class="mb-3">
                 <asp:Label Text="Producto(*)" CssClass="form-label" runat="server" />
-                <asp:DropDownList ID="ddlProducto" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlProducto" CssClass="form-select" OnSelectedIndexChanged="ddlProducto_SelectedIndexChanged" runat="server"></asp:DropDownList>
             </div>
             <div class="mb-3">
                 <asp:Label Text="Cantidad(*)" CssClass="form-label" runat="server" />

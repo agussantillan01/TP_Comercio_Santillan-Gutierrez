@@ -95,6 +95,7 @@ namespace administracion_web
                 {
                     nuevo.Id = Int64.Parse(txtId.Text);
                     negocio.modificarConSP(nuevo);
+                    Response.Redirect("registroProductoss.aspx");
 
                 }
                 else
@@ -136,16 +137,37 @@ namespace administracion_web
                 if(chkConfirmarEliminacion.Checked)
                 { 
                 ProductoNegocio negocio = new ProductoNegocio();
-                negocio.eliminarConSP(int.Parse(txtId.Text));
-   
-                    Response.Redirect("registroProductos.aspx");
+                    List<Producto> lista = negocio.listar();
+                    
+                    foreach (var item in lista)
+                    {
+                        if (item.Id == Int64.Parse(txtId.Text))
+                        {
+                            if (item.stock == 0)
+                            {
+                                negocio.eliminarConSP(Int64.Parse(txtId.Text));
+                                Response.Redirect("registroProductos.aspx");
+
+                                break;
+                            }else
+                            {
+                                Session.Add("Error", "No se ha podido eliminar el procuto ya que aún cuenta con stock");
+                                Response.Redirect("Error.aspx", false);
+                                
+                                break;
+                            }
+                            
+                        }
+
+                    }
+                
                 }
             }
             catch (Exception)
             {
 
-                Session.Add("Error", "No se ha podido eliminar el procuto ya que aún cuenta con stock");
-                Response.Redirect("Error.aspx", false);
+                //Session.Add("Error", "No se ha podido actualizar los prodcuto");
+                //Response.Redirect("Error.aspx", false);
             }
         }
 

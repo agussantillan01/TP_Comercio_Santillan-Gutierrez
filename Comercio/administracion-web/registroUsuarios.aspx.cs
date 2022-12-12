@@ -14,30 +14,34 @@ namespace administracion_web
         public List<Usuario> cantidadUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-            string emailParametro = (string)Session["emailParametro"];
-            UsuarioNegocio negocio = new UsuarioNegocio();
-            
-
-            if (!IsPostBack)
+            Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (usuario == null)
             {
-                cantidadUsuario = negocio.listarSP(emailParametro);
-                if (cantidadUsuario.Count() != 0)
-                {
-                    dgvUsuario.DataSource = negocio.listarSP(emailParametro);
-                    dgvUsuario.DataBind();
+                Session.Add("Error", "Debes loguearte!");
+                Response.Redirect("ErrorLogin.aspx", false);
+            }
+            else
+            {
+                string emailParametro = (string)Session["emailParametro"];
+                UsuarioNegocio negocio = new UsuarioNegocio();
 
 
-                }
-                else
+                if (!IsPostBack)
                 {
-                    dgvUsuario.DataSource = null;
+                    cantidadUsuario = negocio.listarSP(emailParametro);
+                    if (cantidadUsuario.Count() != 0)
+                    {
+                        dgvUsuario.DataSource = negocio.listarSP(emailParametro);
+                        dgvUsuario.DataBind();
+
+
+                    }
+                    else
+                    {
+                        dgvUsuario.DataSource = null;
+                    }
                 }
             }
-            
-               
-            
 
 
         }

@@ -14,7 +14,7 @@ namespace administracion_web
     {
         public Int64 idTipo;
         public Int64 idMarca;
-        public Int64 idProductoSeleccionado;
+        public Int64 idProductoSeleccionado = 0;
 
 
         public List<Compra> ListaCompra;
@@ -23,42 +23,55 @@ namespace administracion_web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            txtId.Enabled = false;
-            ddlMarca.Enabled = true;
-            ddlProducto.Enabled = true;
-            ProveedorNegocio negocioProveedor = new ProveedorNegocio();
-            ProductoNegocio negocioProducto = new ProductoNegocio();
-            CategoriaNegocio negocioCategoria = new CategoriaNegocio();
-            MarcaNegocio negocioMarca = new MarcaNegocio();
-
-            if (!IsPostBack)
+            Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (usuario == null)
             {
-                //Completo el desplegable de Productos
-                List<Producto> listaProducto = negocioProducto.listar();
-                Session["listaProducto"] = listaProducto;
+                Session.Add("Error", "Debes loguearte!");
+                Response.Redirect("ErrorLogin.aspx", false);
+            }
+            else
+            {
+                txtId.Enabled = false;
+                ddlMarca.Enabled = true;
+                ddlProducto.Enabled = true;
+                ProveedorNegocio negocioProveedor = new ProveedorNegocio();
+                ProductoNegocio negocioProducto = new ProductoNegocio();
+                CategoriaNegocio negocioCategoria = new CategoriaNegocio();
+                MarcaNegocio negocioMarca = new MarcaNegocio();
 
-                //Completo el desplegable de Proveedor
-                List<Proveedor> listaProveedor = negocioProveedor.listarSP();
-                ddlProveedor.DataSource = listaProveedor;
-                ddlProveedor.DataValueField = "Id";
-                ddlProveedor.DataTextField = "Nombre";
-                ddlProveedor.DataBind();
 
-                //Completo el desplegable de Categoria
-                List<Tipo> listaCategoria = negocioCategoria.listar();
-                ddlCategoria.DataSource = listaCategoria;
-                ddlCategoria.DataValueField = "IdTipo";
-                ddlCategoria.DataTextField = "NombreTipo";
-                ddlCategoria.DataBind();
+                if (!IsPostBack)
+                {
+                    //Completo el desplegable de Productos
+                    List<Producto> listaProducto = negocioProducto.listar();
+                    Session.Add("listaProducto", listaProducto);
+                    // Session["listaProducto"] = listaProducto;
 
-                List<Marca> listaMarca = negocioMarca.listar();
-                ddlMarca.DataSource = listaMarca;
-                ddlMarca.DataValueField = "Id";
-                ddlMarca.DataTextField = "NombreMarca";
-                ddlMarca.DataBind();
+                    //Completo el desplegable de Proveedor
+                    List<Proveedor> listaProveedor = negocioProveedor.listarSP();
+                    ddlProveedor.DataSource = listaProveedor;
+                    ddlProveedor.DataValueField = "Id";
+                    ddlProveedor.DataTextField = "Nombre";
+                    ddlProveedor.DataBind();
+
+                    //Completo el desplegable de Categoria
+                    List<Tipo> listaCategoria = negocioCategoria.listar();
+                    ddlCategoria.DataSource = listaCategoria;
+                    ddlCategoria.DataValueField = "IdTipo";
+                    ddlCategoria.DataTextField = "NombreTipo";
+                    ddlCategoria.DataBind();
+
+                    List<Marca> listaMarca = negocioMarca.listar();
+                    ddlMarca.DataSource = listaMarca;
+                    ddlMarca.DataValueField = "Id";
+                    ddlMarca.DataTextField = "NombreMarca";
+                    ddlMarca.DataBind();
+
+                }
 
             }
+
+
 
         }
         private List<Proveedor> listadoProveedores()
@@ -72,9 +85,10 @@ namespace administracion_web
         {
             ddlMarca.Enabled = true;
             idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
-            ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll(x => x.Tipo.IdTipo == idTipo);
+            ddlProducto.DataSource = (((List<Producto>)Session["listaProducto"]).FindAll(x => x.Tipo.IdTipo == idTipo));
+            ddlProducto.DataValueField = "Id";
             ddlProducto.DataTextField = "Nombre";
-            ddlProducto.DataBind();
+            // ddlProducto.DataBind();
 
 
         }
@@ -85,10 +99,16 @@ namespace administracion_web
             idMarca = Int64.Parse(ddlMarca.SelectedItem.Value);
             idTipo = Int64.Parse(ddlCategoria.SelectedItem.Value);
             ddlProducto.DataSource = ((List<Producto>)Session["listaProducto"]).FindAll((x => x.Marca.Id == idMarca && x.Tipo.IdTipo == idTipo));
+            ddlProducto.DataValueField = "Id";
+            ddlProducto.DataTextField = "Nombre";
             ddlProducto.DataBind();
-            ddlProducto.Enabled = true;
+            //ddlProducto.Enabled = true;
         }
 
+        protected void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            idProductoSeleccionado = Int64.Parse(ddlProducto.SelectedItem.Value);
+        }
 
         protected void btnSumarProducto_Click(object sender, EventArgs e)
         {
@@ -99,17 +119,18 @@ namespace administracion_web
                 bool ProductoYaSeleccionado = false;
                 Int64 IdProveedor = Int64.Parse(ddlProveedor.SelectedItem.Value);
 
-                string nombreProductoSeleccionado = ddlProducto.SelectedItem.Value.ToString(); //nombre del Producto Seleccionado
-                                                                                               //Guardo en la lista completa de Productos
+
+                //Guardo en la lista completa de Productos
                 List<Producto> listaProducto = listadoProductos();
-                foreach (var item in listaProducto) // Recorro la lista completa de productos
-                {
-                    if (item.Nombre.ToString() == nombreProductoSeleccionado) // si el nombre del producto = producto seleccionado
-                    {
-                        idProductoSeleccionado = item.Id;
-                        break;
-                    }
-                }
+
+                //foreach (var item in listaProducto) // Recorro la lista completa de productos
+                //{
+                //    if (item.Id == IdProductoSeleccionado) // si el nombre del producto = producto seleccionado
+                //    {
+                //        idProductoSeleccionado = item.Id;
+                //        break;
+                //    }
+                //}
 
                 //******* LISTA DE COMPRA*****************
                 ListaCompra = (List<Compra>)Session["listaEnCarro"];
@@ -132,6 +153,7 @@ namespace administracion_web
                         {
                             if (item.Producto.Id == idProductoSeleccionado)
                                 ProductoYaSeleccionado = true;
+                            break;
                         }
                     }
 
@@ -172,11 +194,11 @@ namespace administracion_web
             {
 
                 Session.Add("Error", "Campos incorrectos");
-                Response.Redirect("Error.aspx", false); 
+                Response.Redirect("Error.aspx", false);
             }
 
 
-            
+
         }
 
         protected void btnEliminarProductoLista_Click(object sender, EventArgs e)
@@ -204,23 +226,23 @@ namespace administracion_web
             {
 
                 Session.Add("Error", "Hubo un error al eliminar el producto");
-                Response.Redirect("Error.aspx", false); 
+                Response.Redirect("Error.aspx", false);
             }
-           
+
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-                carrito = (listaTotalProductos)Session["total"];
-                CompraNegocio negocio = new CompraNegocio();
+            carrito = (listaTotalProductos)Session["total"];
+            CompraNegocio negocio = new CompraNegocio();
 
-                foreach (Compra item in carrito.listado)
-                {
-                    negocio.agregarConSP(item);
-                }
+            foreach (Compra item in carrito.listado)
+            {
+                negocio.agregarConSP(item);
+            }
 
-                carrito.listado.RemoveAll(i => i.Id != 0);
-                Response.Redirect("registroProductos.aspx");
+            carrito.listado.RemoveAll(i => i.Id != 0);
+            Response.Redirect("registroProductos.aspx");
 
         }
 
@@ -258,6 +280,7 @@ namespace administracion_web
         {
             ddlMarca.Items.Insert(0, "--Seleccione una Marca--");
         }
+
 
 
     }

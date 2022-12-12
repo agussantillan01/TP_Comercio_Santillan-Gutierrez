@@ -332,3 +332,14 @@ Begin
 update Usuarios SET TipoUser=2  Where IdUsuario = @IdUsuario
 end
 go
+
+
+-- ELIMINA PRODUCTO 
+drop Procedure SP_EliminaProducto 
+--ELIMINA PRODUCTO
+go
+Create Procedure SP_EliminaProducto(@Id bigint)
+as
+Begin
+update Productos set Estado = 0 Where IdProducto = @Id
+end

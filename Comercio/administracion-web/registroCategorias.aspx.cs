@@ -1,4 +1,5 @@
-﻿using negocio;
+﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,18 @@ namespace administracion_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CategoriaNegocio negocio = new CategoriaNegocio();
-            dgvCategorias.DataSource = negocio.listarSP();
-            dgvCategorias.DataBind();
+            Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (usuario == null)
+            {
+                Session.Add("Error", "Debes loguearte!");
+                Response.Redirect("ErrorLogin.aspx", false);
+            }else
+            {
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                dgvCategorias.DataSource = negocio.listarSP();
+                dgvCategorias.DataBind();
+            }
+
         }
 
         protected void dgvCategorias_SelectedIndexChanged(object sender, EventArgs e)

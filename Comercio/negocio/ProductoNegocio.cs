@@ -25,9 +25,9 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.Porcentaje, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca ";
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre,T.IdTipo,T.Nombre AS Tipo, PR.Descripcion,M.IdMarca,M.Nombre AS Marca,PR.Stock, PR.Porcentaje, PR.StockMinimo, PR.Precio, PR.Estado, PR.Estado from Productos PR Inner join Tipo_Productos T On T.IdTipo=PR.IdTipo Inner join Marcas M On M.IdMarca = PR.IdMarca Where PR.Estado=1 ";
                 if (id != "")
-                comando.CommandText += "where PR.IdProducto = " + id;
+                comando.CommandText += "AND PR.IdProducto = " + id;
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -183,7 +183,7 @@ namespace negocio
             }
         }
 
-        public void eliminarConSP(int ID)
+        public void eliminarConSP(Int64 ID)
         {
             AccesoDatos datos = new AccesoDatos();
             try

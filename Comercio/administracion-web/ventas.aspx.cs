@@ -22,7 +22,7 @@ namespace administracion_web
 
     public partial class ventas : System.Web.UI.Page
     {
-  
+
         Int64 idCliente;
         Int64 idProducto;
 
@@ -33,36 +33,44 @@ namespace administracion_web
         ProductoNegocio negocioProducto = new ProductoNegocio();
 
 
-   
+
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            try
+            Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (usuario == null)
             {
-                ClienteNegocio clienteNegocio = new ClienteNegocio();
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                if (!IsPostBack)
+                Session.Add("Error", "Debes loguearte!");
+                Response.Redirect("ErrorLogin.aspx", false);
+            }
+            else
+            {
+                try
                 {
-                    List<Cliente> listaClientes = clienteNegocio.listarSP();
-                    ddlClientes.DataSource = listaClientes;
-                    ddlClientes.DataValueField = "Id";
-                    ddlClientes.DataTextField = "Nombre";
-                    ddlClientes.DataBind();
+                    ClienteNegocio clienteNegocio = new ClienteNegocio();
+                    ProductoNegocio productoNegocio = new ProductoNegocio();
+                    if (!IsPostBack)
+                    {
+                        List<Cliente> listaClientes = clienteNegocio.listarSP();
+                        ddlClientes.DataSource = listaClientes;
+                        ddlClientes.DataValueField = "Id";
+                        ddlClientes.DataTextField = "Nombre";
+                        ddlClientes.DataBind();
 
-                    List<Producto> listProductos = productoNegocio.listar();
-                    ddlProductos.DataSource = listProductos;
-                    ddlProductos.DataValueField = "Id";
-                    ddlProductos.DataTextField = "Nombre";
-                    ddlProductos.DataBind();
+                        List<Producto> listProductos = productoNegocio.listar();
+                        ddlProductos.DataSource = listProductos;
+                        ddlProductos.DataValueField = "Id";
+                        ddlProductos.DataTextField = "Nombre";
+                        ddlProductos.DataBind();
+
+                    }
 
                 }
+                catch (Exception)
+                {
 
-            }
-            catch (Exception)
-            {
-
-                Session.Add("Error", "Error al completarse los datos");
-                Response.Redirect("Error.aspx", false);
+                    Session.Add("Error", "Error al completarse los datos");
+                    Response.Redirect("Error.aspx", false);
+                }
             }
 
 
@@ -134,17 +142,17 @@ namespace administracion_web
             {
 
                 Session.Add("Error", "Campos incorrectos. Revise los datos ingresados");
-                Response.Redirect("Error.aspx", false); 
+                Response.Redirect("Error.aspx", false);
             }
-            
+
 
 
         }
 
-       
+
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            
+
 
             //SaveFileDialog guardar = new SaveFileDialog();
             //guardar.FileName ="Boleta Nro " + NumVenta.ToString() + ".pdf";
@@ -223,7 +231,7 @@ namespace administracion_web
 
                 Response.Redirect("registroProductos.aspx", false);
                 carrito.listado.RemoveAll(i => i.Id != 0);
-                
+
             }
             catch (Exception)
             {
@@ -231,7 +239,7 @@ namespace administracion_web
                 Session.Add("Error", "Hubo un error al Realizar la venta");
                 Response.Redirect("Error.aspx", false);
             }
-            
+
         }
 
 

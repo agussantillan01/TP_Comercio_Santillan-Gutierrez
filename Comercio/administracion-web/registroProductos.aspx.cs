@@ -74,6 +74,7 @@ namespace administracion_web
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
+            Buscador.Text = "";
             ProductoNegocio negocio = new ProductoNegocio();
             dgvProductos.DataSource = negocio.listar();
             dgvProductos.DataBind();
