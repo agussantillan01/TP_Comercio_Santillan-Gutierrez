@@ -24,9 +24,8 @@ namespace administracion_web
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-
             Response.Redirect("Login.aspx", false);
-
+            
         }
     }
 }

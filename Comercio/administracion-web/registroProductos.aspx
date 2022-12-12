@@ -16,16 +16,16 @@
             <asp:TextBox runat="server" ID="Buscador" class="form-control" />
         </div>
         <asp:Button CssClass="btn btn-primary" Text="Search" ID="btnBuscar" OnClick="btnBuscar_Click" runat="server" />
-        <div style="padding-left:3px;">
-            <asp:Button CssClass="btn btn-success" Text="🔙" Id="btnLimpiar" OnClick="btnLimpiar_Click" runat="server" />
-            
+        <div style="padding-left: 3px;">
+            <asp:Button CssClass="btn btn-success" Text="🔙" ID="btnLimpiar" OnClick="btnLimpiar_Click" runat="server" />
+
         </div>
     </div>
 
 
-    <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false" cssClass="table table-ligth table-striped"
+    <asp:GridView ID="dgvProductos" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-ligth table-striped"
         OnClass="table" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
-        <columns>
+        <Columns>
             <asp:BoundField HeaderText="Tipo" DataField="Tipo" />
             <asp:BoundField HeaderText="Marca" DataField="Marca" />
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
@@ -35,15 +35,24 @@
             <asp:BoundField HeaderText="Porcentaje de ganancia" DataField="Porcentaje" />
             <asp:CommandField HeaderText="Modifica/Elimina" ShowSelectButton="true" SelectText="✏️" />
 
-        </columns>
+        </Columns>
 
     </asp:GridView>
-    <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
-        {%>
+    <%if ((dominio.Usuario)Session["Usuario"] == null)
+        {
+            Session.Add("Error", "Recuerde loguearte!");
+            Response.Redirect("ErrorLogin.aspx", false);
+        }
+        else
+        {
+            if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
+            {%>
     <div style="text-align: left;">
         <a type="submit" class="btn btn-primary" href="agregarProducto.aspx">--Agregar Producto--</a>
     </div>
-    <% } %>
+    <% }
+        }%>
+
     <div style="text-align: right;">
         <a type="submit" class="btn btn-primary" href="compras.aspx">Comprar</a>
         <a type="submit" class="btn btn-primary" href="ventas.aspx">Vender</a>

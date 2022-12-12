@@ -28,9 +28,17 @@
                             <a class="nav-link active" aria-current="page" href="registroProductos.aspx">Productos</a>
                             <a class="nav-link" href="registroCompras.aspx">Compras</a>
                             <a class="nav-link" href="registroVentas.aspx">Ventas</a>
-                             <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
+                            <%if ((dominio.Usuario)Session["Usuario"] == null)
+                                {
+                                    Session.Add("Error", "Recuerde loguearte!");
+                                    Response.Redirect("ErrorLogin.aspx", false);
+                                } else
+            {
+                if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
+                {%>
                             <a class="nav-link" href="registroUsuarios.aspx">Usuarios</a>
-                            <% } %>
+                            <% }
+            }%>
                         </div>
                     </div>
                 </div>
@@ -39,10 +47,9 @@
                     <a class="nav-link" href="registroCategorias.aspx">Categorias</a>
                     <asp:Button Text="Cerrar Sesion" ID="btnCerrarSesion" CssClass="btn btn-outline-danger" OnClick="btnCerrarSesion_Click" runat="server" />
 
-<%--                    <a href="Login.aspx">
+                    <%--                    <a href="Login.aspx">
                         <img style="width:35px;padding-top: 11px; padding-left:6px;padding-right:6px;" src="../img/cerrarSesion.png" alt="" />
                     </a>--%>
-
                 </div>
             </nav>
             <div class="container">

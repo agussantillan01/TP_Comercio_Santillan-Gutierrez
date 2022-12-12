@@ -14,6 +14,7 @@ namespace administracion_web
         [STAThread]
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session.Clear();
 
         }
 
@@ -26,7 +27,7 @@ namespace administracion_web
             {
                 usuario = new Usuario(txtEmail.Text, txtPassword.Text,false);
                 if (usuarioNegocio.Loguear(usuario)) {
-                    Session.Add("usuario", usuario);
+                    Session.Add("Usuario", usuario);
                     Response.Redirect("registroProductos.aspx",false);
                     Session.Add("emailParametro", txtEmail.Text);
                     

@@ -4,19 +4,28 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
-<br />
-    <asp:GridView ID="dgvMarcas" Style="width: 50%;" runat="server" DataKeyNames="Id" AutogenerateColumns="false" cssClass="table table-success table-striped"
+    <br />
+    <asp:GridView ID="dgvMarcas" Style="width: 50%;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-success table-striped"
         Onclass="table" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged">
         <Columns>
             <asp:BoundField HeaderText="Marca" DataField="NombreMarca" />
             <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="✏️" />
-            
+
         </Columns>
     </asp:GridView>
     <br />
-               <% if (((dominio.Usuario)Session["usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN) {%>
+    <%if ((dominio.Usuario)Session["Usuario"] == null)
+        {
+            Session.Add("Error", "Recuerde loguearte!");
+            Response.Redirect("ErrorLogin.aspx", false);
+        }
+        else
+        {
+            if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
+            {%>
     <a type="submit" class="btn btn-primary" href="agregarMarca.aspx">--Agregar Marca--</a>
-         <% } %>
+    <% }
+        }%>
 
-
+    
 </asp:Content>
