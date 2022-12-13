@@ -231,6 +231,7 @@ namespace administracion_web
 
                 Response.Redirect("registroProductos.aspx", false);
                 carrito.listado.RemoveAll(i => i.Id != 0);
+                carrito.total = 0;
 
             }
             catch (Exception)

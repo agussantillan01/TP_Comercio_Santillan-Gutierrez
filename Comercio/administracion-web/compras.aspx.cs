@@ -247,6 +247,8 @@ namespace administracion_web
             {
                 return false;
             }
+            Session.Add("Error", "Campos incorrectos");
+            Response.Redirect("Error.aspx",false);
             return true;
         }
         private bool convierteTextoADecimal(string numero)
@@ -255,6 +257,8 @@ namespace administracion_web
             {
                 return false;
             }
+            Session.Add("Error", "Campos incorrectos");
+            Response.Redirect("Error.aspx", false);
             return true;
         }
         private List<Producto> listadoProductos()
