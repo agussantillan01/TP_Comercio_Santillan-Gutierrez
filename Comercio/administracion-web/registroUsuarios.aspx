@@ -28,10 +28,14 @@
     <% }
         else
         {%>
-    <div>
-        <h2 style="text-align: center; color: grey; font-family: Arial;">No hay usuarios registrados...</h2>
+    <div class="row">
+        <div>
+            <h2 style="text-align: center; color: grey; font-family: Arial;">No hay usuarios registrados...</h2>
 
-        <img src="../img/ningunUsuarioRegistrado.png" style="width: 30px; text-align: center;" alt="no se encontraron usuarios registrados" />
+        </div>
+        <div>
+            <img src="../img/ningunUsuarioRegistrado.png" style="width: 30px; text-align: center;" alt="no se encontraron usuarios registrados" />
+        </div>
     </div>
     <%}%>
 </asp:Content>

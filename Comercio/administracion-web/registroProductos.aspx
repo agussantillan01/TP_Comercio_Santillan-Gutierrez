@@ -3,6 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <%if ((dominio.Usuario)Session["Usuario"] == null)
+        {
+            Session.Add("Error", "Recuerde loguearte!");
+            Response.Redirect("ErrorLogin.aspx", false);
+        }
+        else
+
+        {%>
     <hr />
     <div style="text-align: center;">
         <a type="submit" class="btn btn-light" href="registroClientes.aspx">Clientes Existentes</a>
@@ -38,15 +47,8 @@
         </Columns>
 
     </asp:GridView>
-    <%if ((dominio.Usuario)Session["Usuario"] == null)
-        {
-            Session.Add("Error", "Recuerde loguearte!");
-            Response.Redirect("ErrorLogin.aspx", false);
-        }
-        else
-        {
-            if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
-            {%>
+    <%if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
+        {%>
     <div style="text-align: left;">
         <a type="submit" class="btn btn-primary" href="agregarProducto.aspx">--Agregar Producto--</a>
     </div>

@@ -3,7 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <hr />
+
+
+    <%if ((dominio.Usuario)Session["Usuario"] == null)
+        {
+            Session.Add("Error", "Recuerde loguearte!");
+            Response.Redirect("ErrorLogin.aspx", false);
+        }
+        else
+        { %>
     <asp:GridView ID="dgvProveedores" Style="width: 60%; text-align: center;" runat="server" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-ligth table-striped"
         OnClass="table" OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged">
         <Columns>
@@ -14,16 +22,14 @@
             <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="Modificar" />
         </Columns>
     </asp:GridView>
-    <%if ((dominio.Usuario)Session["Usuario"] == null)
-        {
-            Session.Add("Error", "Recuerde loguearte!");
-            Response.Redirect("ErrorLogin.aspx", false);
-        }
-        else
-        {
-            if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
-            {%>
-                    <<a type="submit" class="btn btn-primary" href="agregarProveedores.aspx">--Agregar Proveedor--</a>
-    <% }
-        }%>
+    <%if (((dominio.Usuario)Session["Usuario"]).TipoUsuario == dominio.TipoUsuario.ADMIN)
+        { %>
+    <a type="submit" class="btn btn-primary" href="agregarProveedores.aspx">--Agregar Proveedor--</a>
+
+
+    <%} %>
+
+
+
+    <%} %>
 </asp:Content>
