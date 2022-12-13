@@ -114,17 +114,24 @@ namespace administracion_web
                     {
                         List<Cliente> listaCliente = negocioCliente.listar();
                         List<Producto> listaProducto = negocioProducto.listar();
+                        bool noSePudoConvertirAInt = convierteTextoAInt(txtCantidad.Text);
+                        if (!noSePudoConvertirAInt)
+                        {
+                            Venta aux = new Venta();
+                            aux.Id = idProducto;
+                            aux.Cliente = listaCliente.Find(x => x.Id == idCliente);
+                            aux.Producto = listaProducto.Find(x => x.Id == idProducto);
 
-                        Venta aux = new Venta();
-                        aux.Id = idProducto;
-                        aux.Cliente = listaCliente.Find(x => x.Id == idCliente);
-                        aux.Producto = listaProducto.Find(x => x.Id == idProducto);
-                        aux.Cantidad = Int16.Parse(txtCantidad.Text);
-                        aux.Precio = (aux.Cantidad * aux.Producto.Precio + (aux.Producto.Precio * aux.Producto.Porcentaje / 100));
 
-                        carrito.total += aux.Precio;
-                        listaEnCarrito.Add(aux);
-                        carrito.listado = listaEnCarrito;
+                            aux.Cantidad = Int16.Parse(txtCantidad.Text);
+                            aux.Precio = (aux.Cantidad * aux.Producto.Precio + (aux.Producto.Precio * aux.Producto.Porcentaje / 100));
+
+                            carrito.total += aux.Precio;
+                            listaEnCarrito.Add(aux);
+                            carrito.listado = listaEnCarrito;
+
+                        }
+                        
 
 
                     }
@@ -321,6 +328,16 @@ namespace administracion_web
                 Session.Add("Error", "asdadsa");
                 Response.Redirect("Error.aspx", false);
             }
+        }
+        private bool convierteTextoAInt(string numeroCantidad)
+        {
+            if (Int16.TryParse(numeroCantidad, out Int16 cantidad))
+            {
+                return false;
+            }
+            Session.Add("Error", "Campos incorrectos");
+            Response.Redirect("Error.aspx", false);
+            return true;
         }
     }
 }
