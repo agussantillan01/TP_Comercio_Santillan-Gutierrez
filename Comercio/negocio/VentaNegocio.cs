@@ -21,7 +21,7 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select PR.IdProducto, PR.Nombre AS Producto, V.IdVentaMovimiento AS Factura,V.Cantidad, C.Nombre AS Cliente, V.Precio from Ventas_Movimiento V Inner join Productos PR  On V.IdVentaMovimiento=PR.IdProducto Inner join Clientes C On C.IdCliente = V.IdCliente";
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre AS Producto, V.IdVentaMovimiento AS Factura,V.Cantidad as Cantidad, C.Nombre AS Cliente,C.IdCliente,C.Email, V.Precio from Ventas_Movimiento V Inner join Productos PR  On V.IdVentaMovimiento=PR.IdProducto Inner join Clientes C On C.IdCliente = V.IdCliente\r\n";
                 if (id != "")
                     comando.CommandText += "where V.IdVentaMovimiento = " + id;
                 comando.Connection = conexion;
@@ -33,7 +33,7 @@ namespace negocio
                 {
                     Venta vent = new Venta();
                     vent.Id = (Int64)lector["Factura"];
-                    vent.Cantidad = (Int16)lector["Cantidad"];
+                    vent.Cantidad = (int)lector["Cantidad"];
                     vent.Precio = (decimal)lector["Precio"];
 
 
