@@ -21,9 +21,9 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TP_Comercio; integrated security= true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select PR.IdProducto, PR.Nombre AS Producto, V.IdVentaMovimiento AS Factura,V.Cantidad as Cantidad, C.Nombre AS Cliente,C.IdCliente,C.Email, V.Precio from Ventas_Movimiento V Inner join Productos PR  On V.IdVentaMovimiento=PR.IdProducto Inner join Clientes C On C.IdCliente = V.IdCliente\r\n";
+                comando.CommandText = "Select PR.IdProducto, PR.Nombre AS Producto, V.IdVentaMovimiento AS Factura,V.Cantidad as Cantidad, C.Nombre AS Cliente,C.IdCliente,C.Email, V.Precio from Ventas_Movimiento V Inner join Productos PR  On V.IdProducto=PR.IdProducto Inner join Clientes C On C.IdCliente = V.IdCliente\r\n";
                 if (id != "")
-                    comando.CommandText += "where V.IdVentaMovimiento = " + id;
+                    comando.CommandText += "AND V.IdVentaMovimiento = " + id;
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -73,7 +73,7 @@ namespace negocio
                 datos.setearParametro("@Precio", item.Precio);
 
                 datos.ejectutarAccion();
-                datos.cerrarConexion();
+       
 
 
 
