@@ -3,10 +3,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Desde Registro de compras</h1>
+    <h1>Registro de compras</h1>
 
-    <asp:GridView runat="server" Style="width: 100%;" ID="dgvComprasTotales" DataKeyNames="Id" OnClass="table" AutoGenerateColumns="false" OnSelectedIndexChanged="dgvComprasTotales_SelectedIndexChanged" >
-        <Columns>
+    
+               <asp:GridView ID="dgvComprasTotal" runat="server" Style="width: 100%;" DataKeyNames="Id" AutoGenerateColumns="false" CssClass="table table-ligth table-striped"
+   OnClass="table" >
+    <Columns>
             <asp:BoundField HeaderText="Proveedor" DataField="Proveedor"/>
             <asp:BoundField HeaderText="Producto" DataField="Producto"/>
             <asp:BoundField HeaderText="Cantidad" DataField="Cantidad"/>

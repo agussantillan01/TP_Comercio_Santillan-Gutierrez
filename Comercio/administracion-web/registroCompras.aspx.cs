@@ -1,4 +1,5 @@
 ﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,21 @@ namespace administracion_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
+            Usuario usuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (usuario == null)
+            {
+                Session.Add("Error", "Debes loguearte!");
+                Response.Redirect("ErrorLogin.aspx", false);
+            }
+            else
+            {
+            CompraNegocio negocio = new CompraNegocio();
+            dgvComprasTotal.DataSource = negocio.listar();
+            dgvComprasTotal.DataBind();
+            }
         }
 
-        protected void dgvComprasTotales_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+    
     }
 }
 
